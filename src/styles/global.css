@@ -1,0 +1,161 @@
+@layer tokens, reset, fonts, base, typography, components, utility;
+
+@layer tokens {
+}
+
+@layer reset {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  * {
+    margin: 0;
+  }
+
+  body {
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  img,
+  picture,
+  video,
+  canvas,
+  svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+
+  input,
+  button,
+  textarea,
+  select {
+    font: inherit;
+  }
+
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    overflow-wrap: break-word;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    text-wrap: balance;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  ul,
+  ol {
+    list-style-type: none;
+    padding-left: 0px;
+  }
+
+  button {
+    padding: 0px;
+  }
+}
+
+@layer fonts {
+}
+
+@layer base {
+  /* Layout */
+
+  .grid-main {
+    --grid-main-gap: 10px;
+    --max: 71.25rem;
+    --content: min(100% - (2 * var(--page-padding)), var(--max));
+    --col-size: calc((var(--content) - 2 * var(--grid-main-gap)) / 3);
+
+    display: grid;
+    grid-template-columns:
+      minmax(var(--page-padding), 1fr)
+      repeat(2, minmax(0, var(--col-size)) var(--grid-main-gap))
+      minmax(0, var(--col-size))
+      minmax(var(--page-padding), 1fr);
+  }
+
+  .grid-main > * {
+    grid-column: 2 / -2;
+  }
+
+  @media (min-width: 40rem) {
+    .grid-main {
+      --grid-main-gap: 20px;
+      --col-size: calc((var(--content) - 7 * var(--grid-main-gap)) / 8);
+
+      grid-template-columns:
+        minmax(var(--page-padding), 1fr)
+        repeat(7, minmax(0, var(--col-size)) var(--grid-main-gap))
+        minmax(0, var(--col-size))
+        minmax(var(--page-padding), 1fr);
+    }
+  }
+  @media (min-width: 62.5rem) {
+    .grid-main {
+      --grid-main-gap: 30px;
+      --col-size: calc((var(--content) - 11 * var(--grid-main-gap)) / 12);
+
+      grid-template-columns:
+        1fr
+        repeat(11, minmax(0, var(--col-size)) var(--grid-main-gap))
+        minmax(0, var(--col-size))
+        1fr;
+    }
+  }
+}
+
+@layer typography {
+}
+
+@layer components {
+}
+
+@layer utility {
+  .skip-to-main {
+    position: absolute;
+    top: -80px; /* hide off-screen by default */
+    left: 0;
+    background: #000;
+    color: #fff;
+    padding: 8px 16px;
+    z-index: 100;
+    text-decoration: none;
+    font-weight: bold;
+    transition: top 0.3s;
+  }
+
+  .skip-to-main:focus {
+    top: 0; /* slide into view when focused */
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+  }
+}
