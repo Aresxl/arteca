@@ -2,11 +2,14 @@
 import { defineConfig } from "astro/config";
 import icon from "astro-icon";
 
+import netlify from "@astrojs/netlify";
+
 // https://astro.build/config
 export default defineConfig({
   devToolbar: {
     enabled: false,
   },
+
   experimental: {
     svgo: {
       plugins: [
@@ -21,9 +24,12 @@ export default defineConfig({
       ],
     },
   },
+
   integrations: [
     icon({
       iconDir: `src/assets/icons/offer`,
     }),
   ],
+
+  adapter: netlify(),
 });
