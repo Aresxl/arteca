@@ -1,7 +1,51 @@
 ---
+// Components
+import Hero from "@/components/sections/Hero.astro";
+import Pricing from "@/components/sections/Pricing.astro";
+import OurOffer from "@/components/sections/OurOffer.astro";
 import PrimaryLayout from "@/layouts/PrimaryLayout.astro";
+import Portfolio from "@/components/sections/Portfolio.astro";
+import Testimonials from "@/components/sections/Testimonials.astro";
+import Performance from "@/components/sections/Performance.astro";
+import SectionDivider from "@/components/ui/SectionDivider.astro";
+import CTA from "@/components/sections/Cta.astro";
 ---
 
 <PrimaryLayout title="Arteca">
-  <h1>This is the beginning</h1>
+  <Hero />
+  <OurOffer />
+  <SectionDivider />
+  <Performance />
+  <SectionDivider />
+  <Portfolio />
+  <SectionDivider />
+  <Testimonials />
+  <SectionDivider />
+  <Pricing />
+  <SectionDivider />
+  <CTA />
 </PrimaryLayout>
+
+<!-- 
+
+To Do List 
+- Add classes to Header.astro component
+- Research if there's any copyright/privacy shit with social logos
+- Fix SVG social logos
+- Glitch text on h1
+- prefers reduced media query for animations/transitions
+- fix font-sizes (not clamped)
+- accessibility check
+- fix hover effect on OurOffer cards - not performant - maybe on PricingCards too
+- Refactor footer code
+- setup database/form handler
+- Make the entire contact details a link (contact section)
+
+
+Design Ideas?
+-  clip-path on the buttons to match cyberpunk feel
+
+
+ Design Q for Mona
+ - fs on site-logo
+-->

@@ -1,0 +1,74 @@
+[
+  {
+    "title": "Lump Sum",
+    "price": "$3800",
+    "priceSpan": "+$25/mo hosting",
+    "features": [
+      {
+        "text": "Design and development",
+        "included": true
+      },
+      {
+        "text": "$25/mo hosting",
+        "included": true
+      },
+      {
+        "text": "+$100 Per page (after 5) ",
+        "included": true
+      },
+      {
+        "text": "+$250 to add a blog",
+        "included": true
+      },
+      {
+        "text": "+$50/mo unlimited edits add-on",
+        "included": true
+      },
+      {
+        "text": "24/7 Support",
+        "included": false
+      },
+      {
+        "text": "Lifetime updates",
+        "included": false
+      }
+    ],
+    "popular": false
+  },
+  {
+    "title": "Monthly",
+    "price": "$175",
+    "priceSpan": "per month",
+    "features": [
+      {
+        "text": "Design and development",
+        "included": true
+      },
+      {
+        "text": "Includes hosting",
+        "included": true
+      },
+      {
+        "text": "+$100 Per page (after 5)",
+        "included": true
+      },
+      {
+        "text": "+$250 To add a blog",
+        "included": true
+      },
+      {
+        "text": "Unlimited edits",
+        "included": true
+      },
+      {
+        "text": "24/7 Priority support",
+        "included": true
+      },
+      {
+        "text": "Lifetime updates",
+        "included": true
+      }
+    ],
+    "popular": true
+  }
+]

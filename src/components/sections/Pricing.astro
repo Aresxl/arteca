@@ -1,0 +1,91 @@
+---
+// Data
+
+import data from "@/data/pricing-plan.json";
+
+// Components
+import Heading from "../ui/Heading.astro";
+import LinkOrButton from "../ui/LinkOrButton.astro";
+import PricingCard from "../ui/PricingCard.astro";
+---
+
+<section class="pricing | grid-main" aria-labelledby="pricing">
+  <header class="pricing__header">
+    <div class="title__wrapper">
+      <Heading tag="h2" text="Our pricing" class="section-title" id="pricing" />
+      <span class="subtitle">Simple plans, serious impact</span>
+    </div>
+    <div class="cta__btn-wrapper">
+      <LinkOrButton as="a" href="/contact" variant="primary" text="Get started" />
+    </div>
+  </header>
+  <ul class="pricing__cards-wrapper">
+    {
+      data.map((plan) => (
+        <PricingCard
+          title={plan.title}
+          price={plan.price}
+          priceSpan={plan.priceSpan}
+          features={plan.features}
+          popular={plan.popular}
+        />
+      ))
+    }
+  </ul>
+</section>
+
+<style>
+  .pricing {
+    margin-block-end: var(--spacing-2xl);
+  }
+  .pricing__header {
+    display: grid;
+    text-align: center;
+    margin-block-end: var(--spacing-xl);
+  }
+
+  .subtitle {
+    margin-block: var(--spacing-xxs) 20px;
+  }
+
+  .pricing__cards-wrapper {
+    display: grid;
+    gap: var(--spacing-xl);
+  }
+
+  @media (min-width: 40rem) {
+    .pricing__cards-wrapper {
+      margin-inline: var(--spacing-xl);
+    }
+  }
+
+  @media (min-width: 48rem) {
+    .pricing__header {
+      grid-template-columns: repeat(2, 1fr);
+      align-items: center;
+      margin-block-end: var(--spacing-2xl);
+      text-align: left;
+    }
+
+    h2 {
+      margin-inline-start: 2px;
+    }
+
+    .subtitle {
+      margin-block: var(--spacing-xxs) 0px;
+    }
+
+    .cta__btn-wrapper {
+      justify-self: end;
+      margin-inline-end: var(--spacing-xl);
+    }
+
+    .pricing__cards-wrapper {
+      grid-template-columns: repeat(2, 1fr);
+      margin-inline: 0;
+    }
+  }
+
+  @media (min-width: 62.5rem) {
+  }
+</style>

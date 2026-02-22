@@ -1,0 +1,179 @@
+---
+// Components
+import Heading from "../ui/Heading.astro";
+
+// Helpers
+import { Image } from "astro:assets";
+
+// Images
+import LinkedInIcon from "@/assets/icons/linkedin-white.png";
+import XIcon from "@/assets/icons/x.svg";
+import InstagramIcon from "@/assets/icons/instagram.svg";
+---
+
+<footer class="site__footer grid-main">
+  <div class="site__footer-inner">
+    <div class="site__logo-wrapper">
+      <a href="/" class="home-link" aria-label="Arteca Home">
+        <span class="site-logo">Vyteca</span>
+      </a>
+    </div>
+    <nav class="footer__nav">
+      <ul class="footer__nav-list">
+        <li><a class="nav-link" href="/projects">Projects</a></li>
+        <li><a class="nav-link" href="/about">About</a></li>
+        <li><a class="nav-link" href="/pricing">Pricing</a></li>
+        <li><a class="nav-link" href="/reviews">Reviews</a></li>
+        <li><a class="nav-link" href="/contact">Contact</a></li>
+      </ul>
+    </nav>
+    <ul class="socials">
+      <li>
+        <a href="">
+          <Image src={LinkedInIcon} alt="" width={20} height={20} class="social-icon" />
+        </a>
+      </li>
+      <!-- <li>
+        <a href="">
+          <XIcon width={20} height={20} class="social-icon" />
+        </a>
+      </li> -->
+      <!-- <li>
+        <a href="">
+          <InstagramIcon width={20} height={20} class="social-icon" />
+        </a>
+      </li> -->
+    </ul>
+    <span class="copyright">&copy; 2026 Vycteca. All rights reserved</span>
+  </div>
+</footer>
+
+<style>
+  .site__footer {
+    padding-block: 80px 40px;
+    justify-items: center;
+    text-align: center;
+
+    /* MQ */
+    background-color: var(--cyber-void-700);
+  }
+
+  .footer__nav-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    margin-block: 30px 30px;
+  }
+
+  .nav-link {
+    position: relative;
+    padding: 4px;
+    color: var(--clr-body-text);
+    font-size: var(--fs-400);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    border-radius: 4px;
+    background-color: var(--clr-glow-teal);
+    opacity: 0;
+
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: 400ms ease-in-out;
+    transition-property: transform, opacity;
+
+    /* Experiment */
+    opacity: 0.9;
+
+    box-shadow:
+      0 0 4px var(--clr-glow-teal),
+      0 0 12px var(--clr-glow-teal),
+      0 0 24px var(--clr-glow-teal);
+
+    transition:
+      transform 400ms ease-out,
+      opacity 400ms ease-out,
+      box-shadow 600ms ease-out;
+  }
+
+  .nav-link:hover {
+    text-shadow:
+      0 0 1px var(--clr-glow-teal),
+      0 0 25px var(--clr-glow-teal);
+  }
+
+  .nav-link:hover::after {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+
+  .socials {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    border-radius: 16px;
+  }
+
+  .social-icon {
+    color: var(--clr-neutral-0);
+  }
+
+  .copyright {
+    position: relative;
+    display: block;
+    margin-block-start: 30px;
+  }
+
+  .copyright::before {
+    margin-block-end: 30px;
+    content: "";
+    display: block;
+    width: 100%;
+    height: 1px;
+    background-color: var(--clr-border-default);
+  }
+
+  @media (min-width: 48rem) {
+    .site__footer-inner {
+      display: grid;
+      grid-template-columns: repeat(3, auto);
+      column-gap: var(--spacing-lg);
+      align-items: center;
+    }
+
+    .site__logo-wrapper {
+      justify-self: start;
+    }
+
+    .footer__nav-list {
+      flex-direction: row;
+      margin-block: 0px;
+    }
+
+    .socials {
+      justify-self: end;
+    }
+
+    .copyright {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (min-width: 62.5rem) {
+    .site__footer-inner {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .footer__nav-list {
+      gap: var(--spacing-lg);
+    }
+  }
+</style>

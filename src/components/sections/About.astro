@@ -1,0 +1,60 @@
+---
+import Picture from "astro/components/Picture.astro";
+import Heading from "../ui/Heading.astro";
+import LinkOrButton from "../ui/LinkOrButton.astro";
+---
+
+<section class="about | grid-main" aria-labelledby="about-title">
+  <header>
+    <Heading tag="h2" text="Vyteca" class="section-title" id="about-title" />
+    <div class="subtitle">Crafted for Melbourne's finest restaurants</div>
+    <div class="content">
+      <p>Hi, I’m Lachlan – founder and lead developer at Arteca.</p>
+      <p>
+        A couple of years ago I met a girl from Germany. I wanted a career that wouldn’t lock me to
+        one location, so I could spend time in Europe with her family one month, then back in
+        Melbourne with mine the next.
+      </p>
+      <p>
+        So I taught myself to code the hard way: endless courses, YouTube rabbit holes, paid
+        resources, and a ton of trial and error until I could build fast, clean websites from
+        scratch.
+      </p>
+      <p>
+        While searching for date-night spots around Melbourne, I kept noticing the same thing: many
+        great restaurants had an outdated design and websites that felt slow on mobile
+      </p>
+      <p>That insight led to Arteca.</p>
+      <p>
+        I specialise in one thing: custom, hand-coded websites built exclusively for Melbourne
+        restaurants.
+      </p>
+      <p>
+        No templates. No bloat. Just sites that load lightning fast, look perfect on phones (where
+        most diners search), and include local SEO foundations to help you rank higher for the
+        searches that matter. The result? More bookings, fuller tables, more revenue
+      </p>
+    </div>
+    <LinkOrButton as="a" href="/contact" variant="primary" text="Get started" />
+  </header>
+  <div class="picture__wrapper">
+    <!-- <Picture></Picture> -->
+  </div>
+</section>
+
+<style>
+  header {
+    text-align: center;
+  }
+
+  .content {
+    display: grid;
+    gap: var(--spacing-sm);
+    margin-block-start: var(--spacing-md);
+    /* font-family: var(--ff-ubu); */
+  }
+
+  .btn {
+    margin-block-start: var(--spacing-lg);
+  }
+</style>

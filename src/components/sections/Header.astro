@@ -1,0 +1,385 @@
+---
+import Heading from "../ui/Heading.astro";
+import LinkOrButton from "../ui/LinkOrButton.astro";
+
+const { pathname } = Astro.url;
+---
+
+<div class="mobile__nav-overlay"></div>
+
+<header class="site__header | grid-main">
+  <div class="site__header-inner">
+    <nav class="nav nav--left" aria-label="Desktop navigation left">
+      <ul>
+        <li>
+          <a
+            class="nav-link"
+            href="/projects"
+            aria-current={Astro.url.pathname === "/projects" ? "page" : undefined}>Projects</a
+          >
+        </li>
+        <li>
+          <a
+            class="nav-link"
+            href="/about"
+            aria-current={Astro.url.pathname === "/about" ? "page" : undefined}>About</a
+          >
+        </li>
+        <li>
+          <a
+            class="nav-link"
+            href="/pricing"
+            aria-current={Astro.url.pathname === "/pricing" ? "page" : undefined}>Pricing</a
+          >
+        </li>
+      </ul>
+    </nav>
+
+    <div class="site__logo-wrapper">
+      <a href="/" class="home-link" aria-label="Arteca Home">
+        <span class="site-logo">Vyteca</span>
+      </a>
+    </div>
+
+    <div class="nav__right-wrapper">
+      <nav class="nav nav--right" aria-label="Desktop navigation right">
+        <ul>
+          <li>
+            <a
+              class="nav-link"
+              href="/reviews"
+              aria-current={Astro.url.pathname === "/reviews" ? "page" : undefined}>Reviews</a
+            >
+          </li>
+          <li>
+            <a
+              class="nav-link"
+              href="/contact"
+              aria-current={Astro.url.pathname === "/contact" ? "page" : undefined}>Contact</a
+            >
+          </li>
+        </ul>
+      </nav>
+      <LinkOrButton as="a" href="/contact" text="Get Started" variant="card" class="cta-btn" />
+    </div>
+
+    <button
+      class="nav-toggle"
+      aria-label="Open navigation"
+      aria-expanded="false"
+      aria-controls="nav"
+    >
+      <svg
+        class="hamburger-icon"
+        width="50"
+        height="50"
+        viewBox="0 0 100 100"
+        fill="currentColor"
+        aria-hidden="true"
+      >
+        <g class="top-group">
+          <rect class="line line--top" x="15" y="25" rx="3" width="70" height="7"></rect>
+        </g>
+        <rect class="line line--middle" x="15" y="45" rx="3" width="70" height="7"></rect>
+        <g class="bottom-group">
+          <rect class="line line--bottom" x="15" y="65" rx="3" width="70" height="7"></rect>
+        </g>
+      </svg>
+    </button>
+
+    <nav id="mobile-primary-nav" class="mobile-nav" aria-label="Mobile primary navigation">
+      <ul>
+        <li><a class="nav-link" href="/projects">Projects</a></li>
+        <li><a class="nav-link" href="/about">About</a></li>
+        <li><a class="nav-link" href="/pricing">Pricing</a></li>
+        <li><a class="nav-link" href="/reviews">Reviews</a></li>
+        <li><a class="nav-link" href="/contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site__header {
+    position: sticky;
+    z-index: 200;
+    top: 0;
+    padding-block: 10px;
+
+    background-color: hsl(from var(--clr-primary-blue-700) h s l / 0.35);
+    background-color: hsl(from var(--cyber-void-700) h s l / 0.1);
+    background-color: hsl(from var(--cyber-void-700) h s l / 0.5);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid hsla(0, 0%, 100%, 0.05);
+    box-shadow: 0 8px 32px hsla(0, 0%, 0%, 0.15);
+    /* box-shadow: 0 8px 10px hsla(from var(--cyber-cyan-500) h s l / 0.05); */
+
+    /* box-shadow: 0 8px 32px var(--clr-cta-bg); */
+  }
+  .site__header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-block: 10px;
+  }
+
+  .nav,
+  .btn {
+    display: none;
+  }
+
+  .mobile-nav {
+    position: absolute;
+    z-index: 200;
+    top: 100%;
+    left: 0;
+    right: 0;
+
+    padding-block: 40px;
+
+    /* Old */
+    /* background-color: var(--clr-primary-blue-700); */
+    background-color: var(--cyber-void-700);
+    /* Test */
+
+    /* background-color: hsl(from var(--cyber-void-700) h s l / 0.7); */
+    background-color: hsl(from var(--cyber-void-700) h s l / 0.5);
+
+    opacity: 0;
+    visibility: hidden;
+    border-bottom: 1px solid hsla(0, 0%, 100%, 0.05);
+    box-shadow: 0 8px 32px hsla(0, 0%, 0%, 0.5);
+    /* Think I want the box shadow to give off the same glow effect */
+
+    text-align: center;
+    transform: translateY(-25px);
+
+    transition: 250ms cubic-bezier(0.36, 0, 0.64, 1);
+    transition-property: transform, opacity, visibility;
+
+    ul {
+      display: grid;
+      gap: 30px;
+    }
+
+    .nav-link {
+      font-size: var(--fs-500);
+    }
+  }
+
+  .nav-link {
+    position: relative;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--clr-body-text);
+  }
+
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    border-radius: 4px;
+    background-color: var(--clr-glow-teal);
+    opacity: 0;
+
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: 400ms ease-in-out;
+    transition-property: transform, opacity;
+
+    /* Experiment */
+    opacity: 0.9;
+
+    box-shadow:
+      0 0 4px var(--clr-glow-teal),
+      0 0 12px var(--clr-glow-teal),
+      0 0 24px var(--clr-glow-teal);
+
+    transition:
+      transform 400ms ease-out,
+      opacity 400ms ease-out,
+      box-shadow 600ms ease-out;
+  }
+
+  .nav-link:not([aria-current="page"]):hover {
+    text-shadow:
+      0 0 1px var(--clr-glow-teal),
+      0 0 25px var(--clr-glow-teal);
+  }
+
+  .nav-link:not([aria-current="page"]):hover::after {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+
+  [aria-current="page"] {
+    color: var(--cyber-cyan-500) !important;
+    filter: drop-shadow(0 0 8px var(--cyber-cyan-500));
+  }
+
+  .nav-toggle[aria-expanded="true"] ~ .mobile-nav {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .mobile__nav-overlay {
+    position: fixed;
+    inset: 0;
+    background: hsl(0 0% 0% / 0.1);
+    background: hsl(0 0% 0% / 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 0.3s ease,
+      visibility 0s linear 0.3s;
+    z-index: 100;
+    backdrop-filter: blur(2px);
+    backdrop-filter: blur(12px);
+  }
+
+  body.menu-open .mobile__nav-overlay {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s ease;
+  }
+
+  /* Hamburger shit */
+
+  .nav-toggle {
+    --nav-clr-primary: var(--cyber-cyan-500);
+    --nav-clr-secondary: var(--cyber-magenta-500);
+
+    background-color: transparent;
+    border: none;
+    /* border-radius: 10px; */
+    cursor: pointer;
+  }
+
+  .hamburger-icon {
+    color: var(--nav-clr-primary);
+    filter: drop-shadow(0 0 10px var(--nav-clr-primary));
+
+    transition: 200ms ease-in-out;
+    transition-property: color, filter;
+  }
+
+  .nav-toggle[aria-expanded="true"] .hamburger-icon {
+    color: var(--nav-clr-secondary);
+    filter: drop-shadow(0 0 10px var(--nav-clr-secondary));
+  }
+
+  /* Animations */
+  .top-group,
+  .bottom-group,
+  .line {
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+
+  /* Opening Hamburger */
+  .nav-toggle[aria-expanded="true"] .top-group,
+  .nav-toggle[aria-expanded="true"] .bottom-group {
+    transition: transform 200ms ease-in-out;
+  }
+
+  .nav-toggle[aria-expanded="true"] .line {
+    transition:
+      transform 250ms ease-in-out 250ms,
+      opacity 0ms 250ms;
+  }
+
+  /* Closing Hamburger */
+  .nav-toggle[aria-expanded="false"] .top-group,
+  .nav-toggle[aria-expanded="false"] .bottom-group {
+    transition: transform 200ms ease-in-out 200ms;
+  }
+  .nav-toggle[aria-expanded="false"] .line {
+    transition:
+      transform 200ms ease-in-out,
+      opacity 0ms 200ms;
+  }
+
+  .nav-toggle[aria-expanded="true"] .top-group {
+    transform: translateY(20px);
+  }
+
+  .nav-toggle[aria-expanded="true"] .line--top {
+    transform: rotate(45deg);
+  }
+
+  .nav-toggle[aria-expanded="true"] .line--middle {
+    opacity: 0;
+  }
+  .nav-toggle[aria-expanded="true"] .bottom-group {
+    transform: translateY(-20px);
+  }
+
+  .nav-toggle[aria-expanded="true"] .line--bottom {
+    transform: rotate(-45deg);
+  }
+
+  @media (min-width: 48rem) {
+    .nav {
+      display: block;
+    }
+
+    .nav ul {
+      display: flex;
+      gap: var(--spacing-md);
+      align-items: center;
+    }
+    .nav__right-wrapper {
+      display: flex;
+      gap: var(--spacing-md);
+      align-items: center;
+    }
+
+    .nav a {
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--clr-body-text);
+    }
+
+    .nav-toggle,
+    .mobile-nav {
+      display: none;
+    }
+  }
+
+  @media (min-width: 62.5rem) {
+    .nav ul,
+    .nav__right-wrapper {
+      gap: var(--spacing-lg);
+    }
+
+    .btn {
+      display: inline-flex;
+    }
+  }
+</style>
+
+<script>
+  const navToggle = document.querySelector<HTMLElement>(`.nav-toggle`);
+  const overlay = document.querySelector<HTMLElement>(`.nav-overlay`);
+  const body = document.body;
+
+  function toggleMenu() {
+    const isOpen = body.classList.toggle(`menu-open`);
+
+    navToggle!.setAttribute(`aria-expanded`, String(isOpen));
+
+    if (isOpen) {
+      body.dataset.scrollY = window.scrollY.toString();
+    } else {
+      const scrollY = Number(body.dataset.scrollY) || 0;
+      window.scrollTo(0, scrollY);
+    }
+  }
+
+  navToggle?.addEventListener(`click`, toggleMenu);
+  overlay?.addEventListener(`click`, toggleMenu);
+</script>

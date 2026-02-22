@@ -1,0 +1,71 @@
+---
+import { getCollection } from "astro:content";
+
+const allProjects = await getCollection(`projects`);
+const featuredProjects = allProjects.filter((project) => {
+  return project.data.roles.includes(`featured`);
+});
+
+const sectionTitle = "Portfolio";
+const sectionSubtitle = "Proof of what's coming";
+const sectionText =
+  "I'm launching Vyteca with these two restaurant projects as the benchmark. They demonstrate the precise level of design and craftsmanship I will bring to every client I work with. While I haven’t taken on paid projects yet, these pieces set the bar moving forward.";
+const sectionTitleId = "portfolio";
+
+// Components
+import Heading from "../ui/Heading.astro";
+import PortfolioCard from "../ui/PortfolioCard.astro";
+import SectionHeader from "../ui/SectionHeader.astro";
+---
+
+<section class="portfolio | grid-main" aria-labelledby={sectionTitleId}>
+  <SectionHeader
+    title={sectionTitle}
+    subtitle={sectionSubtitle}
+    supportingText={sectionText}
+    titleTag="h2"
+    titleId={sectionTitleId}
+    class="portfolio__header"
+  />
+  <ul class="portfolio__grid">
+    {
+      featuredProjects.map(({ data }, i) => (
+        <PortfolioCard title={data.title} imgSrc={data.imgSrc} text={data.text} />
+      ))
+    }
+  </ul>
+
+  <style>
+    .portfolio__grid {
+      display: grid;
+      gap: 48px;
+      margin-block-start: 48px;
+      padding-inline: 15px;
+    }
+
+    @media (min-width: 40rem) {
+      .portfolio__grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .portfolio__header {
+      p {
+        max-width: 75ch;
+        margin-inline: auto;
+      }
+    }
+
+    @media (min-width: 62.5rem) {
+      .portfolio__grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .portfolio__header {
+        p {
+          margin-block-start: var(--spacing-lg);
+        }
+      }
+    }
+  </style>
+</section>

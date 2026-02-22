@@ -1,0 +1,230 @@
+---
+// Components
+import { string } from "astro:schema";
+import Heading from "./Heading.astro";
+import LinkOrButton from "./LinkOrButton.astro";
+
+// Images
+import CheckmarkIcon from "@/assets/icons/checkmark.svg";
+import CrossIcon from "@/assets/icons/cross.svg";
+import SuccessIcon from "@/assets/icons/success.svg";
+import ErrorIcon from "@/assets/icons/error.svg";
+
+interface Feature {
+  text: string;
+  included: boolean;
+}
+
+interface Props {
+  title: string;
+  price: string;
+  priceSpan: string;
+  features: Feature[];
+  popular?: boolean;
+}
+
+const { title, price, priceSpan, features, popular = false } = Astro.props;
+---
+
+<li class:list={["card__wrapper", popular && "card__wrapper--popular"]}>
+  <div class:list={["card", !popular && "card--default"]}>
+    <Heading tag="h3" text={title} class="pricing-title" />
+    <ul class="features__list">
+      {
+        features.map((feature) => (
+          <li class:list={["feature__item", feature.included ? "enabled" : "disabled"]}>
+            {feature.text}
+            {feature.included ? (
+              <SuccessIcon class="feature__icon success" />
+            ) : (
+              <ErrorIcon class="feature__icon error" />
+            )}
+          </li>
+        ))
+      }
+    </ul>
+    <p class="package-price">
+      <span class="price">{price}</span>
+      <span class="frequency">{priceSpan}</span>
+    </p>
+    <LinkOrButton as="a" href="/contact" variant="card" text="Get started" />
+  </div>
+</li>
+
+<style>
+  .card {
+    position: relative;
+    padding: 2rem 1.5rem;
+    background-color: var(--cyber-void-400);
+
+    clip-path: polygon(
+      0 0,
+      calc(100% - 20px) 0,
+      100% 20px,
+      100% 100%,
+      20px 100%,
+      0 calc(100% - 20px)
+    );
+  }
+
+  .card--default {
+    border: 1px solid var(--clr-border-default);
+    transition: box-shadow 300ms ease-in-out;
+  }
+
+  .card--default:before,
+  .card--default:after {
+    content: "";
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border: 2px solid var(--cyber-cyan-500);
+    pointer-events: none;
+  }
+
+  .card--default:before {
+    top: -1px;
+    left: -1px;
+    border-right: none;
+    border-bottom: none;
+  }
+
+  .card--default:after {
+    right: -1px;
+    bottom: -1px;
+    border-top: none;
+    border-left: none;
+  }
+
+  .card--default:hover {
+    box-shadow:
+      inset 0 0 30px color-mix(in srgb, var(--cyber-cyan-500) 10%, transparent),
+      0 0 30px color-mix(in srgb, var(--cyber-cyan-500) 30%, transparent);
+  }
+
+  .card__wrapper--popular {
+    /* prettier-ignore */
+    filter: 
+    drop-shadow(0 0 1px color-mix(in srgb, var(--cyber-cyan-500) 100%, transparent))
+    drop-shadow(0 0 2px color-mix(in srgb, var(--cyber-cyan-500) 80%, transparent)),
+    drop-shadow(0 0 8px color-mix(in srgb, var(--cyber-cyan-500) 30%, transparent));
+
+    /* animation: breathe-scale 5s ease-in-out infinite; */
+    animation: pulse-filter 5s ease-in-out infinite;
+    /* animation: card-neon-hum 6s cubic-bezier(0.4, 0, 0.6, 1) infinite; */
+    will-change: transform, filter;
+  }
+
+  .card__wrapper--popular .card {
+    box-shadow:
+      inset 0 0 1px color-mix(in srgb, var(--cyber-cyan-500) 100%, transparent),
+      inset 0 0 5px color-mix(in srgb, var(--cyber-cyan-500) 100%, transparent),
+      inset 0 0 30px color-mix(in srgb, var(--cyber-cyan-500) 15%, transparent);
+  }
+
+  @keyframes breathe-scale {
+    0%,
+    100% {
+      transform: scale(1);
+      filter: drop-shadow(0 0 1px color-mix(in srgb, var(--cyber-cyan-500) 100%, transparent))
+        drop-shadow(0 0 2px color-mix(in srgb, var(--cyber-cyan-500) 80%, transparent))
+        drop-shadow(0 0 8px color-mix(in srgb, var(--cyber-cyan-500) 30%, transparent));
+    }
+    50% {
+      transform: scale(1.015);
+      filter: drop-shadow(0 0 1.5px color-mix(in srgb, var(--cyber-cyan-500) 100%, transparent))
+        drop-shadow(0 0 3px color-mix(in srgb, var(--cyber-cyan-500) 80%, transparent))
+        drop-shadow(0 0 10px color-mix(in srgb, var(--cyber-cyan-500) 35%, transparent));
+    }
+  }
+
+  @keyframes pulse-filter {
+    0%,
+    100% {
+      filter: drop-shadow(0 0 1px color-mix(in srgb, var(--cyber-cyan-500) 100%, transparent))
+        drop-shadow(0 0 2px color-mix(in srgb, var(--cyber-cyan-500) 80%, transparent))
+        drop-shadow(0 0 8px color-mix(in srgb, var(--cyber-cyan-500) 30%, transparent));
+    }
+    50% {
+      filter: drop-shadow(0 0 2px color-mix(in srgb, var(--cyber-cyan-500) 100%, transparent))
+        drop-shadow(0 0 4px color-mix(in srgb, var(--cyber-cyan-500) 80%, transparent))
+        drop-shadow(0 0 12px color-mix(in srgb, var(--cyber-cyan-500) 40%, transparent));
+    }
+  }
+
+  @keyframes card-neon-hum {
+    0%,
+    100% {
+      filter: drop-shadow(0 0 1px color-mix(in srgb, var(--cyber-cyan-500) 100%, transparent))
+        drop-shadow(0 0 2px color-mix(in srgb, var(--cyber-cyan-500) 80%, transparent))
+        drop-shadow(0 0 8px color-mix(in srgb, var(--cyber-cyan-500) 30%, transparent));
+    }
+    15% {
+      filter: drop-shadow(0 0 0.8px color-mix(in srgb, var(--cyber-cyan-500) 90%, transparent))
+        drop-shadow(0 0 1.6px color-mix(in srgb, var(--cyber-cyan-500) 70%, transparent))
+        drop-shadow(0 0 6px color-mix(in srgb, var(--cyber-cyan-500) 25%, transparent));
+    }
+    40% {
+      filter: drop-shadow(0 0 1.1px color-mix(in srgb, var(--cyber-cyan-500) 100%, transparent))
+        drop-shadow(0 0 2.2px color-mix(in srgb, var(--cyber-cyan-500) 85%, transparent))
+        drop-shadow(0 0 9px color-mix(in srgb, var(--cyber-cyan-500) 35%, transparent));
+    }
+    65% {
+      filter: drop-shadow(0 0 0.9px color-mix(in srgb, var(--cyber-cyan-500) 95%, transparent))
+        drop-shadow(0 0 1.8px color-mix(in srgb, var(--cyber-cyan-500) 75%, transparent))
+        drop-shadow(0 0 7px color-mix(in srgb, var(--cyber-cyan-500) 28%, transparent));
+    }
+    82% {
+      filter: drop-shadow(0 0 0.7px color-mix(in srgb, var(--cyber-cyan-500) 85%, transparent))
+        drop-shadow(0 0 1.4px color-mix(in srgb, var(--cyber-cyan-500) 65%, transparent))
+        drop-shadow(0 0 5.5px color-mix(in srgb, var(--cyber-cyan-500) 22%, transparent));
+    }
+  }
+
+  .features__list {
+    display: grid;
+    gap: 12px;
+    margin-block: var(--spacing-sm) var(--spacing-xl);
+  }
+
+  .feature__item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .package-price {
+    display: flex;
+    align-items: end;
+    gap: 5px;
+    margin-block-end: 30px;
+  }
+
+  .price {
+    font-size: 3.5rem;
+    font-weight: var(--fw-700);
+    letter-spacing: -2px;
+    line-height: 1;
+  }
+
+  .feature__icon {
+    --primary-icon-clr: var(--cyber-cyan-500) width: 30px;
+
+    height: 30px;
+    color: var(--primary-icon-clr);
+    filter: drop-shadow(0 0 6px var(--primary-icon-clr));
+  }
+
+  .feature__icon.success {
+    --primary-icon-clr: var(--cyber-cyan-500);
+  }
+  .feature__icon.error {
+    --primary-icon-clr: var(--cyber-magenta-500);
+  }
+
+  @media (min-width: 40rem) {
+    h3 {
+      font-size: 20px;
+    }
+  }
+</style>

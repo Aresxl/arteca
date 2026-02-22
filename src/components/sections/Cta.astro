@@ -1,0 +1,391 @@
+---
+// Images
+import HeroBGLeftDesktop from "@/assets/icons/cyber-bg/hero-bg-left.svg";
+import HeroBGRightDesktop from "@/assets/icons/cyber-bg/hero-bg-right.svg";
+
+import CtaBGLeft from "@/assets/icons/cyber-bg/cta-bg-left.svg";
+import CtaBGLeftPNG from "@/assets/images/mobile/cta-bg-left.png";
+import CtaBGRightPNG from "@/assets/images/mobile/cta-bg-right.png";
+
+// Components
+import Heading from "@/ui/Heading.astro";
+import LinkOrButton from "@/ui/LinkOrButton.astro";
+import Picture from "astro/components/Picture.astro";
+---
+
+<!-- <section class="cta | grid-main" aria-labelledby="cta-heading">
+  <div class="cyber-neon-border">
+    <div class="cta__content">
+      <Heading
+        tag="h2"
+        text="Ready to get the site you always wanted?"
+        class="section-title"
+        id="cta-heading"
+      />
+      <LinkOrButton as="a" href="/contact" variant="card" text="Get started today" />
+    </div>
+    <div class="test"></div>
+    <Picture
+      src={CtaBGLeftPNG}
+      formats={["avif", "webp"]}
+      fallbackFormat="jpg"
+      alt=""
+      layout="constrained"
+      widths={[320, 480, 640, 800, 1020, 1280, 1400, 1800]}
+      priority={false}
+      class="testimonial__img"
+      pictureAttributes={{ class: "cyber-grid left" }}
+    />
+    <Picture
+      src={CtaBGRightPNG}
+      formats={["avif", "webp"]}
+      fallbackFormat="jpg"
+      alt=""
+      layout="constrained"
+      widths={[320, 480, 640, 800, 1020, 1280, 1400, 1800]}
+      priority={false}
+      class="testimonial__img"
+      pictureAttributes={{ class: "cyber-grid right" }}
+    />
+  </div>
+</section> -->
+<section class="cta | grid-main" aria-labelledby="cta-heading">
+  <header>
+    <Heading tag="h2" text="Ready for launch?" class="section-title" />
+    <span class="subtitle">Secure your spot in Vyteca's network</span>
+  </header>
+  <div class="terminal">
+    <div class="terminal__header">
+      <span class="dot dot--magenta"></span>
+      <span class="dot dot--yellow"></span>
+      <span class="dot dot--green"></span>
+      <span class="terminal__header-title">Netwatch V2.077</span>
+    </div>
+    <div class="terminal__body">
+      <div class="terminal__body-top">
+        <p>
+          <span class="clr-cyan-500">root@vyteca:~$</span>
+          <span class="clr-green-400">system --status</span>
+        </p>
+        <p class="clr-green-500">[OK] Vyteca systems online</p>
+        <p class="clr-green-500">[OK] Firewall operational</p>
+        <p class="clr-yellow-500">[WARN] 11 intrusion attempts blocked</p>
+        <p class="clr-magenta-500">[ALERT] Incoming signal: Potential client detected</p>
+      </div>
+      <div class="terminal__body-mid">
+        <p>
+          <span></span>
+          <span class="clr-cyan-500">root@vyteca:~$</span>
+          <span class="clr-green-400">scan --deep</span>
+        </p>
+        <p class="clr-green-400">Scanning for projects... 1 found</p>
+        <p class="clr-green-400">Ready to build yours?</p>
+      </div>
+      <div class="terminal__body-bottom">
+        <p>
+          <span class="clr-cyan-500">root@vyteca:~$</span>
+          <span class="clr-green-400">initiate --project</span>
+          <span class="cursor"></span>
+        </p>
+        <LinkOrButton as="a" href="/contact" text="Get started" variant="card" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  header {
+    margin-block-end: var(--spacing-xl);
+    text-align: center;
+  }
+
+  .terminal {
+    border: 1px solid var(--cyber-green-700);
+    border: 1px solid var(--cyber-cyan-700);
+    background: var(--clr-bg-secondary);
+    overflow: hidden;
+    font-family: var(--ff-heading);
+    font-family: var(--ff-main);
+    font-family: var(--ff-mono);
+    font-size: var(--fs-400);
+    /* font-weight: var(--fw-700); */
+
+    /* prettier-ignore */
+    filter: 
+    drop-shadow(0 0 1px color-mix(in srgb, var(--cyber-cyan-500) 100%, transparent))
+    drop-shadow(0 0 2px color-mix(in srgb, var(--cyber-cyan-500) 80%, transparent))
+    drop-shadow(0 0 8px color-mix(in srgb, var(--cyber-cyan-500) 30%, transparent));
+    /* prettier-ignore */
+    filter: 
+    drop-shadow(0 0 1px color-mix(in srgb, var(--cyber-cyan-500) 100%, transparent))
+    drop-shadow(0 0 2px color-mix(in srgb, var(--cyber-cyan-500) 40%, transparent))
+    drop-shadow(0 0 8px color-mix(in srgb, var(--cyber-cyan-500) 30%, transparent));
+  }
+
+  .terminal__header {
+    display: flex;
+    gap: var(--spacing-sm);
+    align-items: center;
+    padding: var(--spacing-md) var(--spacing-md);
+    border-bottom: 1px solid var(--cyber-green-700);
+    border-bottom: 1px solid var(--cyber-cyan-700);
+    background: var(--cyber-green-900);
+    background: var(--cyber-cyan-900);
+    /* background: var(--cyber-cyan-700); */
+  }
+
+  .terminal__header-title {
+    margin-inline-start: auto;
+    text-transform: uppercase;
+    color: var(--cyber-green-500);
+    color: var(--cyber-cyan-500);
+    letter-spacing: 1px;
+  }
+
+  .terminal__body {
+    padding: var(--spacing-lg);
+    line-height: 1.8;
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+
+  .dot--magenta {
+    background: var(--cyber-magenta-500);
+  }
+  .dot--green {
+    background: var(--cyber-green-500);
+  }
+  .dot--yellow {
+    background: var(--cyber-yellow-500);
+  }
+
+  .terminal__body-mid {
+    margin-block: var(--spacing-lg);
+  }
+
+  .cursor {
+    display: inline-block;
+    width: 8px;
+    height: 18px;
+    margin-inline-start: var(--spacing-xxs);
+    transform: translateY(0.1em);
+    background: var(--cyber-green-500);
+    vertical-align: middle;
+    animation: cursor-blink 1s step-end infinite;
+  }
+
+  .terminal__body-bottom {
+    display: grid;
+
+    @media (min-width: 32.8125rem) {
+      display: block;
+    }
+  }
+
+  .btn {
+    margin-block-start: var(--spacing-xl);
+  }
+
+  .clr-green-400 {
+    color: var(--cyber-green-400);
+  }
+  .clr-green-500 {
+    color: var(--cyber-green-500);
+  }
+  .clr-yellow-500 {
+    color: var(--cyber-yellow-500);
+  }
+  .clr-magenta-500 {
+    color: var(--cyber-magenta-500);
+  }
+  .clr-cyan-500 {
+    color: var(--cyber-cyan-500);
+  }
+
+  @media (min-width: 62.5rem) {
+    header {
+      margin-block-end: var(--spacing-2xl);
+    }
+  }
+</style>
+
+<style>
+  /*  */
+
+  .cta {
+    margin-block: var(--spacing-4xl);
+  }
+
+  .cta__card {
+    position: relative;
+    padding: var(--spacing-xl) var(--spacing-lg);
+    background: var(--clr-bg-secondary);
+    /* clip-path: polygon(
+      0 0,
+      calc(100% - 20px) 0,
+      100% 20px,
+      100% 100%,
+      20px 100%,
+      0 calc(100% - 20px)
+    ); */
+  }
+
+  .cta__card::before,
+  .cta__card::after {
+    content: "";
+    display: block;
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    /* background: conic-gradient(
+      from var(--gradient-angle),
+      var(--cyber-cyan-500),
+      var(--cyber-magenta-500),
+      var(--cyber-green-500),
+      var(--cyber-magenta-500),
+      var(--cyber-cyan-500)
+    ); */
+    background: conic-gradient(
+      from var(--gradient-angle),
+      var(--cyber-magenta-500),
+      var(--cyber-cyan-500),
+      var(--cyber-cyan-900),
+      var(--cyber-cyan-500),
+      var(--cyber-magenta-500)
+    );
+    pointer-events: none;
+    animation: rotation 10s linear infinite;
+  }
+
+  .cta__card::after {
+    filter: blur(3.5px);
+  }
+
+  .cta__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    text-align: center;
+  }
+
+  .btn {
+    align-self: center;
+  }
+
+  .cyber-grid {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    height: 100%;
+    width: 100px;
+    filter: blur(1px);
+    pointer-events: none;
+  }
+
+  .cyber-grid img {
+    height: 100%;
+    width: 100%;
+  }
+
+  .cyber-grid.left {
+    left: 0;
+  }
+
+  .cyber-grid.right {
+    right: 0;
+  }
+
+  .cyber-neon-border {
+    position: relative;
+    padding: 40px;
+    background: var(--clr-bg-secondary);
+    border-radius: 4px;
+    margin-inline: 10px;
+  }
+
+  .cyber-neon-border::before,
+  .cyber-neon-border::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    border-radius: inherit;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+
+  .cyber-neon-border::before {
+    content: "";
+    position: absolute;
+    top: -3px;
+    right: -3px;
+    bottom: -3px;
+    left: -3px;
+    background: linear-gradient(
+      90deg,
+      var(--cyber-cyan-500),
+      var(--cyber-magenta-500),
+      var(--cyber-yellow-500),
+      var(--cyber-green-500),
+      var(--cyber-cyan-500)
+    );
+    background-size: 400% 100%;
+    z-index: -1;
+    animation: neon-flow 6s linear infinite;
+    filter: blur(6px);
+    opacity: 0.3;
+  }
+
+  .cyber-neon-border::after {
+    background: var(--clr-bg-secondary);
+  }
+
+  .test::before {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    z-index: 100;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background:
+      radial-gradient(
+        ellipse at 35% 40%,
+        color-mix(in srgb, var(--cyber-cyan-500) 0%, transparent) 0,
+        transparent 30%
+      ),
+      radial-gradient(
+        ellipse at 65% 60%,
+        color-mix(in srgb, var(--cyber-magenta-500) 0%, transparent) 0,
+        transparent 30%
+      ),
+      linear-gradient(
+        90deg,
+        transparent 0,
+        transparent calc(50% - 1px),
+        color-mix(in srgb, var(--cyber-cyan-500) 8%, transparent) 50%,
+        transparent calc(50% + 1px),
+        transparent 100%
+      ),
+      linear-gradient(
+        0deg,
+        transparent 0,
+        transparent calc(50% - 1px),
+        color-mix(in srgb, var(--cyber-cyan-500) 8%, transparent) 50%,
+        transparent calc(50% + 1px),
+        transparent 100%
+      );
+    background-size:
+      100% 100%,
+      100% 100%,
+      70px 70px,
+      70px 70px;
+    animation: hero-grid-pulse 8s ease-in-out infinite;
+  }
+</style>

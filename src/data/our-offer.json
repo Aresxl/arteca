@@ -1,0 +1,44 @@
+[
+  {
+    "icon": "optimised",
+    "title": "Optimized Page Speed",
+    "text": "If your site takes more than 3 seconds to load, you can lose up to 50% of visitors before they even see your menu. Our sites load in 1 second or less, keeping every hungry searcher engaged and ready to book or visit.",
+    "cta": "Get Started",
+    "ctaHref": "/contact"
+  },
+  {
+    "icon": "mobile-phone",
+    "title": "Mobile First Design",
+    "text": "Mobile first from the start and flawless on every screen. Diners search and browse on phones, so your site looks sharp and loads instantly no matter the device.",
+    "cta": "Get Started",
+    "ctaHref": "/contact"
+  },
+  {
+    "icon": "code",
+    "title": "Custom Hand-Coded",
+    "text": "Unique design with zero templates or bloat. Tailored visuals and clean code that outperforms every generic builder every single time.",
+    "cta": "Get Started",
+    "ctaHref": "/contact"
+  },
+  {
+    "icon": "seo",
+    "title": "SEO Foundations",
+    "text": "Fast loads, clean code, and structured data built in from day one. Helps you rank higher for local searches like “best restaurant in Melbourne” with no extra retainers required.",
+    "cta": "Get Started",
+    "ctaHref": "/contact"
+  },
+  {
+    "icon": "security",
+    "title": "Rock-Solid Security",
+    "text": "Custom code means no common vulnerabilities or hacks. It keeps customer data safe and your site reliable unlike bloated platforms that are constant targets.",
+    "cta": "Get Started",
+    "ctaHref": "/contact"
+  },
+  {
+    "icon": "guarantee",
+    "title": "Results Guarantee",
+    "text": "3%+ boost in conversions (bookings and enquiries) in year one or we optimise free of charge or refund your last month. We set up tracking together so the results are clear and measurable.",
+    "cta": "Get Started",
+    "ctaHref": "/contact"
+  }
+]

@@ -1,0 +1,252 @@
+---
+// Images
+import CircuitBGLeft from "@/assets/images/desktop/circuit-grid-left.png";
+import CircuitBGRight from "@/assets/images/desktop/circuit-grid-right.png";
+
+// Components
+import Heading from "../ui/Heading.astro";
+import LinkOrButton from "../ui/LinkOrButton.astro";
+import Picture from "astro/components/Picture.astro";
+---
+
+<section class="hero grid-main hero-bg" aria-labelledby="hero-subtitle">
+  <header class="hero__header">
+    <span class="hero-title">We are arteca</span>
+    <div class="hero__header-content">
+      <Heading
+        tag="h1"
+        text="Custom hand-coded websites for Melbourne restaurants"
+        class="hero__subtitle"
+        id="hero-subtitle"
+      />
+      <p class="supporting__text">More bookings. Fuller tables. Stronger direct revenue.</p>
+      <div class="btn__wrapper">
+        <LinkOrButton as="a" href="/contact" text="Get started" variant="primary" />
+        <LinkOrButton as="a" href="/projects" text="View work" variant="secondary" />
+      </div>
+    </div>
+  </header>
+  <div class="img__wrapper"></div>
+
+  <div class="dot-bg"></div>
+
+  <Picture
+    src={CircuitBGLeft}
+    formats={["avif", "webp"]}
+    fallbackFormat="jpg"
+    alt=""
+    layout="constrained"
+    widths={[320, 480, 640, 800, 1020, 1280, 1400, 1800]}
+    priority={true}
+    class="cyber__grid-img"
+    pictureAttributes={{ class: "cyber-grid left" }}
+  />
+  <Picture
+    src={CircuitBGRight}
+    formats={["avif", "webp"]}
+    fallbackFormat="jpg"
+    alt=""
+    layout="constrained"
+    widths={[320, 480, 640, 800, 1020, 1280, 1400, 1800]}
+    priority={true}
+    class="cyber__grid-img"
+    pictureAttributes={{ class: "cyber-grid right" }}
+  />
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    z-index: 0;
+    min-height: 80dvh;
+    padding-block: var(--spacing-5xl) var(--spacing-2xl);
+  }
+
+  .hero__header {
+    text-align: center;
+  }
+
+  .hero__header-content {
+    margin-block-start: var(--spacing-lg);
+  }
+
+  .supporting__text {
+    max-width: 30ch;
+    margin-block-start: var(--spacing-sm);
+    margin-inline: auto;
+    font-size: clamp(1rem, 0.9559859154929577rem + 0.18779342723004694vw, 1.125rem);
+  }
+
+  .btn__wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-md);
+    margin-block-start: var(--spacing-lg);
+  }
+
+  .cyber-grid {
+    pointer-events: none;
+    grid-column: 1;
+    position: absolute;
+    z-index: 500;
+    filter: blur(3.5px);
+    height: 100%;
+    width: 150px;
+  }
+  .cyber-grid.left {
+    left: 0;
+  }
+
+  .cyber-grid.right {
+    right: 0;
+  }
+
+  .cyber__grid-img {
+    height: 100%;
+  }
+
+  .dot-bg {
+    grid-column: 1 / -1;
+    position: absolute;
+    inset: 0;
+    z-index: 200;
+    pointer-events: none;
+    background-image: url(src/assets/images/mobile/dot-bg.png);
+    background-repeat: repeat;
+    opacity: 0.5;
+  }
+
+  .hero-bg::before {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background:
+      radial-gradient(
+        ellipse at 35% 40%,
+        color-mix(in srgb, var(--cyber-cyan-500) 8%, transparent) 0,
+        transparent 30%
+      ),
+      radial-gradient(
+        ellipse at 65% 60%,
+        color-mix(in srgb, var(--cyber-magenta-500) 0%, transparent) 0,
+        transparent 30%
+      ),
+      linear-gradient(
+        90deg,
+        transparent 0,
+        transparent calc(50% - 1px),
+        color-mix(in srgb, var(--cyber-cyan-500) 8%, transparent) 50%,
+        transparent calc(50% + 1px),
+        transparent 100%
+      ),
+      linear-gradient(
+        0deg,
+        transparent 0,
+        transparent calc(50% - 1px),
+        color-mix(in srgb, var(--cyber-cyan-500) 8%, transparent) 50%,
+        transparent calc(50% + 1px),
+        transparent 100%
+      );
+    background-size:
+      100% 100%,
+      100% 100%,
+      80px 80px,
+      80px 80px;
+    animation: hero-grid-pulse 8s ease-in-out infinite;
+  }
+
+  @media (min-width: 26.875rem) {
+    .supporting__text {
+      max-width: none;
+    }
+  }
+
+  @media (min-width: 40rem) {
+    .hero {
+      padding-block: var(--spacing-5xl) var(--spacing-2xl);
+    }
+
+    .cyber-grid {
+      width: 200px;
+      /* filter: blur(2px); */
+    }
+
+    .btn__wrapper {
+      gap: var(--spacing-xl);
+    }
+  }
+
+  @media (min-width: 48rem) {
+    .hero {
+      padding-block: var(--spacing-6xl) var(--spacing-2xl);
+    }
+
+    .hero__header-content {
+      max-width: 60ch;
+      margin-inline: auto;
+      margin-block-start: var(--spacing-xl);
+    }
+
+    .supporting__text {
+      margin-block-start: var(--spacing-md);
+    }
+
+    .btn__wrapper {
+      /* margin-block-start: var(--spacing-xl); */
+    }
+  }
+
+  @media (min-width: 62.5rem) {
+    .hero {
+      padding-block: var(--spacing-7xl) var(--spacing-6xl);
+    }
+
+    .hero__header-content {
+      margin-block-start: var(--spacing-2xl);
+    }
+
+    .btn__wrapper {
+      margin-block-start: var(--spacing-xl);
+    }
+
+    .cyber-grid {
+      width: 300px;
+      filter: blur(2px);
+    }
+
+    .btn {
+      font-size: var(--fs-450);
+    }
+  }
+
+  @media (min-width: 90rem) {
+    .cyber-grid {
+      width: 350px;
+    }
+  }
+
+  /* Styles with SVG images for cyber-grid hero bg
+    .cyber-grid {
+      pointer-events: none;
+      position: absolute;
+      z-index: 500;
+      height: 100%;
+       width: 100px; 
+    }
+  
+    .cyber-grid.left {
+      left: 0;
+      grid-column: 1;
+    }
+  
+    .cyber-grid.right {
+      right: 0;
+      grid-column: 1;
+    } */
+</style>

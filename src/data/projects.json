@@ -1,0 +1,18 @@
+[
+  {
+    "id": "1",
+    "imgSrc": "/src/assets/images/desktop/dine.jpg",
+    "title": "Dine",
+    "text": "This was a project that I completed from Frontend Mentor to showcase a Restaurant website",
+    "roles": ["featured", "portfolio"],
+    "websiteHref": ""
+  },
+  {
+    "id": "2",
+    "imgSrc": "/src/assets/images/desktop/barra.jpg",
+    "title": "Barra Recreation",
+    "text": "da",
+    "roles": ["featured", "portfolio"],
+    "websiteHref": ""
+  }
+]

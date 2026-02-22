@@ -1,0 +1,36 @@
+---
+import Heading from "./Heading.astro";
+
+const { title, subtitle, supportingText, titleTag, titleId, ...rest } = Astro.props;
+---
+
+<header {...rest}>
+  <div>
+    <Heading tag={titleTag} text={title} class="section-title" id={titleId} />
+    <span class="subtitle">{subtitle}</span>
+  </div>
+  <p>{supportingText}</p>
+</header>
+
+<style>
+  header {
+    text-align: center;
+
+    .subtitle {
+      margin-block-start: var(--spacing-xxs);
+    }
+
+    p {
+      margin-block-start: var(--spacing-md);
+      font-size: var(--fs-400);
+    }
+  }
+
+  @media (min-width: 62.5rem) {
+    header {
+      p {
+        font-size: var(--fs-450);
+      }
+    }
+  }
+</style>

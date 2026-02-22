@@ -1,0 +1,663 @@
+---
+// Data
+const sectionTitle = "Contact Us";
+const sectionSubtitle = "Get in touch";
+const sectionText =
+  "Send me an email about your Melbourne restaurant. Tell me what's frustrating you online right now, what you're hoping for in a new site, or anything on your mind about your menu vibe and daily flow. I'll reply within 24 hours. Prefer to talk? Call me directly. If I'm unavailable, I'll call you back the same day.";
+const sectionTitleId = "contact-title";
+
+// Images
+import PhoneIcon from "@/assets/icons/phone.svg";
+import EmailIcon from "@/assets/icons/email.svg";
+import HomeIcon from "@/assets/icons/home.svg";
+import SuccessIcon from "@/assets/icons/checkmark.svg";
+import ErrorIcon from "@/assets/icons/cross.svg";
+
+// Components
+import SectionHeader from "../ui/SectionHeader.astro";
+import LinkOrButton from "../ui/LinkOrButton.astro";
+---
+
+<section class="contact | grid-main">
+  <SectionHeader
+    title={sectionTitle}
+    subtitle={sectionSubtitle}
+    supportingText={sectionText}
+    titleTag="h2"
+    titleId={sectionTitleId}
+    class="contact__header"
+  />
+  <ul class="contact__details-list">
+    <li class="contact__detail">
+      <div class="icon__wrapper">
+        <PhoneIcon class="contact__icon" width="30" height="30" aria-hidden="true" />
+      </div>
+      <div class="contact__content">
+        <span class="contact__content-title">Phone</span>
+        <a href="tel:0430-811-413">+61 430 811 413</a>
+      </div>
+    </li>
+    <li class="contact__detail">
+      <div class="icon__wrapper">
+        <EmailIcon class="contact__icon" width="30" height="30" aria-hidden="true" />
+      </div>
+      <div class="contact__content">
+        <span class="contact__content-title">Email</span>
+        <a href="mailto:iivtech@hotmail.com">Click to email</a>
+      </div>
+    </li>
+    <li class="contact__detail">
+      <div class="icon__wrapper">
+        <HomeIcon class="contact__icon" width="30" height="30" aria-hidden="true" />
+      </div>
+      <div class="contact__content">
+        <span class="contact__content-title">Location</span>
+        <span>Melbourne</span>
+      </div>
+    </li>
+  </ul>
+  <div class="form__wrapper">
+    <form class="form" action="" novalidate>
+      <div class="form__control">
+        <label for="name">
+          <span class=""> Name</span>
+          <span class="asterix" aria-hidden="true">*</span>
+        </label>
+        <div class="input__wrapper">
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Bob"
+            aria-describedby="error-name"
+            data-input
+            required
+          />
+          <div class="icon__wrapper">
+            <SuccessIcon class="icon icon--success" width="24" height="24" aria-hidden="true" />
+            <ErrorIcon class="icon icon--error" width="24" height="24" aria-hidden="true" />
+          </div>
+        </div>
+        <span class="error-message" data-error-for="name" aria-live="polite" id="error-name"></span>
+      </div>
+
+      <div class="form__control">
+        <label for="restaurant-name">
+          <span>Restaurant name</span>
+          <span class="asterix" aria-hidden="true">*</span>
+        </label>
+        <div class="input__wrapper">
+          <input
+            type="text"
+            id="restaurant-name"
+            name="restaurant-name"
+            placeholder="Bob's Burger Joint"
+            aria-describedby="error-restaurant-name"
+            data-input
+            required
+          />
+          <div class="icon__wrapper">
+            <SuccessIcon class="icon icon--success" width="24" height="24" aria-hidden="true" />
+            <ErrorIcon class="icon icon--error" width="24" height="24" aria-hidden="true" />
+          </div>
+        </div>
+        <span
+          class="error-message"
+          data-error-for="restaurant-name"
+          aria-live="polite"
+          id="error-restaurant-name"></span>
+      </div>
+
+      <div class="form__control">
+        <label for="email">
+          <span>Email</span>
+          <span class="asterix" aria-hidden="true">*</span>
+        </label>
+        <div class="input__wrapper">
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="example@gmail.com"
+            aria-describedby="error-email"
+            data-input
+            required
+          />
+          <div class="icon__wrapper">
+            <SuccessIcon class="icon icon--success" width="24" height="24" aria-hidden="true" />
+            <ErrorIcon class="icon icon--error" width="24" height="24" aria-hidden="true" />
+          </div>
+        </div>
+        <span class="error-message" data-error-for="email" aria-live="polite" id="error-email"
+        ></span>
+      </div>
+
+      <div class="form__control">
+        <label for="phone">Phone #</label>
+        <div class="input__wrapper">
+          <input type="text" id="phone" name="phone" placeholder="0430 811 413" />
+          <div class="icon__wrapper">
+            <SuccessIcon class="icon icon--success" width="24" height="24" aria-hidden="true" />
+            <ErrorIcon class="icon icon--error" width="24" height="24" aria-hidden="true" />
+          </div>
+        </div>
+      </div>
+
+      <fieldset>
+        <legend>
+          <span>Contact Preference</span>
+          <span class="asterix" aria-hidden="true">*</span>
+        </legend>
+        <div class="radio__wrapper">
+          <label for="email-preference">
+            <input
+              type="radio"
+              id="email-preference"
+              name="contact"
+              value="contact-email"
+              checked
+              required
+            />
+            <span class="checkbox"></span>
+            <span>Email</span>
+          </label>
+
+          <label for="phone-preference">
+            <input type="radio" id="phone-preference" name="contact" value="contact-phone" />
+            <span class="checkbox"></span>
+            <span>Phone call</span>
+          </label>
+
+          <label for="no-preference">
+            <input type="radio" id="no-preference" name="contact" value="contact-none" />
+
+            <span class="checkbox"></span>
+            <span>No preference</span>
+          </label>
+        </div>
+        <span class="error-message" data-error-for="contact" aria-live="polite" id="error-contact"
+        ></span>
+      </fieldset>
+
+      <div class="form__control">
+        <label for="message" class="message-label">
+          <span>Message</span>
+          <span class="asterix" aria-hidden="true">*</span>
+          <div class="icon__wrapper">
+            <SuccessIcon class="icon icon--success" width="24" height="24" aria-hidden="true" />
+            <ErrorIcon class="icon icon--error" width="24" height="24" aria-hidden="true" />
+          </div>
+        </label>
+        <div class="input__wrapper">
+          <textarea
+            class="form-input"
+            name="message"
+            id="message"
+            aria-describedby="error-message-input"
+            placeholder=""
+            data-input
+            required></textarea>
+        </div>
+        <span
+          class="error-message"
+          data-error-for="message"
+          aria-live="polite"
+          id="error-message-input"></span>
+      </div>
+      <div class="honeypot__wrapper" aria-hidden="true">
+        <label for="hp-website">Leave this field empty if you're a human</label>
+        <input
+          type="text"
+          name="hp-website"
+          id="hp-website"
+          value=""
+          tabindex="-1"
+          autocomplete="off"
+        />
+      </div>
+
+      <LinkOrButton as="button" text="Connect" type="submit" variant="card" />
+    </form>
+  </div>
+</section>
+
+<style>
+  .contact {
+    margin-block-end: var(--section-space);
+  }
+
+  .contact__details-list {
+    display: grid;
+    gap: var(--spacing-md);
+    margin-block: var(--spacing-xl);
+  }
+
+  .contact__detail {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+  }
+
+  .contact__content {
+    display: grid;
+    gap: var(--spacing-xxs);
+
+    a {
+      color: var(--clr-body-text);
+      transition: 500ms ease;
+      transition-property: color, filter;
+    }
+
+    a:hover {
+      color: var(--cyber-cyan-500);
+      filter: drop-shadow(0 0 8px var(--cyber-cyan-500));
+    }
+  }
+
+  .contact__content-title {
+    font-weight: var(--fw-700);
+    font-family: var(--ff-heading);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .contact__icon {
+    color: var(--cyber-cyan-500);
+    filter: drop-shadow(0 0 8px var(--cyber-cyan-500));
+  }
+
+  form {
+    position: relative;
+    display: grid;
+    gap: var(--spacing-sm);
+    background-color: var(--clr-bg-secondary);
+    padding: var(--spacing-lg) var(--spacing-sm);
+
+    clip-path: polygon(
+      0 0,
+      calc(100% - 20px) 0,
+      100% 20px,
+      100% 100%,
+      20px 100%,
+      0 calc(100% - 20px)
+    );
+  }
+
+  form::before,
+  form::after {
+    content: "";
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border: 2px solid var(--cyber-cyan-500);
+    pointer-events: none;
+  }
+
+  form::before {
+    top: -1px;
+    left: -1px;
+    border-right: none;
+    border-bottom: none;
+  }
+
+  form::after {
+    right: -1px;
+    bottom: -1px;
+    border-top: none;
+    border-left: none;
+  }
+
+  .form__control {
+    display: grid;
+    gap: var(--spacing-xs);
+  }
+
+  .input__wrapper {
+    position: relative;
+  }
+
+  input,
+  textarea {
+    --input-primary-clr: var(--cyber-cyan-500);
+
+    width: 100%;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border: 1px solid var(--clr-border-default);
+    border-left: 3px solid var(--input-primary-clr);
+    background-color: var(--clr-bg-tertiary);
+    color: var(--clr-body-text);
+    outline: none;
+  }
+
+  .form__control input::placeholder,
+  .form__control textarea::placeholder {
+    color: var(--cyber-chrome-500);
+    font-size: var(--fs-350);
+  }
+
+  input:focus-visible,
+  textarea:focus-visible,
+  label:has(input[type="radio"]:focus-visible) {
+    border-color: var(--input-primary-clr);
+    box-shadow:
+      0 0 0 3px color-mix(in srgb, var(--input-primary-clr) 20%, transparent),
+      inset 0 0 15px color-mix(in srgb, var(--input-primary-clr) 10%, transparent);
+  }
+
+  .form__control label,
+  legend {
+    font-family: var(--ff-heading);
+    font-size: var(--fs-350);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  fieldset {
+    padding: 0px;
+    border: 0px;
+  }
+
+  .radio__wrapper {
+    --input-primary-clr: var(--cyber-cyan-500);
+
+    display: grid;
+    gap: var(--spacing-xs);
+    margin-block-start: var(--spacing-xs);
+  }
+
+  .radio__wrapper input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+
+  .radio__wrapper label {
+    display: flex;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border: 1px solid var(--clr-border-default);
+    border-left: 3px solid var(--cyber-cyan-500);
+    background-color: var(--clr-bg-tertiary);
+    color: var(--clr-body-text);
+    outline: none;
+
+    cursor: pointer;
+  }
+
+  .checkbox {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--cyber-cyan-500);
+    background: var(--clr-bg-tertiary);
+  }
+
+  .checkbox::before {
+    content: "";
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    transform: scale(0);
+    background: var(--cyber-cyan-500);
+
+    transition: transform 150ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+
+  input:checked ~ .checkbox::before {
+    transform: scale(1);
+  }
+
+  input:checked ~ .checkbox {
+    box-shadow: 0 0 10px var(--cyber-cyan-500);
+  }
+
+  .form__control textarea {
+    resize: block;
+  }
+
+  .message-label {
+    position: relative;
+  }
+
+  .form .icon__wrapper {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+  }
+
+  .icon {
+    --icon-clr: var(--cyber-cyan-500);
+
+    display: none;
+    color: var(--icon-clr);
+    filter: drop-shadow(0 0 8px var(--icon-clr));
+  }
+
+  .icon--success {
+    --icon-clr: var(--cyber-green-500);
+  }
+  .icon--error {
+    --icon-clr: var(--cyber-magenta-500);
+  }
+
+  .error-input {
+    --input-primary-clr: var(--cyber-magenta-500);
+
+    border-color: var(--input-primary-clr);
+    box-shadow:
+      0 0 0 3px color-mix(in srgb, var(--input-primary-clr) 20%, transparent),
+      inset 0 0 15px color-mix(in srgb, var(--input-primary-clr) 10%, transparent);
+  }
+
+  .success-input {
+    --input-primary-clr: var(--cyber-green-500);
+
+    color: var(--input-primary-clr);
+    box-shadow:
+      0 0 0 3px color-mix(in srgb, var(--input-primary-clr) 20%, transparent),
+      inset 0 0 15px color-mix(in srgb, var(--input-primary-clr) 10%, transparent);
+  }
+
+  .error-message {
+    --input-primary-clr: var(--cyber-magenta-500);
+
+    color: var(--input-primary-clr);
+    filter: drop-shadow(0 0 8px hsl(from var(--input-primary-clr) h s l / 0.7));
+    font-size: var(--fs-350);
+  }
+
+  .form__control.has-success .icon--success {
+    display: block;
+  }
+  .form__control.has-error .icon--error {
+    display: block;
+  }
+
+  .honeypot__wrapper {
+    position: absolute;
+    left: -999px;
+    overflow: hidden;
+  }
+
+  @media (min-width: 40rem) {
+    .contact__details-list {
+      grid-template-columns: repeat(3, 1fr);
+      justify-items: center;
+      gap: var(--spacing-lg);
+    }
+    .contact__content {
+      gap: 0px;
+    }
+  }
+
+  @media (min-width: 48rem) {
+    .contact__header {
+      p {
+        max-width: 80ch;
+        margin-inline: auto;
+      }
+    }
+  }
+
+  @media (min-width: 62.5rem) {
+    .contact__header {
+      grid-column: 2 / 12;
+      text-align: left;
+    }
+
+    .contact__details-list {
+      grid-column: 2 / 12;
+      grid-template-columns: 1fr;
+      justify-items: start;
+      margin-block: var(--spacing-xl) 0px;
+    }
+
+    .form__wrapper {
+      grid-column: 14 / -2;
+      grid-row: 1 / 4;
+    }
+  }
+</style>
+
+<script>
+  import { actions, isInputError } from "astro:actions";
+
+  const form = document?.querySelector<HTMLFormElement>(`.form`);
+
+  function setFieldError(fieldName: string, message: string | null) {
+    const inputEl = document.querySelector<HTMLInputElement>(`[name="${fieldName}"]`);
+    inputEl?.classList.add(`error-input`);
+    const control = inputEl?.closest(`.form__control`);
+    const errorMessageEl = document.querySelector<HTMLSpanElement>(
+      `[data-error-for="${fieldName}"]`,
+    );
+
+    inputEl?.classList.add(`error-input`);
+    control?.classList.add(`has-error`);
+
+    if (!errorMessageEl) return;
+    errorMessageEl.textContent = message ?? "";
+  }
+
+  function setFieldSuccess(fieldName: string) {
+    resetField(fieldName);
+
+    const inputEl = document.querySelector(`[name="${fieldName}"]`);
+    const control = inputEl?.closest(`.form__control`);
+
+    inputEl?.classList.add(`success-input`);
+    control?.classList.add(`has-success`);
+  }
+
+  function resetField(fieldName: string) {
+    const inputEl = document.querySelector(`[name="${fieldName}"]`);
+    const control = inputEl?.closest(`.form__control`);
+    const errorMessageEl = document.querySelector(`[data-error-for="${fieldName}"]`);
+
+    control?.classList.remove(`has-error`, `has-success`);
+    inputEl?.classList.remove(`error-input`, `success-input`);
+    if (errorMessageEl) errorMessageEl.textContent = "";
+  }
+
+  function resetForm() {
+    const controlEls = document.querySelectorAll(`.form__control`);
+    const inputEls = document.querySelectorAll(`[data-input]`);
+    const errorMessageEls = document.querySelectorAll(`[data-error-for]`);
+
+    controlEls.forEach((el) => el.classList.remove(`has-error`, `has-success`));
+    inputEls.forEach((el) => el.classList.remove(`error-input`, `success-input`));
+    errorMessageEls.forEach((el) => (el.textContent = ""));
+  }
+
+  form?.addEventListener(`submit`, async (e) => {
+    e.preventDefault();
+    const formData = new FormData(form);
+    const { error } = await actions.form(formData);
+
+    resetForm();
+
+    if (isInputError(error)) {
+      console.log(error.fields);
+      for (const [fieldName, message] of Object.entries(error.fields)) {
+        const firstMessage = message[0];
+        setFieldError(fieldName, firstMessage);
+      }
+    }
+  });
+
+  //
+
+  const liveFields = document.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>(
+    `[data-input]`,
+  );
+  liveFields.forEach((field) => {
+    field.addEventListener(`input`, () => {
+      validateAndUpdateField(field);
+    });
+    field.addEventListener(`blur`, () => {
+      validateAndUpdateField(field, true);
+    });
+  });
+
+  function validateAndUpdateField(
+    field: HTMLInputElement | HTMLTextAreaElement,
+    showErrorOnFail = false,
+  ) {
+    const name = field.name;
+    const value = field.value.trim();
+    let isValid = false;
+    let errorMsg = "";
+
+    resetField(name);
+
+    switch (name) {
+      case `name`:
+        isValid = value.length >= 2;
+        errorMsg = `Please enter your name`;
+        break;
+
+      case `restaurant-name`:
+        isValid = value.length >= 4;
+        errorMsg = `Please enter your restaurants name`;
+        break;
+
+      case `email`:
+        isValid = value.length > 0 && /\S+@\S+\.\S+/.test(value);
+        errorMsg = !value ? "Email can't be empty" : "Please enter a valid email";
+        break;
+
+      case "phone":
+        if (!value) {
+          isValid = true;
+        } else {
+          const digits = value.replace(/[^0-9+]/g, "");
+          isValid = digits.length >= 9;
+          errorMsg = "Please enter a valid phone number";
+        }
+        break;
+
+      case "message":
+        isValid = value.length >= 50;
+        errorMsg = !value ? "Message can't be empty" : "Must be 50 characters or more";
+        break;
+
+      default:
+        isValid = value.length > 0;
+    }
+
+    if (isValid) {
+      setFieldSuccess(name);
+    } else {
+      if (showErrorOnFail) {
+        setFieldError(name, errorMsg);
+      }
+    }
+  }
+</script>

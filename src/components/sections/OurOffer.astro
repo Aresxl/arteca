@@ -1,0 +1,88 @@
+---
+// Data
+import data from "@/data/our-offer.json";
+const sectionTitle = "What we offer";
+const sectionSubtitle = "Never worry about your website ever again";
+const sectionText =
+  "At Vyteca, we build high-performance, hand-coded websites exclusively for Melbourne restaurants. Built from scratch — you get 98–100/100 Google PageSpeed scores, flawless mobile performance on every device, and local SEO foundations that help you rank higher and fill more tables.";
+const sectionTitleId = "offer";
+
+// Components
+import OurOfferCard from "../ui/OurOfferCard.astro";
+import Heading from "../ui/Heading.astro";
+import SectionHeader from "../ui/SectionHeader.astro";
+---
+
+<section class="our__offer | grid-main" aria-labelledby={sectionTitleId}>
+  <SectionHeader
+    title={sectionTitle}
+    subtitle={sectionSubtitle}
+    supportingText={sectionText}
+    titleTag="h2"
+    titleId={sectionTitleId}
+    class="our__offer-header"
+  />
+  <ul class="our__offers">
+    {
+      data.map((card) => (
+        <OurOfferCard
+          iconName={card.icon}
+          title={card.title}
+          text={card.text}
+          cta={card.cta}
+          ctaHref={card.ctaHref}
+        />
+      ))
+    }
+  </ul>
+</section>
+
+<style>
+  .our__offer {
+    padding-block-start: var(--section-space);
+  }
+
+  .our__offers {
+    display: grid;
+    gap: var(--spacing-lg);
+    margin-block-start: var(--spacing-xl);
+  }
+
+  @media (min-width: 40rem) {
+    .our__offers {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 48rem) {
+    .our__offer-header {
+      p {
+        max-width: 70ch;
+        margin-inline: auto;
+      }
+    }
+
+    .our__offers {
+      margin-block-start: var(--spacing-2xl);
+    }
+  }
+
+  @media (min-width: 62.5rem) {
+    .our__offer-header {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-3xl);
+      text-align: left;
+
+      p {
+        margin-block-start: 0px;
+        max-width: 50ch;
+      }
+    }
+
+    .our__offers {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 74px 30px;
+    }
+  }
+</style>

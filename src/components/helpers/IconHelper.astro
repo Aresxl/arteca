@@ -1,0 +1,11 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props extends astroHTML.JSX.SVGAttributes {
+  name: string; // e.g. "optimised", "security"
+}
+
+const { name, ...attrs } = Astro.props;
+---
+
+<Icon name={name} {...attrs as any} />

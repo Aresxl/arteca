@@ -1,0 +1,247 @@
+---
+// Data
+const sectionTitle = "Performance";
+const sectionSubtitle = "We build faster sites that fill tables";
+const sectionText =
+  "Most hospitality sites lose diners to slow loads. Ours deliver elite Google PageSpeed scores and under-1-second loads to capture bookings before they bounce. Check your site's speed on Google PageSpeed Insights. Our custom builds hit 98-100 consistently because speed drives results";
+const sectionTitleId = "performance";
+
+// const sectionText =
+//   "Hospitality websites often struggle with speed, but ours deliver top Google PageSpeed performance every time. Check your site's load time on Google PageSpeed Insights—our custom builds load in under 1 second to capture more diners before they bounce.";
+
+// Helpers
+import Picture from "astro/components/Picture.astro";
+
+// Images
+import BarChartIcon from "@/assets/icons/bar-chart.svg";
+import BatterIcon from "@/assets/icons/battery.svg";
+import CutIcon from "@/assets/icons/cut.svg";
+import PerformancePSIImg from "@/assets/images/desktop/performance-psi.jpg";
+
+// Components
+import SectionHeader from "../ui/SectionHeader.astro";
+import SectionDivider from "../ui/SectionDivider.astro";
+---
+
+<section class="performance | grid-main" aria-labelledby={sectionTitleId}>
+  <SectionHeader
+    title={sectionTitle}
+    subtitle={sectionSubtitle}
+    supportingText={sectionText}
+    titleTag="h2"
+    titleId={sectionTitleId}
+    class="performance__header"
+  />
+  <ul class="performance__features">
+    <li class="performance__feature">
+      <CutIcon class="icon" aria-hidden="true" width="30" height="30" />
+      <span>Keep more visitors on-site for more bookings</span>
+    </li>
+    <li class="performance__feature">
+      <BatterIcon class="icon" aria-hidden="true" width="30" height="30" />
+      <span>Turn more visitors into confirmed reservations</span>
+    </li>
+    <li class="performance__feature">
+      <BarChartIcon class="icon" aria-hidden="true" width="30" height="30" />
+      <span>Improve SEO rankings and Google Ads ROI for steady growth</span>
+    </li>
+  </ul>
+  <ul class="badges">
+    <li class="badge">
+      <span class="badge__number">100%</span>
+      <span class="badge__desc">Satisfaction Guaranteed</span>
+    </li>
+    <li class="badge">
+      <span class="badge__number">100</span>
+      <span class="badge__desc">Page Speed Scores</span>
+    </li>
+    <li class="badge">
+      <span class="badge__number">5/5</span>
+      <span class="badge__desc">Google Reviews</span>
+    </li>
+  </ul>
+  <Picture
+    src={PerformancePSIImg}
+    formats={["avif", "webp"]}
+    fallbackFormat="jpg"
+    alt="Google page speed results from my Barra Recreation which shows 98-100/100 scores"
+    layout="constrained"
+    widths={[320, 480, 640, 800, 1020, 1280, 1400, 1800]}
+    priority={false}
+    class="performance__img"
+    pictureAttributes={{ class: "performance__picture" }}
+  />
+</section>
+
+<style>
+  .icon {
+    /* --primary-clr: var(--cyber-cyan-500); */
+
+    width: 30px;
+    height: 30px;
+    color: var(--primary-clr);
+    filter: drop-shadow(0 0 8px var(--primary-clr));
+  }
+
+  .performance__features {
+    display: grid;
+    gap: var(--spacing-md);
+    margin-block: var(--spacing-xl) var(--spacing-2xl);
+  }
+
+  .performance__feature {
+    --primary-clr: var(--cyber-cyan-500);
+
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--spacing-md);
+    align-items: center;
+    line-height: 1.3;
+  }
+
+  .badges {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-xs);
+    text-align: center;
+  }
+
+  .badge {
+    --primary-clr: var(--cyber-cyan-500);
+
+    display: grid;
+    gap: var(--spacing-xxs);
+    justify-items: center;
+  }
+
+  .badge__number {
+    color: var(--primary-clr);
+    filter: drop-shadow(0 0 8px var(--primary-clr));
+    font-family: var(--ff-heading);
+    font-size: var(--fs-600);
+    /* text-shadow: var(--glow-text-cyan); */
+  }
+
+  .badge__desc {
+    max-width: 13ch;
+    font-size: var(--fs-350);
+    line-height: 1.3;
+  }
+
+  .performance__picture {
+    position: relative;
+    margin-block-start: var(--spacing-lg);
+    border: 1px solid var(--cyber-void-100);
+    opacity: 0.8;
+
+    clip-path: polygon(
+      0 0,
+      calc(100% - 20px) 0,
+      100% 20px,
+      100% 100%,
+      20px 100%,
+      0 calc(100% - 20px)
+    );
+  }
+
+  .performance__picture::before,
+  .performance__picture::after {
+    content: "";
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border: 2px solid var(--cyber-cyan-500);
+    pointer-events: none;
+  }
+
+  .performance__picture::before {
+    top: -1px;
+    left: -1px;
+    border-right: none;
+    border-bottom: none;
+  }
+
+  .performance__picture::after {
+    right: -1px;
+    bottom: -1px;
+    border-top: none;
+    border-left: none;
+  }
+
+  @media (min-width: 40rem) {
+    .badge__number {
+      font-size: 1.75rem;
+    }
+
+    .badge__desc {
+      font-size: var(--fs-400);
+    }
+  }
+
+  @media (min-width: 48rem) {
+    .performance {
+      row-gap: var(--spacing-xl);
+    }
+
+    .performance__header {
+      grid-area: 1 / 2 / 2 / 9;
+      text-align: left;
+    }
+
+    .performance__features {
+      grid-area: 2 / 2 / 2 / 9;
+      margin-block: 0px;
+    }
+
+    .badges {
+      grid-area: 1 / 10 / 2 / -2;
+      align-self: start;
+    }
+
+    .performance__picture {
+      grid-area: 1 / 10 / 3 / -2;
+      margin-block-start: var(--spacing-4xl);
+
+      img {
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .badge__number {
+      font-size: 2rem;
+    }
+  }
+
+  @media (min-width: 62.5rem) {
+    .performance {
+      row-gap: var(--spacing-md);
+    }
+
+    .performance__header {
+      grid-area: 1 / 2 / 2 / 11;
+    }
+
+    .performance__features {
+      grid-area: 2 / 2 / 2 / 11;
+      gap: var(--spacing-sm);
+
+      span {
+        font-size: var(--fs-450);
+      }
+    }
+
+    .badges {
+      grid-area: 1 / 13 / 2 / -2;
+    }
+
+    .performance__picture {
+      grid-area: 1 / 13 / 3 / -2;
+      margin-block-start: var(--spacing-5xl);
+    }
+
+    .badge__number {
+      font-size: 2.5rem;
+    }
+  }
+</style>

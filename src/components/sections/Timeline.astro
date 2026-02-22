@@ -1,0 +1,320 @@
+---
+// Data
+const sectionTitle = "Timeline";
+const sectionSubtitle = "We handle everything. You focus on the restaurant";
+const sectionText =
+  "We begin with a brief questionnaire once the agreement is signed. We then work together on content, move to design approval via video walkthrough, hand-code the site, and launch with full handover. Expect 3–4 weeks total — straightforward, low-effort, so you keep your attention on the restaurant.";
+const sectionTitleId = "offer";
+
+// Images
+import ResearchIcon from "@/assets/icons/research.svg";
+import DesignIcon from "@/assets/icons/design.svg";
+import CodeIcon from "@/assets/icons/offer/code.svg";
+import LaunchIcon from "@/assets/icons/launch.svg";
+
+// Components
+import SectionHeader from "../ui/SectionHeader.astro";
+import Heading from "../ui/Heading.astro";
+---
+
+<section class="timeline | grid-main" aria-labelledby={sectionTitleId}>
+  <SectionHeader
+    title={sectionTitle}
+    subtitle={sectionSubtitle}
+    supportingText={sectionText}
+    titleTag="h2"
+    titleId="timeline-title"
+    class="timeline__header"
+  />
+  <ul class="timeline__list">
+    <li class="timeline__step-wrapper">
+      <div class="timeline__step">
+        <div class="timeline__step-header">
+          <div class="icon__wrapper">
+            <ResearchIcon class="timeline__icon" width="24" height="24" aria-hidden="true" />
+          </div>
+          <Heading tag="h3" class="timeline__step-title" text="01: Quick Brief" />
+        </div>
+        <p class="timeline__desc">
+          We send a short questionnaire on your restaurant, menu, vibe, and goals. You share what
+          makes your place special — we help shape it into site content.
+        </p>
+        <div class="card__hover-bg"></div>
+      </div>
+    </li>
+    <li class="timeline__step-wrapper">
+      <div class="timeline__step">
+        <div class="timeline__step-header">
+          <div class="icon__wrapper">
+            <DesignIcon class="timeline__icon" width="24" height="24" aria-hidden="true" />
+          </div>
+          <Heading tag="h3" class="timeline__step-title" text="02: Design Approval" />
+        </div>
+        <p class="timeline__desc">
+          Custom mockups created and shown via video screen share. You give feedback and we make
+          adjustments until you're 100% happy.
+        </p>
+        <div class="card__hover-bg"></div>
+        <span class="timeline__connector"></span>
+      </div>
+    </li>
+    <li class="timeline__step-wrapper">
+      <div class="timeline__step">
+        <div class="timeline__step-header">
+          <div class="icon__wrapper">
+            <CodeIcon class="timeline__icon" width="24" height="24" aria-hidden="true" />
+          </div>
+          <Heading tag="h3" class="timeline__step-title" text="03: Development" />
+        </div>
+        <p class="timeline__desc">
+          With approval, we hand-code everything and handle setup. You'll get a demo link to check
+          before launch.
+        </p>
+        <div class="card__hover-bg"></div>
+        <span class="timeline__connector"></span>
+      </div>
+    </li>
+    <li class="timeline__step-wrapper">
+      <div class="timeline__step">
+        <div class="timeline__step-header">
+          <div class="icon__wrapper">
+            <LaunchIcon class="timeline__icon" width="24" height="24" aria-hidden="true" />
+          </div>
+          <Heading tag="h3" class="timeline__step-title" text="04: Launch" />
+        </div>
+        <p class="timeline__desc">
+          We push live, hand over access, and support the transition. 3–4 weeks total.
+        </p>
+        <div class="card__hover-bg"></div>
+        <span class="timeline__connector"></span>
+      </div>
+    </li>
+  </ul>
+</section>
+
+<style>
+  .timeline__list {
+    /* Controls height of card connector */
+    --gap: var(--spacing-2xl);
+
+    /* grid-column: 1 / -1;
+    margin-inline: 50px; */
+    display: grid;
+    gap: var(--gap);
+    /* gap: var(--spacing-md); */
+    margin-block-start: var(--spacing-xl);
+  }
+
+  .timeline__step-wrapper {
+    --card-primary-clr: var(--cyber-cyan-500);
+
+    position: relative;
+    display: grid;
+    max-width: 550px;
+    margin-inline: auto;
+  }
+
+  .timeline__step-wrapper:nth-of-type(1) {
+    --card-primary-clr: var(--cyber-cyan-500);
+  }
+  .timeline__step-wrapper:nth-of-type(2) {
+    --card-primary-clr: var(--cyber-green-500);
+  }
+  .timeline__step-wrapper:nth-of-type(3) {
+    --card-primary-clr: var(--cyber-magenta-500);
+  }
+  .timeline__step-wrapper:nth-of-type(4) {
+    --card-primary-clr: var(--cyber-yellow-500);
+  }
+
+  .timeline__step-wrapper::before,
+  .timeline__step-wrapper::after {
+    --line-clr: var(--cyber-cyan-500);
+
+    content: "";
+    position: absolute;
+    z-index: -1;
+    bottom: 100%;
+    left: 50%;
+    height: calc(var(--gap) * 1.5);
+    width: 2px;
+    background: var(--line-clr);
+    box-shadow:
+      0 0 1px hsl(from var(--line-clr) h s l / 1),
+      0 0 3px hsl(from var(--line-clr) h s l / 0.5),
+      0 0 10px hsl(from var(--line-clr) h s l / 0.5);
+  }
+
+  .timeline__step-wrapper::before {
+    --line-clr: var(--cyber-cyan-500);
+    transform: translateX(-10px);
+  }
+  .timeline__step-wrapper::after {
+    --line-clr: var(--cyber-magenta-500);
+    transform: translateX(10px);
+  }
+
+  .timeline__step-wrapper:nth-of-type(1)::before,
+  .timeline__step-wrapper:nth-of-type(1)::after {
+    display: none;
+  }
+
+  .timeline__step {
+    position: relative;
+    display: grid;
+    gap: var(--spacing-md);
+    padding: var(--spacing-sm);
+
+    background-color: var(--clr-bg-secondary);
+    border: 1px solid var(--clr-border-default);
+    clip-path: polygon(
+      0 0,
+      calc(100% - 20px) 0,
+      100% 20px,
+      100% 100%,
+      20px 100%,
+      0 calc(100% - 20px)
+    );
+    transition: transform 300ms ease-in-out;
+  }
+
+  .timeline__step::before,
+  .timeline__step::after {
+    content: "";
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border: 2px solid var(--card-primary-clr);
+    pointer-events: none;
+  }
+
+  .timeline__step::before {
+    top: -1px;
+    left: -1px;
+    border-right: none;
+    border-bottom: none;
+  }
+
+  .timeline__step::after {
+    right: -1px;
+    bottom: -1px;
+    border-top: none;
+    border-left: none;
+  }
+
+  .timeline__step:hover {
+    transform: translateY(-3px);
+  }
+
+  .timeline__step-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+  }
+
+  .timeline__icon {
+    width: 30px;
+    height: 30px;
+    color: var(--card-primary-clr);
+    filter: drop-shadow(0 0 8px var(--card-primary-clr));
+  }
+
+  .timeline__step-title {
+    color: var(--card-primary-clr);
+    filter: drop-shadow(0 0 8px var(--card-primary-clr));
+  }
+
+  .timeline__desc {
+    font-size: var(--fs-375);
+  }
+
+  .card__hover-bg:before {
+    pointer-events: none;
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    box-shadow:
+      inset 0 0 30px color-mix(in srgb, var(--card-primary-clr) 10%, transparent),
+      0 0 30px color-mix(in srgb, var(--card-primary-clr) 30%, transparent);
+    transition: opacity 300ms ease-in-out;
+  }
+
+  .timeline__step:hover .card__hover-bg:before {
+    opacity: 1;
+  }
+
+  @media (min-width: 48rem) {
+    .timeline {
+      margin-block-end: 250px;
+    }
+
+    .timeline__header {
+      p {
+        max-width: 70ch;
+        margin-inline: auto;
+      }
+    }
+
+    .timeline__list {
+      grid-template-columns: repeat(2, 1fr);
+      /* grid-template-columns: repeat(4, 1fr); */
+      gap: 0px var(--spacing-md);
+      margin-block-start: var(--spacing-4xl);
+    }
+
+    .timeline__step-wrapper {
+      max-width: 350px;
+    }
+
+    .timeline__step-wrapper:nth-of-type(1) {
+      transform: translateY(-75px);
+    }
+    .timeline__step-wrapper:nth-of-type(2) {
+      transform: translateY(75px);
+    }
+    .timeline__step-wrapper:nth-of-type(3) {
+      transform: translateY(0px);
+    }
+    .timeline__step-wrapper:nth-of-type(4) {
+      transform: translateY(150px);
+    }
+
+    .timeline__step-wrapper:nth-of-type(1)::before,
+    .timeline__step-wrapper:nth-of-type(1)::after {
+      position: absolute;
+      left: auto;
+      left: 100%;
+      bottom: 60%;
+      /* transform: none; */
+      display: block;
+      width: calc(var(--gap) * 3.5);
+      height: 1px;
+    }
+
+    .timeline__step-wrapper:nth-of-type(1)::before {
+      transform: translateY(10px);
+    }
+
+    .timeline__step-wrapper:nth-of-type(1)::after {
+      transform: translateY(-10px);
+    }
+  }
+
+  @media (min-width: 62.5rem) {
+    .timeline__header {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-2xl);
+      text-align: left;
+
+      p {
+        max-width: 60ch;
+      }
+    }
+
+    .timeline__list {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+</style>

@@ -1,0 +1,190 @@
+---
+// Helpers
+import { Picture } from "astro:assets";
+
+// Images
+import BarraImg from "@/assets/images/desktop/barra.jpg";
+import DineImg from "@/assets/images/desktop/dine.jpg";
+
+// Components
+import CustomPicture from "./CustomPicture.astro";
+import Heading from "./Heading.astro";
+
+const { title, imgSrc, text, ...rest } = Astro.props;
+---
+
+<li class="card__wrapper">
+  <div class="card">
+    <div class="picture__wrapper">
+      <Picture
+        src={imgSrc}
+        formats={["avif", "webp"]}
+        fallbackFormat="jpg"
+        alt=""
+        layout="constrained"
+        widths={[320, 480, 640, 800]}
+        priority={false}
+        class="portfolio__picture"
+      />
+    </div>
+    <div class="card__content">
+      <Heading tag="h3" text={title} class="card__content-title" />
+      <!-- <p>{text}</p> -->
+      <span class="fake-link" aria-hidden="true">View Website</span>
+    </div>
+    <a href="#" class="card__overlay-link" aria-label=`View ${title} website`></a>
+  </div>
+</li>
+<style>
+  .card__wrapper {
+    --primary-card-clr: var(--cyber-cyan-500);
+    /* filter: drop-shadow(0 0 10px hsl(from var(--cyber-cyan-500) h s l / 0.25)) brightness(0.6); */
+
+    /* prettier-ignore */
+    filter: 
+    drop-shadow(0 0 2px hsl(from var(--primary-card-clr) h s l / 0.75))
+    drop-shadow(0 0 20px hsl(from var(--primary-card-clr) h s l / 0.15))
+    brightness(0.6);
+
+    /* prettier-ignore */
+    filter: 
+    drop-shadow(0 0 2px hsl(from var(--primary-card-clr) h s l / 0.75))
+    drop-shadow(0 0 12px hsl(from var(--primary-card-clr) h s l / 0.15))
+    brightness(0.6);
+
+    /* Tinker with the drop-shadow */
+    transition: filter 400ms ease-in-out;
+  }
+
+  .card__wrapper:hover {
+    /* prettier-ignore */
+    filter: 
+    drop-shadow(0 0 1px hsl(from var(--primary-card-clr) h s l / 0.15)) 
+    drop-shadow(0 0 8px hsl(from var(--primary-card-clr) h s l / 0.5)) 
+    brightness(0.9);
+
+    /* prettier-ignore */
+    filter: 
+    drop-shadow(0 0 2px hsl(from var(--primary-card-clr) h s l / 0.85))
+    drop-shadow(0 0 20px hsl(from var(--primary-card-clr) h s l / 0.15))
+    brightness(0.9);
+  }
+
+  .card__wrapper:nth-of-type(1) {
+    --primary-card-clr: var(--cyber-cyan-500);
+  }
+  .card__wrapper:nth-of-type(2) {
+    --primary-card-clr: var(--cyber-magenta-500);
+  }
+
+  .card {
+    --teaser-space: 3.25rem;
+
+    position: relative;
+    overflow: hidden;
+    max-height: 350px;
+    border: 1px solid var(--clr-border-default);
+
+    clip-path: polygon(
+      0 0,
+      calc(100% - 20px) 0,
+      100% 20px,
+      100% 100%,
+      20px 100%,
+      0 calc(100% - 20px)
+    );
+  }
+
+  .portfolio__picture {
+    transform: translateY(0);
+    transition: transform 2s ease-in-out;
+  }
+  /* Maybe set a delay on the opacity? Or make opacity happen faster than the transform */
+
+  .card__wrapper:hover .portfolio__picture {
+    transform: translateY(calc(-100% + 350px));
+  }
+
+  .card__content {
+    pointer-events: none;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 15px 20px;
+    background-color: hsl(from var(--clr-neutral-900) h s l / 0.95);
+    transform: translateY(calc(100% - var(--teaser-space)));
+    transition: transform 400ms 1700ms
+      linear(
+        0,
+        0.253 15.1%,
+        0.418 23.4%,
+        0.608 31%,
+        0.999 44.7%,
+        0.837 52.4%,
+        0.798 55.8%,
+        0.786 59.1%,
+        0.795 62.1%,
+        0.824 65.3%,
+        0.999 77.4%,
+        0.969 81.2%,
+        0.96 84.7%,
+        0.995 95.4%,
+        1
+      );
+
+    .card__content-title {
+      margin-block-end: 5px;
+    }
+  }
+
+  .card__wrapper:hover .card__content {
+    transform: translateY(0);
+  }
+
+  .card__overlay-link {
+    position: absolute;
+    inset: 0;
+    cursor: pointer;
+  }
+
+  .fake-link {
+    margin-block-start: 5px;
+    text-decoration: underline;
+  }
+
+  /*  */
+
+  /* .card::before {
+    content: "";
+    position: absolute;
+    inset: -20px;
+    box-shadow: 0 0 4px 12px var(--cyber-cyan-500);
+    outline: 2px solid red;
+    clip-path: inherit;
+  } */
+
+  /* .card::before,
+  .card::after {
+    content: "";
+    position: absolute;
+    z-index: 10;
+    width: 30px;
+    height: 30px;
+    border: 3px solid var(--card-primary-clr);
+    pointer-events: none;
+  }
+
+  .card::before {
+    top: -2px;
+    left: 0px;
+    border-right: none;
+    border-bottom: none;
+  }
+
+  .card::after {
+    right: -1px;
+    bottom: -2px;
+    border-top: none;
+    border-left: none;
+  } */
+</style>

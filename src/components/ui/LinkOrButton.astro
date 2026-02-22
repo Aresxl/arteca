@@ -1,0 +1,219 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+interface AnchorProps extends HTMLAttributes<"a"> {
+  as?: "a";
+  href: string;
+  text: string;
+  variant: "primary" | "secondary" | "card";
+}
+
+interface ButtonProps extends HTMLAttributes<"button"> {
+  as: "button";
+  text: string;
+  type?: "submit" | "reset" | "button";
+  variant: "primary" | "secondary" | "card";
+}
+
+type Props = AnchorProps | ButtonProps;
+const props = Astro.props as Props;
+
+const { as, text, variant, color, ...rest } = Astro.props;
+
+const inferredAs = "href" in props ? "a" : (as ?? "button");
+---
+
+{
+  inferredAs === "a" ? (
+    <a class:list={["btn", `btn--${variant}`]} {...rest}>
+      {text}
+    </a>
+  ) : (
+    <button class:list={["btn", `btn--${variant}`]} {...rest}>
+      {text}
+    </button>
+  )
+}
+
+<style>
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 52px;
+    padding-block: 0.5rem;
+    padding-inline: 1.25rem;
+    background: transparent;
+    font-family: var(--ff-heading);
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  .btn--primary {
+    position: relative;
+    border: 2px solid var(--clr-glow-teal);
+    border-radius: 0.5rem;
+    color: var(--clr-glow-teal);
+
+    text-shadow:
+      0 0 0.5px hsl(from var(--clr-neutral-0) h s l / 0.5),
+      0 0 2.5px var(--clr-glow-teal);
+
+    box-shadow:
+      inset 0 0 0.5em 0 var(--clr-glow-teal),
+      0 0 0.5em 0 var(--clr-glow-teal);
+
+    transition: color 300ms linear;
+    animation: neon-flicker-main 7s infinite alternate;
+  }
+
+  .btn--primary:before {
+    pointer-events: none;
+    content: "";
+    position: absolute;
+    top: 120%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--clr-glow-teal);
+    opacity: 0.25;
+
+    transform: perspective(1em) rotateX(20deg) scale(1, 0.5);
+    filter: blur(1em);
+
+    transition: opacity 300ms linear;
+  }
+
+  .btn--primary:after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    opacity: 0;
+    background: hsl(from var(--clr-glow-teal) h s l / 0.1);
+    box-shadow: 0 0 2em 0.125em var(--clr-glow-teal);
+    transition: opacity 300ms linear;
+  }
+
+  .btn--primary:hover,
+  .btn--primary:focus {
+    color: var(--clr-neutral-0);
+    text-shadow: none;
+    animation: neon-flicker-main 1.8s infinite;
+  }
+
+  .btn--primary:hover:before,
+  .btn--primary:focus:before {
+    opacity: 0.5;
+  }
+  .btn--primary:hover:after,
+  .btn--primary:focus:after {
+    opacity: 1;
+  }
+
+  /* Experiment later on with this glitch effect? */
+
+  /* .btn--primary:hover:after {
+    background: linear-gradient(to bottom, transparent 0%, var(--clr-glow-teal) 2%, transparent 4%);
+    background-size: 100% 8px;
+    animation: scan 2s linear infinite;
+  }
+
+  @keyframes scan {
+    0% {
+      background-position: 0 0;
+    }
+    100% {
+      background-position: 0 100%;
+    }
+  } */
+
+  /* Secondary */
+
+  .btn--secondary {
+    position: relative;
+    text-transform: uppercase;
+    /* letter-spacing: 0.5px; */
+    /* font-size: var(--fs-500); */
+    color: var(--clr-body-text);
+  }
+
+  .btn--secondary::after {
+    content: "";
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    border-radius: 4px;
+    background-color: var(--clr-glow-teal);
+    opacity: 0;
+
+    transform: scaleX(0);
+    /* transform-origin: left; */
+    transition: 400ms ease-in-out;
+    transition-property: transform, opacity;
+
+    box-shadow:
+      0 0 4px var(--clr-glow-teal),
+      0 0 12px var(--clr-glow-teal),
+      0 0 24px var(--clr-glow-teal);
+
+    transition: transform 400ms ease-out opacity 400ms ease-out;
+  }
+
+  .btn--secondary:hover {
+    text-shadow:
+      0 0 1px var(--clr-glow-teal),
+      0 0 25px var(--clr-glow-teal);
+  }
+
+  .btn--secondary:hover::after {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+
+  /*  */
+
+  .btn--card {
+    position: relative;
+    border: 2px solid var(--clr-glow-teal);
+    border-radius: 0.5rem;
+    color: var(--clr-glow-teal);
+
+    text-shadow:
+      0 0 0.5px hsl(from var(--clr-neutral-0) h s l / 0.5),
+      0 0 2.5px var(--clr-glow-teal);
+
+    box-shadow:
+      inset 0 0 0.5em 0 var(--clr-glow-teal),
+      0 0 0.5em 0 var(--clr-glow-teal);
+
+    transition: color 300ms linear;
+    animation: neon-flicker-main 7s infinite alternate;
+  }
+
+  .btn--card:after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    opacity: 0;
+    background: hsl(from var(--clr-glow-teal) h s l / 0.1);
+    box-shadow: 0 0 1.25em 0.125em var(--clr-glow-teal);
+    /* box-shadow: 0 0 2em 0.125em var(--clr-glow-teal); */
+    transition: opacity 300ms linear;
+  }
+
+  .btn--card:hover,
+  .btn--card:focus {
+    color: var(--clr-neutral-0);
+    text-shadow: none;
+    animation: neon-flicker-main 1.8s infinite;
+  }
+
+  .btn--card:hover:after,
+  .btn--card:focus:after {
+    opacity: 1;
+  }
+</style>

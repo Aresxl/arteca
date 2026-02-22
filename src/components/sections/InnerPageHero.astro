@@ -1,0 +1,171 @@
+---
+// Images
+import CircuitBGLeft from "@/assets/images/desktop/circuit-grid-left.png";
+import CircuitBGRight from "@/assets/images/desktop/circuit-grid-right.png";
+
+// Components
+import Heading from "../ui/Heading.astro";
+import Picture from "astro/components/Picture.astro";
+
+interface Props {
+  title: string;
+  subtitle: string;
+}
+
+const { title, subtitle } = Astro.props;
+---
+
+<section class="hero | grid-main">
+  <header>
+    <div class="hero-title">{title}</div>
+    <Heading tag="h1" text={subtitle} class="hero__subtitle" />
+  </header>
+
+  <div class="dot-bg"></div>
+
+  <Picture
+    src={CircuitBGLeft}
+    formats={["avif", "webp"]}
+    fallbackFormat="jpg"
+    alt=""
+    layout="constrained"
+    widths={[320, 480, 640, 800, 1020, 1280, 1400, 1800]}
+    priority={true}
+    class="cyber__grid-img"
+    pictureAttributes={{ class: "cyber-grid left" }}
+  />
+  <Picture
+    src={CircuitBGRight}
+    formats={["avif", "webp"]}
+    fallbackFormat="jpg"
+    alt=""
+    layout="constrained"
+    widths={[320, 480, 640, 800, 1020, 1280, 1400, 1800]}
+    priority={true}
+    class="cyber__grid-img"
+    pictureAttributes={{ class: "cyber-grid right" }}
+  />
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    margin-block-end: var(--section-space);
+    padding-block: var(--spacing-3xl) var(--spacing-2xl);
+    text-align: center;
+  }
+
+  .hero__subtitle {
+    margin-block-start: var(--spacing-lg);
+  }
+
+  .dot-bg {
+    grid-column: 1 / -1;
+    position: absolute;
+    inset: 0;
+    z-index: 200;
+    pointer-events: none;
+    background-image: url(src/assets/images/mobile/dot-bg.png);
+    background-repeat: repeat;
+    opacity: 0.5;
+  }
+
+  .cyber-grid {
+    pointer-events: none;
+    grid-column: 1;
+    position: absolute;
+    z-index: 500;
+    filter: blur(3.5px);
+    height: 100%;
+    width: 150px;
+  }
+  .cyber-grid.left {
+    left: 0;
+  }
+
+  .cyber-grid.right {
+    right: 0;
+  }
+
+  .cyber__grid-img {
+    height: 100%;
+  }
+
+  .hero::before {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background:
+      radial-gradient(
+        ellipse at 35% 40%,
+        color-mix(in srgb, var(--cyber-cyan-500) 8%, transparent) 0,
+        transparent 30%
+      ),
+      radial-gradient(
+        ellipse at 65% 60%,
+        color-mix(in srgb, var(--cyber-magenta-500) 0%, transparent) 0,
+        transparent 30%
+      ),
+      linear-gradient(
+        90deg,
+        transparent 0,
+        transparent calc(50% - 1px),
+        color-mix(in srgb, var(--cyber-cyan-500) 8%, transparent) 50%,
+        transparent calc(50% + 1px),
+        transparent 100%
+      ),
+      linear-gradient(
+        0deg,
+        transparent 0,
+        transparent calc(50% - 1px),
+        color-mix(in srgb, var(--cyber-cyan-500) 8%, transparent) 50%,
+        transparent calc(50% + 1px),
+        transparent 100%
+      );
+    background-size:
+      100% 100%,
+      100% 100%,
+      80px 80px,
+      80px 80px;
+    animation: hero-grid-pulse 8s ease-in-out infinite;
+  }
+
+  @media (min-width: 40rem) {
+    .hero {
+      padding-block: var(--spacing-5xl) var(--spacing-2xl);
+    }
+
+    .cyber-grid {
+      width: 200px;
+      /* filter: blur(2px); */
+    }
+  }
+
+  @media (min-width: 48rem) {
+    .hero {
+      padding-block: var(--spacing-6xl) var(--spacing-2xl);
+    }
+  }
+
+  @media (min-width: 62.5rem) {
+    .hero {
+      padding-block: var(--spacing-7xl) var(--spacing-6xl);
+    }
+
+    .cyber-grid {
+      width: 300px;
+      filter: blur(2px);
+    }
+  }
+
+  @media (min-width: 90rem) {
+    .cyber-grid {
+      width: 350px;
+    }
+  }
+</style>

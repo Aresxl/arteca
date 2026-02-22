@@ -1,0 +1,63 @@
+---
+
+---
+
+<div class="section__divider" aria-hidden="true"></div>
+
+<style>
+  /* .section__divider {
+    position: relative;
+    height: 1px;
+    margin: var(--section-space) var(--page-padding);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--cyber-cyan-500) 20%,
+      var(--cyber-cyan-500) 80%,
+      transparent
+    );
+  } */
+
+  .section__divider {
+    position: relative;
+    height: 1px;
+    margin: var(--section-space) var(--page-padding);
+
+    background-image:
+      linear-gradient(to right, transparent, var(--cyber-cyan-500)),
+      linear-gradient(to left, transparent, var(--cyber-cyan-500));
+    background-size: 45%, 45%;
+    background-position:
+      left center,
+      right center;
+    background-repeat: no-repeat;
+  }
+
+  .section__divider:before {
+    content: "◆";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    padding-inline: var(--spacing-sm);
+    color: var(--cyber-cyan-500);
+    font-size: var(--fs-350);
+  }
+
+  @media (min-width: 48rem) {
+    .section__divider {
+      background-size: 47%, 47%;
+    }
+  }
+
+  @media (min-width: 62.5rem) {
+    .section__divider {
+      background-size: 47.5%, 47.5%;
+    }
+  }
+  @media (min-width: 90rem) {
+    .section__divider {
+      background-size: 48%, 48%;
+    }
+  }
+</style>

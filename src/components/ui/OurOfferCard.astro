@@ -1,0 +1,214 @@
+---
+import Heading from "./Heading.astro";
+import IconHelper from "../helpers/IconHelper.astro";
+
+const { iconName, title, text, cta, ctaHref } = Astro.props;
+
+interface Props {
+  iconName: string;
+  title: string;
+  text: string;
+  cta: string;
+  ctaHref: string;
+}
+---
+
+<li class="card">
+  <div class="card__header">
+    <div class="icon__wrapper">
+      <IconHelper name={iconName} width="24" height="24" class="card__icon" aria-hidden="true" />
+    </div>
+    <Heading tag="h3" text={title} class="offer-card-title" />
+  </div>
+  <p>{text}</p>
+  <a href={ctaHref} class="fake-link">
+    {cta}
+    <span class="sr-only">with {title.toLowerCase()}</span>
+  </a>
+  <a href={ctaHref} class="card__overlay-link" aria-hidden="true"></a>
+  <span class="card__hover-bg"></span>
+</li>
+
+<style>
+  .card {
+    --card-primary-clr: var(--cyber-cyan-500);
+
+    position: relative;
+    padding: 1.5rem;
+    border: 1px solid var(--clr-border-default);
+    border-radius: 0;
+
+    clip-path: polygon(
+      0 0,
+      calc(100% - 20px) 0,
+      100% 20px,
+      100% 100%,
+      20px 100%,
+      0 calc(100% - 20px)
+    );
+    background-color: var(--clr-bg-secondary);
+
+    cursor: pointer;
+    transition: transform 300ms ease-in-out;
+
+    .card__header {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      margin-block-end: 24px;
+    }
+
+    .card__icon {
+      width: 32px;
+      height: 32px;
+      color: var(--card-primary-clr);
+      filter: drop-shadow(0 0 8px var(--card-primary-clr));
+    }
+
+    h3 {
+      color: var(--card-primary-clr);
+      filter: drop-shadow(0 0 8px var(--card-primary-clr));
+    }
+
+    p {
+      margin-block: 10px 30px;
+      color: var(--cyber-chrome-100);
+    }
+  }
+  .card__overlay-link {
+    position: absolute;
+    z-index: 100;
+    inset: 0;
+    cursor: pointer;
+    pointer-events: auto;
+  }
+
+  .card__hover-bg:before {
+    pointer-events: none;
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    box-shadow:
+      inset 0 0 30px color-mix(in srgb, var(--card-primary-clr) 10%, transparent),
+      0 0 30px color-mix(in srgb, var(--card-primary-clr) 30%, transparent);
+    transition: opacity 300ms ease-in-out;
+  }
+
+  .fake-link {
+    /* --card-primary-clr: var(--cyber-cyan-500); */
+
+    position: relative;
+    z-index: 200;
+    padding: 6px 4px;
+    color: var(--clr-body-text);
+    /* color: var(--card-primary-clr); */
+    /* text-shadow:
+      0 0 10px var(--card-primary-clr),
+      0 0 20px color-mix(in srgb, var(--card-primary-clr) 60%, transparent); */
+    text-transform: uppercase;
+    font-family: var(--ff-heading);
+    font-weight: var(--fw-700);
+    /* letter-spacing: 0.5px; */
+    /* font-size: var(--fs-500); */
+
+    pointer-events: auto;
+  }
+
+  .fake-link::after {
+    content: "";
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    border-radius: 4px;
+    background-color: var(--card-primary-clr);
+    opacity: 0;
+
+    transform: scaleX(0);
+    /* transform-origin: left; */
+    transition: 400ms ease-in-out;
+    transition-property: transform, opacity;
+
+    box-shadow:
+      0 0 4px hsl(from var(--card-primary-clr) h s l / 0.5),
+      0 0 12px hsl(from var(--card-primary-clr) h s l / 0.5),
+      0 0 24px hsl(from var(--card-primary-clr) h s l / 0.5);
+
+    transition:
+      transform 400ms ease-out,
+      opacity 400ms ease-out;
+  }
+
+  .fake-link:hover {
+    text-shadow:
+      0 0 1px hsl(from var(--card-primary-clr) h s l / 0.5),
+      0 0 25px hsl(from var(--card-primary-clr) h s l / 0.5);
+  }
+
+  .fake-link:hover::after {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+
+  .card::before,
+  .card::after {
+    content: "";
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border: 2px solid var(--card-primary-clr);
+    pointer-events: none;
+  }
+
+  .card::before {
+    top: -1px;
+    left: -1px;
+    border-right: none;
+    border-bottom: none;
+  }
+
+  .card::after {
+    right: -1px;
+    bottom: -1px;
+    border-top: none;
+    border-left: none;
+  }
+
+  .card:hover {
+    transform: translateY(-3px);
+  }
+
+  .card:hover .card__hover-bg:before {
+    opacity: 1;
+  }
+
+  .card:hover .card__icon {
+    animation: cyber-icon-glitch 3s infinite;
+  }
+
+  .card:nth-of-type(1) {
+    --card-primary-clr: var(--cyber-cyan-500);
+  }
+  .card:nth-of-type(2) {
+    --card-primary-clr: var(--cyber-magenta-500);
+  }
+  .card:nth-of-type(3) {
+    --card-primary-clr: var(--cyber-yellow-500);
+    --card-primary-clr: var(--cyber-green-500);
+  }
+  .card:nth-of-type(4) {
+    --card-primary-clr: var(--cyber-green-500);
+    --card-primary-clr: var(--cyber-cyan-500);
+  }
+  .card:nth-of-type(5) {
+    --card-primary-clr: var(--cyber-purple-500);
+    --card-primary-clr: var(--cyber-magenta-500);
+  }
+  .card:nth-of-type(6) {
+    --card-primary-clr: var(--cyber-orange-500);
+    --card-primary-clr: var(--cyber-yellow-500);
+    --card-primary-clr: var(--cyber-green-500);
+  }
+</style>

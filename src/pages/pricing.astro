@@ -1,0 +1,20 @@
+---
+import PrimaryLayout from "@/layouts/PrimaryLayout.astro";
+import Pricing from "@/components/sections/Pricing.astro";
+import Cta from "@/components/sections/Cta.astro";
+import InnerPageHero from "@/components/sections/InnerPageHero.astro";
+import SectionDivider from "@/components/ui/SectionDivider.astro";
+import Testimonials from "@/components/sections/Testimonials.astro";
+---
+
+<PrimaryLayout title="Pricing">
+  <InnerPageHero
+    title="Pricing"
+    subtitle="Affordable, custom packages for restaurants ready to boost direct revenue."
+  />
+  <Pricing />
+  <SectionDivider />
+  <Testimonials />
+  <SectionDivider />
+  <Cta />
+</PrimaryLayout>
