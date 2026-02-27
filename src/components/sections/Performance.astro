@@ -3,7 +3,7 @@
 const sectionTitle = "Performance";
 const sectionSubtitle = "We build faster sites that fill tables";
 const sectionText =
-  "Most hospitality sites lose diners to slow loads. Ours deliver elite Google PageSpeed scores and under-1-second loads to capture bookings before they bounce. Check your site's speed on Google PageSpeed Insights. Our custom builds hit 98-100 consistently because speed drives results";
+  "Most hospitality sites lose diners to slow loads. Ours deliver elite Google PageSpeed scores and under-1-second loads to capture bookings before they bounce. Check your site's speed on Google PageSpeed Insights. Our custom builds hit 98-100 consistently because speed drives results.";
 const sectionTitleId = "performance";
 
 // const sectionText =
@@ -32,7 +32,7 @@ import SectionDivider from "../ui/SectionDivider.astro";
     titleId={sectionTitleId}
     class="performance__header"
   />
-  <ul class="performance__features">
+  <ul class="performance__features | fade-in">
     <li class="performance__feature">
       <CutIcon class="icon" aria-hidden="true" width="30" height="30" />
       <span>Keep more visitors on-site for more bookings</span>
@@ -46,7 +46,7 @@ import SectionDivider from "../ui/SectionDivider.astro";
       <span>Improve SEO rankings and Google Ads ROI for steady growth</span>
     </li>
   </ul>
-  <ul class="badges">
+  <ul class="badges | fade-in">
     <li class="badge">
       <span class="badge__number">100%</span>
       <span class="badge__desc">Satisfaction Guaranteed</span>
@@ -69,11 +69,24 @@ import SectionDivider from "../ui/SectionDivider.astro";
     widths={[320, 480, 640, 800, 1020, 1280, 1400, 1800]}
     priority={false}
     class="performance__img"
-    pictureAttributes={{ class: "performance__picture" }}
+    pictureAttributes={{ class: "performance__picture | fade-in" }}
   />
 </section>
 
 <style>
+  /* .performance > *:nth-child(1) {
+    animation-delay: 0ms;
+  }
+  .performance > *:nth-child(2) {
+    animation-delay: 100ms;
+  }
+  .performance > *:nth-child(3) {
+    animation-delay: 200ms;
+  }
+  .performance > *:nth-child(4) {
+    animation-delay: 300ms;
+  } */
+
   .icon {
     /* --primary-clr: var(--cyber-cyan-500); */
 
@@ -132,7 +145,7 @@ import SectionDivider from "../ui/SectionDivider.astro";
     position: relative;
     margin-block-start: var(--spacing-lg);
     border: 1px solid var(--cyber-void-100);
-    opacity: 0.8;
+    /* opacity: 0.8; */
 
     clip-path: polygon(
       0 0,

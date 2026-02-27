@@ -50,11 +50,11 @@ import Picture from "astro/components/Picture.astro";
   </div>
 </section> -->
 <section class="cta | grid-main" aria-labelledby="cta-heading">
-  <header>
+  <header class="fade-in">
     <Heading tag="h2" text="Ready for launch?" class="section-title" />
     <span class="subtitle">Secure your spot in Vyteca's network</span>
   </header>
-  <div class="terminal">
+  <div class="terminal | fade-in">
     <div class="terminal__header">
       <span class="dot dot--magenta"></span>
       <span class="dot dot--yellow"></span>
@@ -108,13 +108,7 @@ import Picture from "astro/components/Picture.astro";
     font-family: var(--ff-main);
     font-family: var(--ff-mono);
     font-size: var(--fs-400);
-    /* font-weight: var(--fw-700); */
 
-    /* prettier-ignore */
-    filter: 
-    drop-shadow(0 0 1px color-mix(in srgb, var(--cyber-cyan-500) 100%, transparent))
-    drop-shadow(0 0 2px color-mix(in srgb, var(--cyber-cyan-500) 80%, transparent))
-    drop-shadow(0 0 8px color-mix(in srgb, var(--cyber-cyan-500) 30%, transparent));
     /* prettier-ignore */
     filter: 
     drop-shadow(0 0 1px color-mix(in srgb, var(--cyber-cyan-500) 100%, transparent))

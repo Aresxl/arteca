@@ -4,6 +4,8 @@ import icon from "astro-icon";
 
 import netlify from "@astrojs/netlify";
 
+import sitemap from "@astrojs/sitemap";
+
 // https://astro.build/config
 export default defineConfig({
   devToolbar: {
@@ -25,11 +27,9 @@ export default defineConfig({
     },
   },
 
-  integrations: [
-    icon({
-      iconDir: `src/assets/icons/offer`,
-    }),
-  ],
+  integrations: [icon({
+    iconDir: `src/assets/icons/offer`,
+  }), sitemap()],
 
   adapter: netlify(),
 });

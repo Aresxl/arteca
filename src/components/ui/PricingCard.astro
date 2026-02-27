@@ -109,9 +109,7 @@ const { title, price, priceSpan, features, popular = false } = Astro.props;
     drop-shadow(0 0 2px color-mix(in srgb, var(--cyber-cyan-500) 80%, transparent)),
     drop-shadow(0 0 8px color-mix(in srgb, var(--cyber-cyan-500) 30%, transparent));
 
-    /* animation: breathe-scale 5s ease-in-out infinite; */
-    animation: pulse-filter 5s ease-in-out infinite;
-    /* animation: card-neon-hum 6s cubic-bezier(0.4, 0, 0.6, 1) infinite; */
+    animation: pulse-filter 3s ease-in-out infinite;
     will-change: transform, filter;
   }
 
@@ -120,22 +118,6 @@ const { title, price, priceSpan, features, popular = false } = Astro.props;
       inset 0 0 1px color-mix(in srgb, var(--cyber-cyan-500) 100%, transparent),
       inset 0 0 5px color-mix(in srgb, var(--cyber-cyan-500) 100%, transparent),
       inset 0 0 30px color-mix(in srgb, var(--cyber-cyan-500) 15%, transparent);
-  }
-
-  @keyframes breathe-scale {
-    0%,
-    100% {
-      transform: scale(1);
-      filter: drop-shadow(0 0 1px color-mix(in srgb, var(--cyber-cyan-500) 100%, transparent))
-        drop-shadow(0 0 2px color-mix(in srgb, var(--cyber-cyan-500) 80%, transparent))
-        drop-shadow(0 0 8px color-mix(in srgb, var(--cyber-cyan-500) 30%, transparent));
-    }
-    50% {
-      transform: scale(1.015);
-      filter: drop-shadow(0 0 1.5px color-mix(in srgb, var(--cyber-cyan-500) 100%, transparent))
-        drop-shadow(0 0 3px color-mix(in srgb, var(--cyber-cyan-500) 80%, transparent))
-        drop-shadow(0 0 10px color-mix(in srgb, var(--cyber-cyan-500) 35%, transparent));
-    }
   }
 
   @keyframes pulse-filter {
@@ -149,35 +131,6 @@ const { title, price, priceSpan, features, popular = false } = Astro.props;
       filter: drop-shadow(0 0 2px color-mix(in srgb, var(--cyber-cyan-500) 100%, transparent))
         drop-shadow(0 0 4px color-mix(in srgb, var(--cyber-cyan-500) 80%, transparent))
         drop-shadow(0 0 12px color-mix(in srgb, var(--cyber-cyan-500) 40%, transparent));
-    }
-  }
-
-  @keyframes card-neon-hum {
-    0%,
-    100% {
-      filter: drop-shadow(0 0 1px color-mix(in srgb, var(--cyber-cyan-500) 100%, transparent))
-        drop-shadow(0 0 2px color-mix(in srgb, var(--cyber-cyan-500) 80%, transparent))
-        drop-shadow(0 0 8px color-mix(in srgb, var(--cyber-cyan-500) 30%, transparent));
-    }
-    15% {
-      filter: drop-shadow(0 0 0.8px color-mix(in srgb, var(--cyber-cyan-500) 90%, transparent))
-        drop-shadow(0 0 1.6px color-mix(in srgb, var(--cyber-cyan-500) 70%, transparent))
-        drop-shadow(0 0 6px color-mix(in srgb, var(--cyber-cyan-500) 25%, transparent));
-    }
-    40% {
-      filter: drop-shadow(0 0 1.1px color-mix(in srgb, var(--cyber-cyan-500) 100%, transparent))
-        drop-shadow(0 0 2.2px color-mix(in srgb, var(--cyber-cyan-500) 85%, transparent))
-        drop-shadow(0 0 9px color-mix(in srgb, var(--cyber-cyan-500) 35%, transparent));
-    }
-    65% {
-      filter: drop-shadow(0 0 0.9px color-mix(in srgb, var(--cyber-cyan-500) 95%, transparent))
-        drop-shadow(0 0 1.8px color-mix(in srgb, var(--cyber-cyan-500) 75%, transparent))
-        drop-shadow(0 0 7px color-mix(in srgb, var(--cyber-cyan-500) 28%, transparent));
-    }
-    82% {
-      filter: drop-shadow(0 0 0.7px color-mix(in srgb, var(--cyber-cyan-500) 85%, transparent))
-        drop-shadow(0 0 1.4px color-mix(in srgb, var(--cyber-cyan-500) 65%, transparent))
-        drop-shadow(0 0 5.5px color-mix(in srgb, var(--cyber-cyan-500) 22%, transparent));
     }
   }
 

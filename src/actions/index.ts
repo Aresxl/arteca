@@ -42,10 +42,10 @@ export const server = {
           .nonempty({ message: `Message can't be empty` })
           .min(50, { message: `Must be 50 characters or more` }),
       ),
-      "hp-website": z.string().optional(),
+      fax: z.string().optional(),
     }),
     handler: async (input) => {
-      if (input[`hp-website`]?.trim()) {
+      if (input[`fax`]?.trim()) {
         return { success: true };
       }
 

@@ -13,7 +13,7 @@ import Heading from "./Heading.astro";
 const { title, imgSrc, text, ...rest } = Astro.props;
 ---
 
-<li class="card__wrapper">
+<li class="card__wrapper fade-in">
   <div class="card">
     <div class="picture__wrapper">
       <Picture
@@ -29,7 +29,6 @@ const { title, imgSrc, text, ...rest } = Astro.props;
     </div>
     <div class="card__content">
       <Heading tag="h3" text={title} class="card__content-title" />
-      <!-- <p>{text}</p> -->
       <span class="fake-link" aria-hidden="true">View Website</span>
     </div>
     <a href="#" class="card__overlay-link" aria-label=`View ${title} website`></a>
@@ -38,31 +37,17 @@ const { title, imgSrc, text, ...rest } = Astro.props;
 <style>
   .card__wrapper {
     --primary-card-clr: var(--cyber-cyan-500);
-    /* filter: drop-shadow(0 0 10px hsl(from var(--cyber-cyan-500) h s l / 0.25)) brightness(0.6); */
-
-    /* prettier-ignore */
-    filter: 
-    drop-shadow(0 0 2px hsl(from var(--primary-card-clr) h s l / 0.75))
-    drop-shadow(0 0 20px hsl(from var(--primary-card-clr) h s l / 0.15))
-    brightness(0.6);
 
     /* prettier-ignore */
     filter: 
     drop-shadow(0 0 2px hsl(from var(--primary-card-clr) h s l / 0.75))
     drop-shadow(0 0 12px hsl(from var(--primary-card-clr) h s l / 0.15))
-    brightness(0.6);
+    brightness(0.7);
 
-    /* Tinker with the drop-shadow */
     transition: filter 400ms ease-in-out;
   }
 
   .card__wrapper:hover {
-    /* prettier-ignore */
-    filter: 
-    drop-shadow(0 0 1px hsl(from var(--primary-card-clr) h s l / 0.15)) 
-    drop-shadow(0 0 8px hsl(from var(--primary-card-clr) h s l / 0.5)) 
-    brightness(0.9);
-
     /* prettier-ignore */
     filter: 
     drop-shadow(0 0 2px hsl(from var(--primary-card-clr) h s l / 0.85))
@@ -78,7 +63,7 @@ const { title, imgSrc, text, ...rest } = Astro.props;
   }
 
   .card {
-    --teaser-space: 3.25rem;
+    --teaser-space: 3.2rem;
 
     position: relative;
     overflow: hidden;
@@ -99,7 +84,6 @@ const { title, imgSrc, text, ...rest } = Astro.props;
     transform: translateY(0);
     transition: transform 2s ease-in-out;
   }
-  /* Maybe set a delay on the opacity? Or make opacity happen faster than the transform */
 
   .card__wrapper:hover .portfolio__picture {
     transform: translateY(calc(-100% + 350px));
@@ -110,9 +94,10 @@ const { title, imgSrc, text, ...rest } = Astro.props;
     position: absolute;
     bottom: 0;
     width: 100%;
-    padding: 15px 20px;
+    padding: var(--spacing-xxs) var(--spacing-md);
+
     background-color: hsl(from var(--clr-neutral-900) h s l / 0.95);
-    transform: translateY(calc(100% - var(--teaser-space)));
+    /* transform: translateY(calc(100% - var(--teaser-space))); */
     transition: transform 400ms 1700ms
       linear(
         0,
@@ -144,47 +129,24 @@ const { title, imgSrc, text, ...rest } = Astro.props;
   .card__overlay-link {
     position: absolute;
     inset: 0;
+    z-index: 100;
+    pointer-events: auto;
     cursor: pointer;
   }
 
   .fake-link {
+    position: relative;
+    z-index: 200;
     margin-block-start: 5px;
+    cursor: pointer;
     text-decoration: underline;
+    text-underline-offset: 5px;
   }
 
-  /*  */
-
-  /* .card::before {
-    content: "";
-    position: absolute;
-    inset: -20px;
-    box-shadow: 0 0 4px 12px var(--cyber-cyan-500);
-    outline: 2px solid red;
-    clip-path: inherit;
-  } */
-
-  /* .card::before,
-  .card::after {
-    content: "";
-    position: absolute;
-    z-index: 10;
-    width: 30px;
-    height: 30px;
-    border: 3px solid var(--card-primary-clr);
-    pointer-events: none;
+  @media (min-width: 62.5rem) {
+    .card__content {
+      padding: 15px 20px;
+      transform: translateY(calc(100% - var(--teaser-space)));
+    }
   }
-
-  .card::before {
-    top: -2px;
-    left: 0px;
-    border-right: none;
-    border-bottom: none;
-  }
-
-  .card::after {
-    right: -1px;
-    bottom: -2px;
-    border-top: none;
-    border-left: none;
-  } */
 </style>

@@ -204,16 +204,9 @@ import LinkOrButton from "../ui/LinkOrButton.astro";
           aria-live="polite"
           id="error-message-input"></span>
       </div>
-      <div class="honeypot__wrapper" aria-hidden="true">
-        <label for="hp-website">Leave this field empty if you're a human</label>
-        <input
-          type="text"
-          name="hp-website"
-          id="hp-website"
-          value=""
-          tabindex="-1"
-          autocomplete="off"
-        />
+      <div class="fax__wrapper" aria-hidden="true">
+        <label for="fax">Leave this field empty if you're a human</label>
+        <input type="text" name="fax" id="fax" value="" tabindex="-1" autocomplete="off" />
       </div>
 
       <LinkOrButton as="button" text="Connect" type="submit" variant="card" />
@@ -480,7 +473,7 @@ import LinkOrButton from "../ui/LinkOrButton.astro";
     display: block;
   }
 
-  .honeypot__wrapper {
+  .fax__wrapper {
     position: absolute;
     left: -999px;
     overflow: hidden;
@@ -588,6 +581,14 @@ import LinkOrButton from "../ui/LinkOrButton.astro";
       for (const [fieldName, message] of Object.entries(error.fields)) {
         const firstMessage = message[0];
         setFieldError(fieldName, firstMessage);
+      }
+    }
+
+    for (const [key, value] of formData.entries()) {
+      if (key === `fax`) continue;
+      if (value.toString().trim() !== "") {
+        console.log(key);
+        setFieldSuccess(key);
       }
     }
   });

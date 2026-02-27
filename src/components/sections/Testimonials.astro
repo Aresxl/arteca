@@ -35,12 +35,16 @@ import SectionHeader from "../ui/SectionHeader.astro";
     class="testimonials__header"
   />
 
-  <div class="carousel carousel--testimonials">
+  <div
+    class="carousel carousel--testimonials fade-in"
+    role="region"
+    aria-label="Testimonial carousel"
+  >
     <div class="carousel__btn-wrapper">
-      <button class="carousel__btn prev" data-carousel-btn="prev">
+      <button class="carousel__btn prev" aria-label="Previous testimonial" data-carousel-btn="prev">
         <ChevLeftSvg aria-hidden="true" class="carousel__btn-svg" />
       </button>
-      <button class="carousel__btn next" data-carousel-btn="next">
+      <button class="carousel__btn next" aria-label="Next testimonial" data-carousel-btn="next">
         <ChevRightSvg aria-hidden="true" class="carousel__btn-svg" />
       </button>
     </div>
@@ -106,15 +110,18 @@ import SectionHeader from "../ui/SectionHeader.astro";
     </ul>
 
     <div class="carousel__indicators-wrapper">
-      <button class="carousel__indicator" aria-label="" data-indicator-active="true"></button>
-      <button class="carousel__indicator" aria-label=""></button>
-      <button class="carousel__indicator" aria-label=""></button>
+      <button
+        class="carousel__indicator"
+        aria-label="Go to slide 1 of 3"
+        data-indicator-active="true"></button>
+      <button class="carousel__indicator" aria-label="Go to slide 2 of 3"></button>
+      <button class="carousel__indicator" aria-label="Go to slide 3 of 3"></button>
     </div>
     <div class="video__control-btns">
-      <button class="video__control-btn play" data-play>
+      <button class="video__control-btn play" aria-label="Play testimonials video" data-play>
         <PlaySvg aria-hidden="true" class="video__btn-svg" width="64" height="64" />
       </button>
-      <button class="video__control-btn pause" data-pause>
+      <button class="video__control-btn pause" aria-label="Pause testimonials video" data-pause>
         <PauseSvg aria-hidden="true" class="video__btn-svg" width="64" height="64" />
       </button>
     </div>
@@ -300,6 +307,11 @@ import SectionHeader from "../ui/SectionHeader.astro";
   }
 
   @media (min-width: 40rem) {
+    .carousel {
+      max-width: 600px;
+      margin-inline: auto;
+    }
+
     .cyber-grid {
       width: auto;
     }
@@ -313,6 +325,10 @@ import SectionHeader from "../ui/SectionHeader.astro";
   }
 
   @media (min-width: 62.5rem) {
+    .carousel {
+      max-width: 700px;
+    }
+
     .testimonials__header {
       p {
         margin-block-start: var(--spacing-lg);
@@ -339,11 +355,13 @@ import SectionHeader from "../ui/SectionHeader.astro";
 
     if (currentSlide) delete currentSlide.dataset.active;
     if (currentIndicator) delete currentIndicator.dataset.indicatorActive;
+    if (currentIndicator) currentIndicator.ariaCurrent = `false`;
 
     const targetIndex = (newIndex + slides.length) % slides.length;
 
     slides[targetIndex].dataset.active = `true`;
     indicators[targetIndex].dataset.indicatorActive = `true`;
+    indicators[targetIndex].ariaCurrent = `true`;
 
     if (!isInitialLoad) {
       slides[targetIndex].scrollIntoView({

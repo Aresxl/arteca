@@ -10,7 +10,7 @@ import PricingCard from "../ui/PricingCard.astro";
 ---
 
 <section class="pricing | grid-main" aria-labelledby="pricing">
-  <header class="pricing__header">
+  <header class="pricing__header | fade-in">
     <div class="title__wrapper">
       <Heading tag="h2" text="Our pricing" class="section-title" id="pricing" />
       <span class="subtitle">Simple plans, serious impact</span>
@@ -19,7 +19,7 @@ import PricingCard from "../ui/PricingCard.astro";
       <LinkOrButton as="a" href="/contact" variant="primary" text="Get started" />
     </div>
   </header>
-  <ul class="pricing__cards-wrapper">
+  <ul class="pricing__cards-wrapper | fade-in">
     {
       data.map((plan) => (
         <PricingCard

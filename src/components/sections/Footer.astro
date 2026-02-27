@@ -1,14 +1,6 @@
 ---
 // Components
 import Heading from "../ui/Heading.astro";
-
-// Helpers
-import { Image } from "astro:assets";
-
-// Images
-import LinkedInIcon from "@/assets/icons/linkedin-white.png";
-import XIcon from "@/assets/icons/x.svg";
-import InstagramIcon from "@/assets/icons/instagram.svg";
 ---
 
 <footer class="site__footer grid-main">
@@ -27,23 +19,6 @@ import InstagramIcon from "@/assets/icons/instagram.svg";
         <li><a class="nav-link" href="/contact">Contact</a></li>
       </ul>
     </nav>
-    <ul class="socials">
-      <li>
-        <a href="">
-          <Image src={LinkedInIcon} alt="" width={20} height={20} class="social-icon" />
-        </a>
-      </li>
-      <!-- <li>
-        <a href="">
-          <XIcon width={20} height={20} class="social-icon" />
-        </a>
-      </li> -->
-      <!-- <li>
-        <a href="">
-          <InstagramIcon width={20} height={20} class="social-icon" />
-        </a>
-      </li> -->
-    </ul>
     <span class="copyright">&copy; 2026 Vycteca. All rights reserved</span>
   </div>
 </footer>
@@ -169,7 +144,7 @@ import InstagramIcon from "@/assets/icons/instagram.svg";
 
   @media (min-width: 62.5rem) {
     .site__footer-inner {
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
     }
 
     .footer__nav-list {

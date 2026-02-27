@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sunny-starship-2641b8.netlify.app/sitemap-index.xml

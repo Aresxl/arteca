@@ -11,7 +11,7 @@ import Picture from "astro/components/Picture.astro";
 
 <section class="hero grid-main hero-bg" aria-labelledby="hero-subtitle">
   <header class="hero__header">
-    <span class="hero-title">We are arteca</span>
+    <span class="hero-title" data-text="We are Vyteca">We are Vyteca</span>
     <div class="hero__header-content">
       <Heading
         tag="h1"
@@ -38,6 +38,7 @@ import Picture from "astro/components/Picture.astro";
     layout="constrained"
     widths={[320, 480, 640, 800, 1020, 1280, 1400, 1800]}
     priority={true}
+    quality={80}
     class="cyber__grid-img"
     pictureAttributes={{ class: "cyber-grid left" }}
   />
@@ -49,6 +50,7 @@ import Picture from "astro/components/Picture.astro";
     layout="constrained"
     widths={[320, 480, 640, 800, 1020, 1280, 1400, 1800]}
     priority={true}
+    quality={80}
     class="cyber__grid-img"
     pictureAttributes={{ class: "cyber-grid right" }}
   />
@@ -58,8 +60,8 @@ import Picture from "astro/components/Picture.astro";
   .hero {
     position: relative;
     z-index: 0;
-    min-height: 80dvh;
-    padding-block: var(--spacing-5xl) var(--spacing-2xl);
+    min-height: 78dvh;
+    padding-block: var(--spacing-3xl) var(--spacing-2xl);
   }
 
   .hero__header {
@@ -82,7 +84,7 @@ import Picture from "astro/components/Picture.astro";
     align-items: center;
     justify-content: center;
     gap: var(--spacing-md);
-    margin-block-start: var(--spacing-lg);
+    margin-block-start: var(--spacing-xl);
   }
 
   .cyber-grid {
@@ -141,7 +143,7 @@ import Picture from "astro/components/Picture.astro";
         90deg,
         transparent 0,
         transparent calc(50% - 1px),
-        color-mix(in srgb, var(--cyber-cyan-500) 8%, transparent) 50%,
+        color-mix(in srgb, var(--cyber-cyan-500) 10%, transparent) 50%,
         transparent calc(50% + 1px),
         transparent 100%
       ),
@@ -149,7 +151,7 @@ import Picture from "astro/components/Picture.astro";
         0deg,
         transparent 0,
         transparent calc(50% - 1px),
-        color-mix(in srgb, var(--cyber-cyan-500) 8%, transparent) 50%,
+        color-mix(in srgb, var(--cyber-cyan-500) 10%, transparent) 50%,
         transparent calc(50% + 1px),
         transparent 100%
       );
@@ -158,7 +160,7 @@ import Picture from "astro/components/Picture.astro";
       100% 100%,
       80px 80px,
       80px 80px;
-    animation: hero-grid-pulse 8s ease-in-out infinite;
+    animation: hero-grid-pulse 6.5s ease-in-out infinite;
   }
 
   @media (min-width: 26.875rem) {

@@ -31,6 +31,7 @@ import SectionHeader from "../ui/SectionHeader.astro";
           text={card.text}
           cta={card.cta}
           ctaHref={card.ctaHref}
+          class="card__wrapper fade-in"
         />
       ))
     }
@@ -45,6 +46,7 @@ import SectionHeader from "../ui/SectionHeader.astro";
   .our__offers {
     display: grid;
     gap: var(--spacing-lg);
+
     margin-block-start: var(--spacing-xl);
   }
 

@@ -42,6 +42,7 @@ import Heading from "../ui/Heading.astro";
         <div class="card__hover-bg"></div>
       </div>
     </li>
+
     <li class="timeline__step-wrapper">
       <div class="timeline__step">
         <div class="timeline__step-header">
@@ -58,6 +59,7 @@ import Heading from "../ui/Heading.astro";
         <span class="timeline__connector"></span>
       </div>
     </li>
+
     <li class="timeline__step-wrapper">
       <div class="timeline__step">
         <div class="timeline__step-header">
@@ -74,6 +76,7 @@ import Heading from "../ui/Heading.astro";
         <span class="timeline__connector"></span>
       </div>
     </li>
+
     <li class="timeline__step-wrapper">
       <div class="timeline__step">
         <div class="timeline__step-header">
@@ -97,11 +100,8 @@ import Heading from "../ui/Heading.astro";
     /* Controls height of card connector */
     --gap: var(--spacing-2xl);
 
-    /* grid-column: 1 / -1;
-    margin-inline: 50px; */
     display: grid;
     gap: var(--gap);
-    /* gap: var(--spacing-md); */
     margin-block-start: var(--spacing-xl);
   }
 
@@ -207,7 +207,8 @@ import Heading from "../ui/Heading.astro";
   }
 
   .timeline__step-header {
-    display: flex;
+    display: grid;
+    grid-template-columns: auto 1fr;
     align-items: center;
     gap: var(--spacing-sm);
   }
@@ -244,11 +245,11 @@ import Heading from "../ui/Heading.astro";
     opacity: 1;
   }
 
-  @media (min-width: 48rem) {
-    .timeline {
-      margin-block-end: 250px;
-    }
+  .timeline__step:hover .timeline__icon {
+    animation: cyber-icon-glitch 3s infinite;
+  }
 
+  @media (min-width: 48rem) {
     .timeline__header {
       p {
         max-width: 70ch;
@@ -256,14 +257,7 @@ import Heading from "../ui/Heading.astro";
       }
     }
 
-    .timeline__list {
-      grid-template-columns: repeat(2, 1fr);
-      /* grid-template-columns: repeat(4, 1fr); */
-      gap: 0px var(--spacing-md);
-      margin-block-start: var(--spacing-4xl);
-    }
-
-    .timeline__step-wrapper {
+    /* .timeline__step-wrapper {
       max-width: 350px;
     }
 
@@ -278,15 +272,14 @@ import Heading from "../ui/Heading.astro";
     }
     .timeline__step-wrapper:nth-of-type(4) {
       transform: translateY(150px);
-    }
+    } */
 
-    .timeline__step-wrapper:nth-of-type(1)::before,
+    /* .timeline__step-wrapper:nth-of-type(1)::before,
     .timeline__step-wrapper:nth-of-type(1)::after {
       position: absolute;
       left: auto;
       left: 100%;
       bottom: 60%;
-      /* transform: none; */
       display: block;
       width: calc(var(--gap) * 3.5);
       height: 1px;
@@ -298,7 +291,7 @@ import Heading from "../ui/Heading.astro";
 
     .timeline__step-wrapper:nth-of-type(1)::after {
       transform: translateY(-10px);
-    }
+    } */
   }
 
   @media (min-width: 62.5rem) {
@@ -310,11 +303,33 @@ import Heading from "../ui/Heading.astro";
 
       p {
         max-width: 60ch;
+        margin-block-start: 0px;
       }
     }
 
     .timeline__list {
+      --gap: var(--spacing-lg);
+      grid-column: 1 / -1;
       grid-template-columns: repeat(4, 1fr);
+      margin-inline: var(--spacing-2xl);
+      margin-block-start: var(--spacing-3xl);
+    }
+
+    .timeline__step-wrapper::before,
+    .timeline__step-wrapper::after {
+      position: absolute;
+      right: 100%;
+      left: auto;
+      bottom: 50%;
+      height: 2px;
+      width: var(--gap);
+    }
+
+    .timeline__step-wrapper::before {
+      transform: translateY(15px);
+    }
+    .timeline__step-wrapper::after {
+      transform: translateY(-15px);
     }
   }
 </style>

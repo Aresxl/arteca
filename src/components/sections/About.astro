@@ -51,10 +51,19 @@ import LinkOrButton from "../ui/LinkOrButton.astro";
     display: grid;
     gap: var(--spacing-sm);
     margin-block-start: var(--spacing-md);
-    /* font-family: var(--ff-ubu); */
   }
 
   .btn {
     margin-block-start: var(--spacing-lg);
+  }
+
+  @media (min-width: 40rem) {
+    .content {
+      gap: var(--spacing-md);
+      max-width: 70ch;
+      margin-inline: auto;
+      margin-block-start: var(--spacing-xl);
+      /* text-align: left; */
+    }
   }
 </style>
