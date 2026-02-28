@@ -27,7 +27,6 @@ interface Props extends HTMLAttributes<"li"> {
       {cta}
       <span class="sr-only">with {title.toLowerCase()}</span>
     </a>
-    <a href={ctaHref} class="card__overlay-link" aria-hidden="true"></a>
     <span class="card__hover-bg"></span>
   </div>
 </li>
@@ -59,7 +58,6 @@ interface Props extends HTMLAttributes<"li"> {
     );
     background-color: var(--clr-bg-secondary);
 
-    cursor: pointer;
     transition: transform 300ms ease-in-out;
 
     .card__header {
@@ -86,13 +84,6 @@ interface Props extends HTMLAttributes<"li"> {
       margin-block: 10px 30px;
       color: var(--cyber-chrome-100);
     }
-  }
-  .card__overlay-link {
-    position: absolute;
-    z-index: 100;
-    inset: 0;
-    cursor: pointer;
-    pointer-events: auto;
   }
 
   .card__hover-bg:before {
