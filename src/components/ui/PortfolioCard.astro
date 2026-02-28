@@ -88,6 +88,7 @@ const { title, imgSrc, text, ...rest } = Astro.props;
 
   .card__wrapper:hover .portfolio__picture {
     transform: translateY(calc(-100% + 350px));
+    will-change: transform;
   }
 
   .card__content {
