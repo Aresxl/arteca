@@ -12,6 +12,10 @@ export default defineConfig({
     enabled: false,
   },
 
+  build: {
+    inlineStylesheets: "always",
+  },
+
   experimental: {
     svgo: {
       plugins: [
@@ -24,12 +28,6 @@ export default defineConfig({
           },
         },
       ],
-    },
-  },
-
-  vite: {
-    build: {
-      assetsInlineLimit: 10240,
     },
   },
 

@@ -23,6 +23,7 @@ const { title, imgSrc, text, ...rest } = Astro.props;
         alt=""
         layout="constrained"
         widths={[320, 480, 640, 800]}
+        sizes="40vw"
         priority={false}
         class="portfolio__picture"
       />
@@ -94,7 +95,7 @@ const { title, imgSrc, text, ...rest } = Astro.props;
     position: absolute;
     bottom: 0;
     width: 100%;
-    padding: var(--spacing-xxs) var(--spacing-md);
+    padding: var(--spacing-xs) var(--spacing-md);
 
     background-color: hsl(from var(--clr-neutral-900) h s l / 0.95);
     /* transform: translateY(calc(100% - var(--teaser-space))); */

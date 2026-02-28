@@ -5,12 +5,12 @@ import MetaHead from "./MetaHead.astro";
 
 import "@/styles/global.css";
 
-const { title } = Astro.props;
+const { title, description } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="en">
-  <MetaHead title={title} />
+  <MetaHead title={title} description={description} />
   <body>
     <a href="#main" class="skip-to-main">Skip to main content</a>
     <Header />
