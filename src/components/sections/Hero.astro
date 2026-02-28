@@ -1,12 +1,24 @@
 ---
 // Images
+// Old Images - Good
 import CircuitBGLeft from "@/assets/images/desktop/circuit-grid-left.png";
 import CircuitBGRight from "@/assets/images/desktop/circuit-grid-right.png";
+
+// Test Images
+import CircuitBGLeftMobile from "@/assets/images/mobile/circuit-bg-left-mobile.png";
+import CircuitBGRightMobile from "@/assets/images/mobile/circuit-bg-right-mobile.png";
+
+import CircuitBGLeftTablet from "@/assets/images/tablet/circuit-bg-left-tablet.png";
+import CircuitBGRightTablet from "@/assets/images/tablet/circuit-bg-right-tablet.png";
+
+import CircuitBGLeftDesktop from "@/assets/images/desktop/circuit-bg-left-desktop.png";
+import CircuitBGRightDesktop from "@/assets/images/desktop/circuit-bg-right-desktop.png";
 
 // Components
 import Heading from "../ui/Heading.astro";
 import LinkOrButton from "../ui/LinkOrButton.astro";
 import Picture from "astro/components/Picture.astro";
+import CustomPicture from "../ui/CustomPicture.astro";
 ---
 
 <section class="hero grid-main hero-bg" aria-labelledby="hero-subtitle">
@@ -30,30 +42,51 @@ import Picture from "astro/components/Picture.astro";
 
   <div class="dot-bg"></div>
 
-  <Picture
+  <CustomPicture
+    desktop={CircuitBGLeftDesktop}
+    tablet={CircuitBGLeftTablet}
+    mobile={CircuitBGLeftMobile}
+    fallbackWidth={CircuitBGLeftMobile.width}
+    fallbackHeight={CircuitBGLeftMobile.height}
+    alt=""
+    priority={false}
+    class="cyber-grid left"
+  />
+  <CustomPicture
+    desktop={CircuitBGRightDesktop}
+    tablet={CircuitBGRightTablet}
+    mobile={CircuitBGRightMobile}
+    fallbackWidth={CircuitBGRightMobile.width}
+    fallbackHeight={CircuitBGRightMobile.height}
+    alt=""
+    priority={false}
+    class="cyber-grid right"
+  />
+
+  <!-- <Picture
     src={CircuitBGLeft}
-    formats={["avif", "webp"]}
-    fallbackFormat="jpg"
+    formats={["avif", "webp", "jpg"]}
+    fallbackFormat="png"
     alt=""
     layout="constrained"
     widths={[320, 480, 640, 800, 1020, 1280, 1400, 1800]}
-    priority={true}
-    quality={80}
+    priority={false}
+    quality={70}
     class="cyber__grid-img"
     pictureAttributes={{ class: "cyber-grid left" }}
   />
   <Picture
     src={CircuitBGRight}
-    formats={["avif", "webp"]}
-    fallbackFormat="jpg"
+    formats={["avif", "webp", "jpg"]}
+    fallbackFormat="png"
     alt=""
     layout="constrained"
     widths={[320, 480, 640, 800, 1020, 1280, 1400, 1800]}
-    priority={true}
-    quality={80}
+    priority={false}
+    quality={70}
     class="cyber__grid-img"
     pictureAttributes={{ class: "cyber-grid right" }}
-  />
+  /> -->
 </section>
 
 <style>
@@ -104,7 +137,11 @@ import Picture from "astro/components/Picture.astro";
     right: 0;
   }
 
-  .cyber__grid-img {
+  /* .cyber__grid-img {
+    height: 100%;
+  } */
+
+  .cyber__grid img {
     height: 100%;
   }
 
@@ -114,7 +151,7 @@ import Picture from "astro/components/Picture.astro";
     inset: 0;
     z-index: 200;
     pointer-events: none;
-    background-image: url(src/assets/images/mobile/dot-bg.png);
+    background-image: url(/images/dot-bg.png);
     background-repeat: repeat;
     opacity: 0.5;
   }

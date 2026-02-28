@@ -331,6 +331,17 @@
   .fade-in.is-visible {
     animation: fade-in 700ms cubic-bezier(0.66, 0, 0.34, 1) forwards;
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fade-in {
+      opacity: 1;
+      scale: 1;
+    }
+
+    .fade-in.is-visible {
+      animation: none;
+    }
+  }
 }
 
 @layer reset {
@@ -411,14 +422,6 @@
     font-style: normal;
     font-weight: 400;
     src: url("../fonts/jetbrains-mono-v24-latin-regular.woff2") format("woff2");
-  }
-
-  @font-face {
-    font-display: swap;
-    font-family: "JetBrains";
-    font-style: normal;
-    font-weight: 700;
-    src: url("../fonts/jetbrains-mono-v24-latin-700.woff2") format("woff2");
   }
 
   /* Orbitron */

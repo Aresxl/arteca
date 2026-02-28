@@ -27,9 +27,18 @@ export default defineConfig({
     },
   },
 
-  integrations: [icon({
-    iconDir: `src/assets/icons/offer`,
-  }), sitemap()],
+  vite: {
+    build: {
+      assetsInlineLimit: 10240,
+    },
+  },
+
+  integrations: [
+    icon({
+      iconDir: `src/assets/icons/offer`,
+    }),
+    sitemap(),
+  ],
 
   adapter: netlify(),
 });

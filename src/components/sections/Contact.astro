@@ -27,7 +27,7 @@ import LinkOrButton from "../ui/LinkOrButton.astro";
     titleId={sectionTitleId}
     class="contact__header"
   />
-  <ul class="contact__details-list">
+  <ul class="contact__details-list | fade-in">
     <li class="contact__detail">
       <div class="icon__wrapper">
         <PhoneIcon class="contact__icon" width="30" height="30" aria-hidden="true" />
@@ -56,7 +56,7 @@ import LinkOrButton from "../ui/LinkOrButton.astro";
       </div>
     </li>
   </ul>
-  <div class="form__wrapper">
+  <div class="form__wrapper | fade-in">
     <form class="form" action="" novalidate>
       <div class="form__control">
         <label for="name">

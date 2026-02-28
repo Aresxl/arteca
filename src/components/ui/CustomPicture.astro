@@ -63,26 +63,32 @@ const desktopJpg = await getImage({
   sizes: desktopSizes,
 });
 
-// let tabletAvif;
-// let tabletWebp;
-// let tabletJpg;
-// if (tablet) {
-//   tabletAvif = await getImage({
-//     src: tablet,
-//     priority: priority,
-//     format: "avif",
-//   });
-//   tabletWebp = await getImage({
-//     src: tablet,
-//     priority: priority,
-//     format: "webp",
-//   });
-//   tabletJpg = await getImage({
-//     src: tablet,
-//     priority: priority,
-//     format: "jpg",
-//   });
-// }
+let tabletAvif;
+let tabletWebp;
+let tabletJpg;
+if (tablet) {
+  tabletAvif = await getImage({
+    src: tablet,
+    priority: priority,
+    format: "avif",
+    widths: customWidths,
+    sizes: desktopSizes,
+  });
+  tabletWebp = await getImage({
+    src: tablet,
+    priority: priority,
+    format: "webp",
+    widths: customWidths,
+    sizes: desktopSizes,
+  });
+  tabletJpg = await getImage({
+    src: tablet,
+    priority: priority,
+    format: "jpg",
+    widths: customWidths,
+    sizes: desktopSizes,
+  });
+}
 
 const mobileAvif = await getImage({
   src: mobile,
@@ -130,6 +136,10 @@ const mobileJpg = await getImage({
     type="image/jpeg"
   />
   <!-- Tablet -->
+
+  {tabletAvif && <source media="(min-width: 40rem)" srcset={tabletAvif.src} type="image/avif" />}
+  {tabletWebp && <source media="(min-width: 40rem)" srcset={tabletWebp.src} type="image/webp" />}
+  {tabletJpg && <source media="(min-width: 40rem)" srcset={tabletJpg.src} type="image/jpg" />}
   <!-- Mobile -->
   <source
     media="(max-width: 40rem)"
@@ -155,3 +165,10 @@ const mobileJpg = await getImage({
     fetchpriority={priority ? "high" : "auto"}
   />
 </picture>
+
+<style>
+  .cyber-grid img {
+    height: 100%;
+    width: 100%;
+  }
+</style>
