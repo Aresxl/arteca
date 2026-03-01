@@ -4,7 +4,7 @@ import { Resend } from "resend";
 
 export const server = {
   form: defineAction({
-    accept: "form",
+    // accept: "form",
     input: z.object({
       name: z.preprocess(
         (val) => (val === null ? "" : val),

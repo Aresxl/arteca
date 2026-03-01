@@ -574,25 +574,69 @@ import LinkOrButton from "../ui/LinkOrButton.astro";
 
   form?.addEventListener(`submit`, async (e) => {
     e.preventDefault();
+
     const formData = new FormData(form);
-    const { error } = await actions.form(formData);
+    const rawData = Object.fromEntries(formData);
+
+    const data = rawData as {
+      name: string;
+      "restaurant-name": string;
+      phone?: string;
+      email: string;
+      contact: "contact-email" | "contact-phone" | "contact-none";
+      message: string;
+      fax?: string;
+    };
 
     resetForm();
+
+    const { error } = await actions.form(data);
 
     if (isInputError(error)) {
       for (const [fieldName, message] of Object.entries(error.fields)) {
         const firstMessage = message[0];
         setFieldError(fieldName, firstMessage);
       }
+      return;
     }
 
+    // Success path
     for (const [key, value] of formData.entries()) {
       if (key === `fax`) continue;
       if (value.toString().trim() !== "") {
         setFieldSuccess(key);
       }
     }
+
+    // Optional but nice: show a global success message
+    // const successEl = document.createElement('p');
+    // successEl.textContent = 'Message sent successfully!';
+    // successEl.style.color = '#10b981';
+    // form.appendChild(successEl);
+    // setTimeout(() => successEl.remove(), 6000);
   });
+
+  // form?.addEventListener(`submit`, async (e) => {
+  //   e.preventDefault();
+  //   const formData = new FormData(form);
+  //   const { error } = await actions.form(formData);
+
+  //   resetForm();
+
+  //   if (isInputError(error)) {
+  //     for (const [fieldName, message] of Object.entries(error.fields)) {
+  //       const firstMessage = message[0];
+  //       setFieldError(fieldName, firstMessage);
+  //     }
+  //   }
+
+  //   for (const [key, value] of formData.entries()) {
+  //     if (key === `fax`) continue;
+  //     if (value.toString().trim() !== "") {
+  //       setFieldSuccess(key);
+  //     }
+  //   }
+  // });
 
   //
 
