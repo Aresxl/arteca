@@ -2,8 +2,6 @@ import { defineAction, ActionError } from "astro:actions";
 import { z } from "astro/zod";
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 export const server = {
   form: defineAction({
     accept: "form",
@@ -48,6 +46,14 @@ export const server = {
       fax: z.string().optional(),
     }),
     handler: async (input) => {
+      const apiKey = process.env.RESEND_API_KEY || import.meta.env.RESEND_API_KEY;
+
+      if (!apiKey) {
+        throw new Error("Missing RESEND_API_KEY");
+      }
+
+      const resend = new Resend(apiKey);
+
       console.log("=== FORM SUBMISSION START ===");
       console.log("Raw input:", input);
 
