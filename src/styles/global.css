@@ -124,27 +124,8 @@
   }
 
   /* Animations */
-  @keyframes hero-grid-pulse {
-    0%,
-    to {
-      opacity: 1;
-      background-position:
-        0 0,
-        100% 100%,
-        0 0,
-        0 0;
-    }
-    50% {
-      opacity: 0.8;
-      background-position:
-        100% 100%,
-        0 0,
-        40px 40px,
-        40px 40px;
-    }
-  }
 
-  @keyframes hero-grid-pulse-transform {
+  @keyframes hero-grid-pulse {
     0%,
     100% {
       opacity: 1;
@@ -152,7 +133,7 @@
     }
     50% {
       opacity: 0.8;
-      transform: translate(40px, 40px); /* simulates the position shift */
+      transform: translate(40px, 40px);
     }
   }
 
