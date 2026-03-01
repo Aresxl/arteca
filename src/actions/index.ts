@@ -46,12 +46,14 @@ export const server = {
       fax: z.string().optional(),
     }),
     handler: async (input) => {
-      const apiKey = process.env.RESEND_API_KEY || import.meta.env.RESEND_API_KEY;
+      const apiKey = import.meta.env.RESEND_API_KEY;
 
       if (!apiKey) {
-        console.log(`Missing RESEND_API_KEY`);
-
-        throw new Error("Missing RESEND_API_KEY");
+        console.error("Missing RESEND_API_KEY in environment");
+        throw new ActionError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Server configuration error",
+        });
       }
 
       const resend = new Resend(apiKey);
