@@ -580,7 +580,6 @@ import LinkOrButton from "../ui/LinkOrButton.astro";
     resetForm();
 
     if (isInputError(error)) {
-      console.log(error.fields);
       for (const [fieldName, message] of Object.entries(error.fields)) {
         const firstMessage = message[0];
         setFieldError(fieldName, firstMessage);
@@ -590,7 +589,6 @@ import LinkOrButton from "../ui/LinkOrButton.astro";
     for (const [key, value] of formData.entries()) {
       if (key === `fax`) continue;
       if (value.toString().trim() !== "") {
-        console.log(key);
         setFieldSuccess(key);
       }
     }
