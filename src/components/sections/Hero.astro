@@ -63,6 +63,7 @@ import CustomPicture from "../ui/CustomPicture.astro";
 <style>
   .hero {
     position: relative;
+    overflow: hidden;
     z-index: 0;
     min-height: 78dvh;
     padding-block: var(--spacing-3xl) var(--spacing-2xl);
@@ -128,10 +129,7 @@ import CustomPicture from "../ui/CustomPicture.astro";
     pointer-events: none;
     position: absolute;
     z-index: -1;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+    inset: -40px;
     background:
       radial-gradient(
         ellipse at 35% 40%,
@@ -164,7 +162,8 @@ import CustomPicture from "../ui/CustomPicture.astro";
       100% 100%,
       80px 80px,
       80px 80px;
-    animation: hero-grid-pulse 6.5s ease-in-out infinite;
+    animation: hero-grid-pulse-transform 6.5s ease-in-out infinite;
+    /* animation: hero-grid-pulse 6.5s ease-in-out infinite; */
   }
 
   @media (min-width: 26.875rem) {
