@@ -50,9 +50,11 @@ const { title, subtitle } = Astro.props;
 <style>
   .hero {
     position: relative;
+    overflow: hidden;
     margin-block-end: var(--section-space);
     padding-block: var(--spacing-3xl) var(--spacing-2xl);
     text-align: center;
+    min-height: 78vh;
   }
 
   .hero__subtitle {
@@ -96,10 +98,7 @@ const { title, subtitle } = Astro.props;
     pointer-events: none;
     position: absolute;
     z-index: -1;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+    inset: -40px;
     background:
       radial-gradient(
         ellipse at 35% 40%,
