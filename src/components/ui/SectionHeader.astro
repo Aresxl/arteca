@@ -7,12 +7,13 @@ const {
   supportingText,
   titleTag,
   titleId,
+  fadeIn = false,
   class: className,
   ...rest
 } = Astro.props;
 ---
 
-<header class:list={[className, `fade-in`]} {...rest}>
+<header class:list={[className, fadeIn && `fade-in`]} {...rest}>
   <div>
     <Heading tag={titleTag} text={title} class="section-title" id={titleId} />
     <span class="subtitle">{subtitle}</span>

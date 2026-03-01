@@ -1,6 +1,7 @@
 ---
-// Data
+const { fadeIn } = Astro.props;
 
+// Data
 import data from "@/data/pricing-plan.json";
 
 // Components
@@ -10,7 +11,7 @@ import PricingCard from "../ui/PricingCard.astro";
 ---
 
 <section class="pricing | grid-main" aria-labelledby="pricing">
-  <header class="pricing__header | fade-in">
+  <header class:list={["pricing__header", fadeIn && "fade-in"]}>
     <div class="title__wrapper">
       <Heading tag="h2" text="Our pricing" class="section-title" id="pricing" />
       <span class="subtitle">Simple plans, serious impact</span>

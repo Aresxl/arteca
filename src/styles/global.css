@@ -689,6 +689,10 @@
     border: 0;
   }
 
+  .hidden {
+    display: none;
+  }
+
   /* .fade-in {
     opacity: 0;
     scale: 0.99;

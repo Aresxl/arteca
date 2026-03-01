@@ -1,6 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 
+// Data
 const allProjects = await getCollection(`projects`);
 const featuredProjects = allProjects.filter((project) => {
   return project.data.roles.includes(`featured`);
@@ -11,6 +12,8 @@ const sectionSubtitle = "Proof of what's coming";
 const sectionText =
   "I'm launching Vyteca with these two restaurant projects as the benchmark. They demonstrate the precise level of design and craftsmanship I will bring to every client I work with. While I haven’t taken on paid projects yet, these pieces set the bar moving forward.";
 const sectionTitleId = "portfolio";
+
+const { fadeIn } = Astro.props;
 
 // Components
 import Heading from "../ui/Heading.astro";
@@ -25,6 +28,7 @@ import SectionHeader from "../ui/SectionHeader.astro";
     supportingText={sectionText}
     titleTag="h2"
     titleId={sectionTitleId}
+    fadeIn={fadeIn}
     class="portfolio__header"
   />
   <ul class="portfolio__grid">
