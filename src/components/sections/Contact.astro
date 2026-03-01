@@ -13,6 +13,9 @@ import HomeIcon from "@/assets/icons/home.svg";
 import SuccessIcon from "@/assets/icons/checkmark.svg";
 import ErrorIcon from "@/assets/icons/cross.svg";
 
+// Helper
+import { actions } from "astro:actions";
+
 // Components
 import SectionHeader from "../ui/SectionHeader.astro";
 import LinkOrButton from "../ui/LinkOrButton.astro";
@@ -57,7 +60,7 @@ import LinkOrButton from "../ui/LinkOrButton.astro";
     </li>
   </ul>
   <div class="form__wrapper | fade-in">
-    <form class="form" action="" novalidate>
+    <form class="form" method="post" action={actions.form} novalidate>
       <div class="form__control">
         <label for="name">
           <span class=""> Name</span>
