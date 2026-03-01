@@ -49,6 +49,8 @@ export const server = {
       const apiKey = process.env.RESEND_API_KEY || import.meta.env.RESEND_API_KEY;
 
       if (!apiKey) {
+        console.log(`Missing RESEND_API_KEY`);
+
         throw new Error("Missing RESEND_API_KEY");
       }
 
