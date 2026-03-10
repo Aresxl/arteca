@@ -451,18 +451,6 @@
     color: var(--clr-body-text);
   }
 
-  /* body::before {
-    content: "";
-    grid-column: 1 / -1;
-    position: absolute;
-    inset: 0;
-    z-index: 200;
-    pointer-events: none;
-    background-image: url(src/assets/images/mobile/dot-bg.png);
-    background-repeat: repeat;
-    opacity: 0.5;
-  } */
-
   body::after {
     content: "";
     pointer-events: none;

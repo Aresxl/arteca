@@ -11,12 +11,14 @@
   "dependencies": {
     "@astrojs/netlify": "^6.6.4",
     "@astrojs/sitemap": "^3.7.0",
-    "astro": "^5.17.3",
+    "astro": "^5.18.0",
     "astro-icon": "^1.1.5",
-    "resend": "^6.9.3",
-    "tslib": "^2.8.1"
+    "resend": "^6.9.3"
   },
   "overrides": {
     "minimatch": "^10.2.1"
+  },
+  "devDependencies": {
+    "tslib": "^2.8.1"
   }
 }

@@ -8,6 +8,7 @@ import sitemap from "@astrojs/sitemap";
 
 // https://astro.build/config
 export default defineConfig({
+  site: "https://vyteca.com",
   devToolbar: {
     enabled: false,
   },
