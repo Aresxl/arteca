@@ -214,14 +214,32 @@ import LinkOrButton from "../ui/LinkOrButton.astro";
       </div>
 
       <LinkOrButton as="button" text="Connect" type="submit" variant="card" />
-
-      <p class="success-message hidden">Message sent successfully. I'll get back to you soon</p>
     </form>
+
+    <div id="success-modal" class="modal hidden">
+      <div class="modal-content">
+        <h2 class="">Submission Complete 🚀</h2>
+        <p id="modal-message" class="">
+          Thanks for contacting us, Bob! Your inquiry for Bobs Burger has been sent. We'll get back
+          to you soon. Check your inbox (and spam folder) if needed.`
+        </p>
+        <LinkOrButton
+          as="button"
+          text="Got it"
+          variant="card"
+          id="close-modal"
+          class="close-modal"
+        />
+      </div>
+    </div>
   </div>
+
+  <div class="modal__overlay"></div>
 </section>
 
 <style>
   .contact {
+    position: relative;
     margin-block-end: var(--section-space);
   }
 
@@ -263,6 +281,10 @@ import LinkOrButton from "../ui/LinkOrButton.astro";
   .contact__icon {
     color: var(--cyber-cyan-500);
     filter: drop-shadow(0 0 8px var(--cyber-cyan-500));
+  }
+
+  .form__wrapper {
+    position: relative;
   }
 
   form {
@@ -494,6 +516,42 @@ import LinkOrButton from "../ui/LinkOrButton.astro";
     overflow: hidden;
   }
 
+  .modal {
+    position: absolute;
+    bottom: 50%;
+    transform: translateY(50%);
+    z-index: 900;
+    padding: var(--spacing-md);
+    margin-inline: 10px;
+    text-align: center;
+    background-color: var(--clr-bg-tertiary);
+  }
+
+  .modal-content {
+    display: grid;
+    gap: var(--spacing-sm);
+  }
+
+  .modal__overlay {
+    position: fixed;
+    inset: 0;
+    background: hsl(0 0% 0% / 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 0.3s ease,
+      visibility 0s linear 0.3s;
+    z-index: 100;
+    backdrop-filter: blur(12px);
+    pointer-events: none;
+  }
+
+  body.modal--visible .modal__overlay {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s ease;
+  }
+
   @media (min-width: 40rem) {
     .contact__details-list {
       grid-template-columns: repeat(3, 1fr);
@@ -502,6 +560,11 @@ import LinkOrButton from "../ui/LinkOrButton.astro";
     }
     .contact__content {
       gap: 0px;
+    }
+
+    .modal {
+      margin-inline: 80px;
+      padding: var(--spacing-lg);
     }
   }
 
@@ -531,6 +594,15 @@ import LinkOrButton from "../ui/LinkOrButton.astro";
       grid-column: 14 / -2;
       grid-row: 1 / 4;
     }
+
+    .modal {
+      transform: translateX(-300px) translateY(50%);
+      margin-inline: 0px;
+    }
+
+    .modal-content {
+      gap: var(--spacing-md);
+    }
   }
 </style>
 
@@ -546,7 +618,6 @@ import LinkOrButton from "../ui/LinkOrButton.astro";
     const errorMessageEl = document.querySelector<HTMLSpanElement>(
       `[data-error-for="${fieldName}"]`,
     );
-
     inputEl?.classList.add(`error-input`);
     control?.classList.add(`has-error`);
 
@@ -579,13 +650,37 @@ import LinkOrButton from "../ui/LinkOrButton.astro";
     const inputEls = document.querySelectorAll(`[data-input]`);
     const errorMessageEls = document.querySelectorAll(`[data-error-for]`);
 
-    controlEls.forEach((el) => el.classList.remove(`has-error`, `has-success`));
-    inputEls.forEach((el) => el.classList.remove(`error-input`, `success-input`));
-    errorMessageEls.forEach((el) => (el.textContent = ""));
+    // Clear classes
+    controlEls.forEach((el) => {
+      el.classList.remove(`has-error`, `has-success`);
+    });
+    inputEls.forEach((el: any) => {
+      el.classList.remove(`error-input`, `success-input`);
+      el.value = "";
+    });
+    errorMessageEls.forEach((el) => {
+      el.textContent = "";
+    });
   }
 
   form?.addEventListener(`submit`, async (e) => {
     e.preventDefault();
+
+    // Validate all fields first
+    let isFormValid = true;
+    liveFields.forEach((field) => {
+      validateAndUpdateField(field, true); // Force show errors if invalid
+      const control = field.closest(".form__control");
+      if (control?.classList.contains("has-error")) {
+        isFormValid = false;
+      }
+    });
+
+    if (!isFormValid) {
+      const firstError = document.querySelector(".has-error");
+      if (firstError) firstError.scrollIntoView({ behavior: "smooth" });
+      return; // Block submit + modal if invalid
+    }
 
     const formData = new FormData(form);
     const rawData = Object.fromEntries(formData);
@@ -602,17 +697,24 @@ import LinkOrButton from "../ui/LinkOrButton.astro";
 
     resetForm();
 
-    const { error } = await actions.form(data);
+    // Optimistic: Show success modal immediately
+    const name = data.name;
+    const restaurantName = data["restaurant-name"];
+    const email = data.email;
+    const modalMessage = document.getElementById("modal-message");
+    const modalEl = document.querySelector(`.modal`);
+    const modalCloseBtnEl = document.querySelector(`#close-modal`);
+    const bodyEl = document.querySelector(`body`);
 
-    if (isInputError(error)) {
-      for (const [fieldName, message] of Object.entries(error.fields)) {
-        const firstMessage = message[0];
-        setFieldError(fieldName, firstMessage);
-      }
-      return;
+    if (modalMessage) {
+      modalMessage.textContent = `Thanks for contacting us, ${name}! Your inquiry for ${restaurantName} has been sent. We'll get back to you soon. Check your inbox (and spam folder) if needed.`;
+    }
+    if (modalEl) {
+      modalEl.classList.remove(`hidden`);
+      bodyEl?.classList.add(`modal--visible`);
     }
 
-    // Success path
+    // Optimistic: Set success icons on all non-empty
     for (const [key, value] of formData.entries()) {
       if (key === `fax`) continue;
       if (value.toString().trim() !== "") {
@@ -620,49 +722,51 @@ import LinkOrButton from "../ui/LinkOrButton.astro";
       }
     }
 
-    const successMsg = document.querySelector(`.success-msg`);
-    if (successMsg) {
-      successMsg.classList.remove(`hidden`);
+    actions
+      .form(data)
+      .then(({ error }) => {
+        if (error) {
+          if (modalMessage) {
+            modalMessage.textContent = `Oops—something went wrong. Please check the form and try again. (Error: ${error.message || "Unknown"})`;
+          }
+          resetForm();
+
+          if (isInputError(error)) {
+            const erroredFields = new Set(Object.keys(error.fields));
+
+            // Apply errors first
+            for (const [fieldName, message] of Object.entries(error.fields)) {
+              const firstMessage = message[0];
+              setFieldError(fieldName, firstMessage);
+            }
+
+            for (const [key, value] of formData.entries()) {
+              if (key === `fax`) continue;
+              if (value.toString().trim() !== "" && !erroredFields.has(key)) {
+                setFieldSuccess(key);
+              }
+            }
+          }
+        } else {
+          console.log("Background success!");
+        }
+      })
+      .catch((err) => {
+        console.error("Action error:", err);
+        if (modalMessage) {
+          modalMessage.textContent = "Oops—server connection issue. Please try again.";
+        }
+      });
+
+    if (modalCloseBtnEl) {
+      modalCloseBtnEl.addEventListener(`click`, () => {
+        console.log(`btn clicked`);
+        modalEl?.classList.add(`hidden`);
+        bodyEl?.classList.remove(`modal--visible`);
+        resetForm();
+      });
     }
-
-    resetForm();
-
-    setTimeout(() => {
-      successMsg?.classList.add(`hidden`);
-    }, 6000);
-
-    // Optional but nice: show a global success message
-    // const successEl = document.createElement('p');
-    // successEl.textContent = 'Message sent successfully!';
-    // successEl.style.color = '#10b981';
-    // form.appendChild(successEl);
-    // setTimeout(() => successEl.remove(), 6000);
   });
-
-  // Code for when accept: form bug is fixed
-  // form?.addEventListener(`submit`, async (e) => {
-  //   e.preventDefault();
-  //   const formData = new FormData(form);
-  //   const { error } = await actions.form(formData);
-
-  //   resetForm();
-
-  //   if (isInputError(error)) {
-  //     for (const [fieldName, message] of Object.entries(error.fields)) {
-  //       const firstMessage = message[0];
-  //       setFieldError(fieldName, firstMessage);
-  //     }
-  //   }
-
-  //   for (const [key, value] of formData.entries()) {
-  //     if (key === `fax`) continue;
-  //     if (value.toString().trim() !== "") {
-  //       setFieldSuccess(key);
-  //     }
-  //   }
-  // });
-
-  //
 
   const liveFields = document.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>(
     `[data-input]`,

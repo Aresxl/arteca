@@ -7,6 +7,9 @@ const featuredProjects = allProjects.filter((project) => {
   return project.data.roles.includes(`featured`);
 });
 
+console.log(allProjects);
+// console.log(featuredProjects);
+
 const sectionTitle = "Portfolio";
 const sectionSubtitle = "Proof of what's coming";
 const sectionText =
@@ -34,7 +37,12 @@ import SectionHeader from "../ui/SectionHeader.astro";
   <ul class="portfolio__grid">
     {
       featuredProjects.map(({ data }, i) => (
-        <PortfolioCard title={data.title} imgSrc={data.imgSrc} text={data.text} />
+        <PortfolioCard
+          title={data.title}
+          imgSrc={data.imgSrc}
+          text={data.text}
+          websiteHref={data.websiteHref}
+        />
       ))
     }
   </ul>

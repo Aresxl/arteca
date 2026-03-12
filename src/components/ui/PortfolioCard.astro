@@ -5,7 +5,7 @@ import { Picture } from "astro:assets";
 // Components
 import Heading from "./Heading.astro";
 
-const { title, imgSrc, text, ...rest } = Astro.props;
+const { title, imgSrc, text, websiteHref, ...rest } = Astro.props;
 ---
 
 <li class="card__wrapper fade-in">
@@ -27,7 +27,12 @@ const { title, imgSrc, text, ...rest } = Astro.props;
       <Heading tag="h3" text={title} class="card__content-title" />
       <span class="fake-link" aria-hidden="true">View Website</span>
     </div>
-    <a href="#" class="card__overlay-link" aria-label=`View ${title} website`></a>
+    <a
+      href={websiteHref}
+      class="card__overlay-link"
+      aria-label=`View ${title} website`
+      target="_blank"
+      rel="noopener noreferrer"></a>
   </div>
 </li>
 <style>

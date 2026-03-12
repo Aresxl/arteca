@@ -16,11 +16,10 @@ import Picture from "astro/components/Picture.astro";
 import BarChartIcon from "@/assets/icons/bar-chart.svg";
 import BatterIcon from "@/assets/icons/battery.svg";
 import CutIcon from "@/assets/icons/cut.svg";
-import PerformancePSIImg from "@/assets/images/desktop/performance-psi.jpg";
+import PerformancePSIImg from "@/assets/images/desktop/performance-psi.png";
 
 // Components
 import SectionHeader from "../ui/SectionHeader.astro";
-import SectionDivider from "../ui/SectionDivider.astro";
 ---
 
 <section class="performance | grid-main" aria-labelledby={sectionTitleId}>
@@ -75,22 +74,7 @@ import SectionDivider from "../ui/SectionDivider.astro";
 </section>
 
 <style>
-  /* .performance > *:nth-child(1) {
-    animation-delay: 0ms;
-  }
-  .performance > *:nth-child(2) {
-    animation-delay: 100ms;
-  }
-  .performance > *:nth-child(3) {
-    animation-delay: 200ms;
-  }
-  .performance > *:nth-child(4) {
-    animation-delay: 300ms;
-  } */
-
   .icon {
-    /* --primary-clr: var(--cyber-cyan-500); */
-
     width: 30px;
     height: 30px;
     color: var(--primary-clr);
@@ -133,7 +117,6 @@ import SectionDivider from "../ui/SectionDivider.astro";
     filter: drop-shadow(0 0 8px var(--primary-clr));
     font-family: var(--ff-heading);
     font-size: var(--fs-600);
-    /* text-shadow: var(--glow-text-cyan); */
   }
 
   .badge__desc {
@@ -146,7 +129,6 @@ import SectionDivider from "../ui/SectionDivider.astro";
     position: relative;
     margin-block-start: var(--spacing-lg);
     border: 1px solid var(--cyber-void-100);
-    /* opacity: 0.8; */
 
     clip-path: polygon(
       0 0,

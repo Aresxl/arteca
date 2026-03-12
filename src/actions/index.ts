@@ -71,8 +71,8 @@ export const server = {
         console.log("Preparing email payload...");
 
         const emailPayload = {
-          from: "Agency Contact Form <onboarding@resend.dev>",
-          to: ["lockyyw@outlook.com"],
+          from: "Vyteca Contact Form <contact@mail.vyteca.com>",
+          to: ["vyteca@gmail.com"],
           replyTo: input.email,
           subject: `New inquiry from ${input.name} @ ${input["restaurant-name"]}`,
           html: `
