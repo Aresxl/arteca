@@ -1,0 +1,602 @@
+---
+import CheckmarkIcon from "@/assets/icons/success.svg";
+
+interface FeatureRow {
+  label: string;
+  foundation: boolean;
+  signature: boolean;
+  michelin: boolean;
+}
+
+interface Category {
+  name: string;
+  features: FeatureRow[];
+}
+
+const categories: Category[] = [
+  {
+    name: "Core",
+    features: [
+      { label: "Bespoke hand-coded website", foundation: true, signature: true, michelin: true },
+      {
+        label: "5 pages included (extra available)",
+        foundation: true,
+        signature: true,
+        michelin: true,
+      },
+      { label: "SEO foundations", foundation: true, signature: true, michelin: true },
+      { label: "Google analytics", foundation: true, signature: true, michelin: true },
+      {
+        label: "Google business profile optimisation",
+        foundation: true,
+        signature: true,
+        michelin: true,
+      },
+      { label: "QR table menus", foundation: true, signature: true, michelin: true },
+      { label: "Easy CMS integration", foundation: true, signature: true, michelin: true },
+      { label: "Booking integration", foundation: true, signature: true, michelin: true },
+      { label: "Results guarantee", foundation: true, signature: true, michelin: true },
+    ],
+  },
+  {
+    name: "Included",
+    features: [
+      { label: "12 month hosting", foundation: true, signature: true, michelin: true },
+      { label: "6 months priority support", foundation: true, signature: true, michelin: true },
+    ],
+  },
+  {
+    name: "Visibility",
+    features: [
+      {
+        label: "Google reviews + Instagram social proof",
+        foundation: false,
+        signature: true,
+        michelin: true,
+      },
+      {
+        label: "Email capture + basic automation",
+        foundation: false,
+        signature: true,
+        michelin: true,
+      },
+      { label: "Event / private dining form", foundation: false, signature: true, michelin: true },
+      {
+        label: "Professional food photography",
+        foundation: false,
+        signature: true,
+        michelin: true,
+      },
+    ],
+  },
+  {
+    name: "Revenue",
+    features: [
+      { label: "Online order integration", foundation: false, signature: false, michelin: true },
+      {
+        label: "Loyalty / rewards program setup",
+        foundation: false,
+        signature: false,
+        michelin: true,
+      },
+      { label: "Premium custom animations", foundation: false, signature: false, michelin: true },
+      {
+        label: "Cinematic hero video production",
+        foundation: false,
+        signature: false,
+        michelin: true,
+      },
+      { label: "Multi language support", foundation: false, signature: false, michelin: true },
+    ],
+  },
+];
+---
+
+<div class="matrix-container">
+  <!-- <div class="dot-bg" aria-hidden="true"></div> -->
+
+  <table class="matrix-table" aria-label="Pricing plan feature comparison">
+    <thead>
+      <tr class="matrix-header">
+        <th class="col-feature" scope="col">
+          <span class="col-label">Feature</span>
+        </th>
+        <th class="col-tier col-tier--foundation" scope="col">
+          <span class="tier-num">Tier 01</span>
+          <span class="tier-name">Foundation</span>
+        </th>
+        <th class="col-tier col-tier--signature" scope="col">
+          <span class="tier-num">Tier 02</span>
+          <span class="tier-name">Signature</span>
+        </th>
+        <th class="col-tier col-tier--michelin" scope="col">
+          <span class="tier-num">Tier 03</span>
+          <span class="tier-name">Michelin Star</span>
+        </th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {
+        categories.map((cat) => (
+          <>
+            <tr class="category-row">
+              <th class="category-cell" colspan="4" scope="rowgroup">
+                {cat.name}
+              </th>
+            </tr>
+
+            {cat.features.map((feature) => (
+              <tr class="feature-row">
+                <th scope="row" class="feature-label">
+                  {feature.label}
+                </th>
+
+                <td class="feature-cell">
+                  {feature.foundation ? (
+                    <CheckmarkIcon
+                      class="check-icon check-icon--foundation"
+                      width="24"
+                      height="24"
+                      aria-label="Included"
+                    />
+                  ) : (
+                    <span class="dash" aria-label="Not included">
+                      &#8212;
+                    </span>
+                  )}
+                </td>
+
+                <td class="feature-cell">
+                  {feature.signature ? (
+                    <CheckmarkIcon
+                      class="check-icon check-icon--signature"
+                      width="24"
+                      height="24"
+                      aria-label="Included"
+                    />
+                  ) : (
+                    <span class="dash" aria-label="Not included">
+                      &#8212;
+                    </span>
+                  )}
+                </td>
+
+                <td class="feature-cell">
+                  {feature.michelin ? (
+                    <CheckmarkIcon
+                      class="check-icon check-icon--michelin"
+                      width="24"
+                      height="24"
+                      aria-label="Included"
+                    />
+                  ) : (
+                    <span class="dash" aria-label="Not included">
+                      &#8212;
+                    </span>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </>
+        ))
+      }
+    </tbody>
+  </table>
+</div>
+
+<style>
+  /* ════════════════════════════════════════════
+     KEYFRAMES
+  ════════════════════════════════════════════ */
+
+  @keyframes row-reveal {
+    from {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes check-pulse-foundation {
+    0%,
+    100% {
+      filter: drop-shadow(0 0 3px var(--cyber-magenta-500));
+    }
+    50% {
+      filter: drop-shadow(0 0 9px var(--cyber-magenta-500));
+    }
+  }
+
+  @keyframes check-pulse-signature {
+    0%,
+    100% {
+      filter: drop-shadow(0 0 3px var(--cyber-cyan-500));
+    }
+    50% {
+      filter: drop-shadow(0 0 9px var(--cyber-cyan-500));
+    }
+  }
+
+  @keyframes check-pulse-michelin {
+    0%,
+    100% {
+      filter: drop-shadow(0 0 3px var(--cyber-yellow-500));
+    }
+    50% {
+      filter: drop-shadow(0 0 9px var(--cyber-yellow-500));
+    }
+  }
+
+  @keyframes header-appear {
+    from {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* ════════════════════════════════════════════
+     ROW REVEAL — per-row scroll trigger
+     Rows start hidden. The <script> observer adds .row-revealed
+     to each <tr> individually as it enters the viewport.
+     Animation takes over from the static hidden state because
+     CSS animation values win the cascade over regular author rules.
+  ════════════════════════════════════════════ */
+
+  .feature-row {
+    border-bottom: 1px solid rgb(255 255 255 / 0.04);
+    opacity: 0;
+    transform: translateX(-8px);
+    transition: background-color 200ms ease;
+  }
+
+  .feature-row.row-revealed {
+    animation: row-reveal 0.4s ease-out both;
+  }
+
+  .row-revealed .check-icon--foundation {
+    animation: check-pulse-foundation 5s ease-in-out infinite;
+  }
+
+  .row-revealed .check-icon--signature {
+    animation: check-pulse-signature 5s ease-in-out infinite;
+    animation-delay: 1.5s;
+  }
+
+  .row-revealed .check-icon--michelin {
+    animation: check-pulse-michelin 5s ease-in-out infinite;
+    animation-delay: 3s;
+  }
+
+  /* No-JS fallback — rows are always visible without scripting */
+  @media (scripting: none) {
+    .feature-row {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* Reduced motion — disable all animations, rows immediately visible */
+  @media (prefers-reduced-motion: reduce) {
+    .feature-row {
+      opacity: 1;
+      transform: none;
+    }
+
+    .feature-row.row-revealed {
+      animation: none;
+    }
+
+    .row-revealed .check-icon--foundation,
+    .row-revealed .check-icon--signature,
+    .row-revealed .check-icon--michelin {
+      animation: none;
+    }
+  }
+
+  /* ════════════════════════════════════════════
+     LAYOUT
+  ════════════════════════════════════════════ */
+
+  .matrix-container {
+    position: relative;
+    background-color: var(--cyber-void-400);
+    border: 1px solid var(--clr-border-default);
+    overflow: hidden;
+    transition: box-shadow 300ms ease-in-out;
+
+    clip-path: polygon(
+      0 0,
+      calc(100% - 20px) 0,
+      100% 20px,
+      100% 100%,
+      20px 100%,
+      0 calc(100% - 20px)
+    );
+  }
+
+  .matrix-container::before,
+  .matrix-container::after {
+    content: "";
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border: 2px solid var(--cyber-cyan-500);
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  .matrix-container::before {
+    top: -1px;
+    left: -1px;
+    border-right: none;
+    border-bottom: none;
+  }
+
+  .matrix-container::after {
+    bottom: -1px;
+    right: -1px;
+    border-top: none;
+    border-left: none;
+  }
+
+  .matrix-container:hover {
+    box-shadow:
+      inset 0 0 40px color-mix(in srgb, var(--cyber-cyan-500) 5%, transparent),
+      0 0 20px color-mix(in srgb, var(--cyber-cyan-500) 15%, transparent);
+  }
+
+  .dot-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image: url(/images/dot-bg.png);
+    background-repeat: repeat;
+    opacity: 0.5;
+  }
+
+  /* ════════════════════════════════════════════
+     TABLE
+  ════════════════════════════════════════════ */
+
+  .matrix-table {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  /* ─── Header ─── */
+
+  .matrix-header {
+    animation: header-appear 0.5s ease-out both;
+  }
+
+  .col-feature {
+    padding: 1.25rem 1.5rem;
+    text-align: left;
+    border-bottom: 1px solid hsl(from var(--clr-border-default) h s l / 0.8);
+    width: 100%;
+    font-weight: normal;
+  }
+
+  .col-label {
+    font-size: var(--fs-300);
+    color: rgb(255 255 255 / 0.25);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .col-tier {
+    width: 90px;
+    min-width: 80px;
+    padding: 1.25rem 0.5rem;
+    text-align: center;
+    border-bottom: 1px solid hsl(from var(--clr-border-default) h s l / 0.8);
+    border-left: 1px solid rgb(255 255 255 / 0.04);
+    vertical-align: top;
+    font-weight: normal;
+  }
+
+  .tier-num {
+    display: block;
+    font-size: var(--fs-300);
+    color: rgb(255 255 255 / 0.35);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-block-end: 0.3rem;
+  }
+
+  .tier-name {
+    display: block;
+    font-size: var(--fs-350);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .col-tier--foundation .tier-name {
+    color: var(--cyber-magenta-500);
+    filter: drop-shadow(0 0 6px var(--cyber-magenta-500));
+  }
+
+  .col-tier--signature .tier-name {
+    color: var(--cyber-cyan-500);
+    filter: drop-shadow(0 0 6px var(--cyber-cyan-500));
+  }
+
+  .col-tier--michelin .tier-name {
+    color: var(--cyber-yellow-500);
+    filter: drop-shadow(0 0 6px var(--cyber-yellow-500));
+  }
+
+  /* ─── Category separator rows ─── */
+
+  .category-row {
+    background-color: rgb(255 255 255 / 0.02);
+  }
+
+  .category-cell {
+    padding: 0.4rem 1.5rem;
+    border-top: 1px solid rgb(255 255 255 / 0.06);
+    border-bottom: 1px solid rgb(255 255 255 / 0.06);
+    font-size: var(--fs-300);
+    font-weight: normal;
+    color: rgb(255 255 255 / 0.2);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    text-align: left;
+  }
+
+  /* ─── Feature rows ─── */
+
+  .feature-row:hover {
+    background-color: rgb(255 255 255 / 0.025);
+  }
+
+  .feature-row:last-child {
+    border-bottom: none;
+  }
+
+  .feature-label {
+    padding: 0.6rem 1.5rem;
+    font-size: var(--fs-375);
+    font-weight: normal;
+    text-align: left;
+    color: rgb(180, 210, 215);
+  }
+
+  .feature-cell {
+    width: 90px;
+    text-align: center;
+    padding: 0.6rem 0.5rem;
+    border-left: 1px solid rgb(255 255 255 / 0.04);
+    vertical-align: middle;
+  }
+
+  /* ─── Check icons ─── */
+
+  .check-icon {
+    display: block;
+    margin: 0 auto;
+    width: 24px;
+    height: 24px;
+  }
+
+  .check-icon--foundation {
+    color: var(--cyber-magenta-500);
+    filter: drop-shadow(0 0 4px var(--cyber-magenta-500));
+  }
+
+  .check-icon--signature {
+    color: var(--cyber-cyan-500);
+    filter: drop-shadow(0 0 4px var(--cyber-cyan-500));
+  }
+
+  .check-icon--michelin {
+    color: var(--cyber-yellow-500);
+    filter: drop-shadow(0 0 4px var(--cyber-yellow-500));
+  }
+
+  /* ─── Dash (not included) ─── */
+
+  .dash {
+    display: block;
+    font-size: var(--fs-350);
+    color: rgb(255 255 255 / 0.1);
+    line-height: 1;
+  }
+
+  /* ════════════════════════════════════════════
+     TIER INDICATOR BARS
+  ════════════════════════════════════════════ */
+
+  .tier-indicators {
+    display: grid;
+    grid-template-columns: 1fr 90px 90px 90px;
+    margin-block-start: 0.6rem;
+    padding-inline: 1.5rem 0.5rem;
+  }
+
+  .tier-bar {
+    width: 2px;
+    height: 8px;
+    margin-inline: auto;
+    opacity: 0.45;
+  }
+
+  .tier-bar--foundation {
+    background-color: var(--cyber-magenta-500);
+  }
+  .tier-bar--signature {
+    background-color: var(--cyber-cyan-500);
+  }
+  .tier-bar--michelin {
+    background-color: var(--cyber-yellow-500);
+  }
+
+  /* ════════════════════════════════════════════
+     RESPONSIVE
+  ════════════════════════════════════════════ */
+
+  @media (min-width: 40rem) {
+    .col-tier {
+      padding: 1.25rem 0.75rem;
+    }
+  }
+
+  @media (min-width: 62.5rem) {
+    .col-tier {
+      width: 100px;
+    }
+
+    .feature-label {
+      font-size: var(--fs-375);
+    }
+  }
+</style>
+
+<script>
+  function initMatrixRowReveal() {
+    const table = document.querySelector<HTMLElement>(".matrix-table");
+    if (!table) return;
+
+    if (window.getComputedStyle(table).display === "none") return;
+
+    const rows = table.querySelectorAll<HTMLElement>(".feature-row");
+    if (!rows.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries, obs) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("row-revealed");
+            obs.unobserve(entry.target);
+          }
+        }
+      },
+      {
+        threshold: 0.3,
+        rootMargin: "0px 0px -20px 0px",
+      },
+    );
+
+    rows.forEach((row) => observer.observe(row));
+  }
+
+  // Astro defers component scripts — DOM is ready when this runs.
+  // The idle callback keeps the observer setup off the critical path.
+  if ("requestIdleCallback" in window) {
+    requestIdleCallback(initMatrixRowReveal, { timeout: 500 });
+  } else {
+    initMatrixRowReveal();
+  }
+</script>

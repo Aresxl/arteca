@@ -1,0 +1,54 @@
+[
+  {
+    "tierLabel": "Tier 01",
+    "cardTitle": "Foundation",
+    "cardSubtitle": "The clean, high-performance foundation every restaurant needs",
+    "features": [
+      "Bespoke hand-coded website",
+      "5 pages included",
+      "SEO Foundations",
+      "Google analytics",
+      "Google business profile optimisation",
+      "QR table menus",
+      "Easy CMS integration ",
+      "Booking integration",
+      "Results guaranteee"
+    ],
+    "badges": ["12 months hosting", "6 months priority support"],
+    "inherits": false,
+    "isFoundation": true,
+    "popular": false
+  },
+  {
+    "tierLabel": "Tier 02",
+    "cardTitle": "Signature",
+    "cardSubtitle": "Turn browsers into reservations with smarter visibility and lead capture",
+    "features": [
+      "Google reviews + Instagram social proof",
+      "Email capture + basic automation",
+      "Event / private dining form",
+      "Professional food photography"
+    ],
+    "inherits": true,
+    "inheritedFrom": "Foundation",
+    "inheritedFeatures": "11 features included",
+    "popular": true
+  },
+  {
+    "tierLabel": "Tier 03",
+    "cardTitle": "Michelin Star",
+    "cardSubtitle": "The full revenue engine for restaurants",
+    "features": [
+      "Online order integration",
+      "Loyalty / rewards program setup",
+      "Premium custom animations",
+      "Cinematic hero video production",
+      "Multi language support"
+    ],
+    "inherits": true,
+    "inheritedFrom": "Signature",
+    "inheritedFeatures": "16 features included",
+    "popular": false,
+    "michelin": true
+  }
+]
