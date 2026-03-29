@@ -13,6 +13,8 @@ const { title, imgSrc, text, websiteHref, ...rest } = Astro.props;
     <div class="picture__wrapper">
       <Picture
         src={imgSrc}
+        height={imgSrc.height}
+        width={imgSrc.width}
         formats={["avif", "webp"]}
         fallbackFormat="jpg"
         alt=""

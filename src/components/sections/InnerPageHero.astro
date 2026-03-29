@@ -25,6 +25,8 @@ const { title, subtitle } = Astro.props;
 
   <Picture
     src={CircuitBGLeft}
+    height={CircuitBGLeft.height}
+    width={CircuitBGLeft.width}
     formats={["avif", "webp"]}
     fallbackFormat="jpg"
     alt=""
@@ -36,6 +38,8 @@ const { title, subtitle } = Astro.props;
   />
   <Picture
     src={CircuitBGRight}
+    height={CircuitBGRight.height}
+    width={CircuitBGRight.width}
     formats={["avif", "webp"]}
     fallbackFormat="jpg"
     alt=""
