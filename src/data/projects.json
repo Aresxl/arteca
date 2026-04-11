@@ -14,5 +14,13 @@
     "text": "da",
     "roles": ["featured", "portfolio"],
     "websiteHref": "https://barra-recreation.netlify.app/"
+  },
+  {
+    "id": "3",
+    "imgSrc": "/src/assets/images/desktop/aurelia-house.jpg",
+    "title": "Aurelia House",
+    "text": "da",
+    "roles": ["featured", "portfolio"],
+    "websiteHref": "https://aurelia-house.netlify.app/"
   }
 ]

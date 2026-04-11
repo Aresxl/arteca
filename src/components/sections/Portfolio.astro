@@ -76,5 +76,11 @@ import SectionHeader from "../ui/SectionHeader.astro";
         }
       }
     }
+
+    @media (min-width: 90rem) {
+      .portfolio__grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
   </style>
 </section>
