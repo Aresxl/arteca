@@ -1,10 +1,12 @@
 ---
-const { title, description } = Astro.props;
+const { title, description, canonical } = Astro.props;
+
+const defaultCanonical = new URL(Astro.url.pathname, Astro.site).href;
 ---
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link
     rel="preload"
     href="/fonts/orbitron-v35-latin-900.woff2"
@@ -33,7 +35,51 @@ const { title, description } = Astro.props;
     type="font/woff2"
     crossorigin
   />
+
+  <link rel="canonical" href={defaultCanonical} />
+  <link rel="sitemap" href="/sitemap-index.xml" />
   <meta name="description" content={description} />
   <meta name="generator" content={Astro.generator} />
+
+  <!-- Open Graph / Facebook, LinkedIn, etc. -->
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={defaultCanonical} />
+  <meta property="og:site_name" content="Vyteca" />
+
+  <!-- Twitter/X Cards -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:site" content="@Ares_HD" />
   <title>{title}</title>
 </head>
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Vyteca",
+    "url": "https://vyteca.com",
+    "logo": "https://vyteca.com/images/vyteca-logo.png",
+    // "image": "https://vyteca.com/og-image.jpg",
+    "description": "Custom hand-coded websites for Melbourne restaurants. Lightning-fast loads, flawless mobile, local SEO foundations. More direct bookings and fuller tables. Built from scratch in 3–4 weeks.",
+    "founder": {
+      "@type": "Person",
+      "name": "Lachlan Williams"
+    },
+    "foundingDate": "2026-02-17",
+    "areaServed": {
+      "@type": "Place",
+      "name": "Melbourne, Victoria, Australia"
+    },
+    "serviceType": [
+      "Restaurant Website Design",
+      "Restaurant SEO",
+      "Restaurant Performance Optimization",
+      "Restaurant Conversion Optimization"
+    ]
+    // "sameAs": ["https://twitter.com/vyteca", "https://linkedin.com/company/vyteca"]
+  }
+</script>

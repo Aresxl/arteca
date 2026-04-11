@@ -11,6 +11,7 @@ export const collections = {
         text: z.string(),
         roles: z.array(z.enum(["featured", "portfolio"])),
         imgSrc: image(),
+        websiteHref: z.string(),
       }),
   }),
 };

@@ -1,0 +1,116 @@
+---
+const { fadeIn } = Astro.props;
+
+// Data
+import data from "@/data/packages.json";
+
+// Components
+import Heading from "../ui/Heading.astro";
+import LinkOrButton from "../ui/LinkOrButton.astro";
+import PricingCard from "../ui/PricingCard.astro";
+import PackageCard from "../ui/PackageCard.astro";
+import FeatureMatrix from "../ui/FeatureMatrix.astro";
+---
+
+<section class="packages | grid-main" aria-labelledby="package-title">
+  <header class:list={["package__header", fadeIn && "fade-in"]}>
+    <Heading tag="h2" text="What's Included" class="section-title" id="package-title" />
+    <span class="subtitle">Simple plans, serious impact</span>
+  </header>
+  <ul class="package__cards-wrapper">
+    {
+      data.map((plan) => (
+        <PackageCard
+          tierLabel={plan.tierLabel}
+          cardTitle={plan.cardTitle}
+          cardSubtitle={plan.cardSubtitle}
+          features={plan.features}
+          badges={plan.badges}
+          isFoundation={plan.isFoundation}
+          inherits={plan.inherits}
+          inheritedFrom={plan.inheritedFrom}
+          inheritedFeatures={plan.inheritedFeatures}
+          michelin={plan.michelin}
+          popular={plan.popular}
+        />
+      ))
+    }
+  </ul>
+  <div class="matrix-wrapper">
+    <FeatureMatrix />
+  </div>
+
+  <div class="footer">
+    <p>
+      These tiers are illustrative guides only. Every restaurant project is 100% custom-scoped to
+      your menu, brand and goals. Final investment and deliverables confirmed after a quick strategy
+      call.
+    </p>
+    <div class="cta__btn-wrapper">
+      <LinkOrButton
+        as="a"
+        href="https://cal.com/vyteca/15min"
+        variant="primary"
+        text="Book a call"
+        target="_blank"
+        rel="noopener noreferrer"
+      />
+    </div>
+  </div>
+</section>
+
+<style>
+  .packages {
+    margin-block-end: var(--spacing-2xl);
+  }
+  .package__header {
+    display: grid;
+    text-align: center;
+    margin-block-end: var(--spacing-xl);
+  }
+
+  .subtitle {
+    margin-block: var(--spacing-xxs) 20px;
+  }
+
+  .package__cards-wrapper {
+    display: grid;
+    gap: var(--spacing-lg);
+  }
+
+  .footer {
+    display: grid;
+    gap: var(--spacing-md);
+    text-align: center;
+    margin-block-start: var(--spacing-md);
+  }
+
+  .matrix-wrapper {
+    display: none;
+    width: 100%;
+  }
+
+  @media (min-width: 40rem) {
+    .package__cards-wrapper {
+      display: none;
+    }
+
+    .matrix-wrapper {
+      display: block;
+    }
+  }
+
+  @media (min-width: 48rem) {
+    .subtitle {
+      margin-block: var(--spacing-xxs) var(--spacing-md);
+    }
+
+    .footer {
+      max-width: 670px;
+      margin-inline: auto;
+    }
+  }
+
+  @media (min-width: 62.5rem) {
+  }
+</style>

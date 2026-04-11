@@ -25,6 +25,8 @@ const { title, subtitle } = Astro.props;
 
   <Picture
     src={CircuitBGLeft}
+    height={CircuitBGLeft.height}
+    width={CircuitBGLeft.width}
     formats={["avif", "webp"]}
     fallbackFormat="jpg"
     alt=""
@@ -36,6 +38,8 @@ const { title, subtitle } = Astro.props;
   />
   <Picture
     src={CircuitBGRight}
+    height={CircuitBGRight.height}
+    width={CircuitBGRight.width}
     formats={["avif", "webp"]}
     fallbackFormat="jpg"
     alt=""
@@ -54,7 +58,6 @@ const { title, subtitle } = Astro.props;
     margin-block-end: var(--section-space);
     padding-block: var(--spacing-3xl) var(--spacing-2xl);
     text-align: center;
-    min-height: 78vh;
   }
 
   .hero__subtitle {
@@ -67,7 +70,7 @@ const { title, subtitle } = Astro.props;
     inset: 0;
     z-index: 200;
     pointer-events: none;
-    background-image: url(src/assets/images/mobile/dot-bg.png);
+    background-image: url(/images/dot-bg.png);
     background-repeat: repeat;
     opacity: 0.5;
   }

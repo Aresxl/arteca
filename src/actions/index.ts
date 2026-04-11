@@ -2,11 +2,9 @@ import { defineAction, ActionError } from "astro:actions";
 import { z } from "astro/zod";
 import { Resend } from "resend";
 
-const resend = new Resend(import.meta.env.RESEND_API_KEY);
-
 export const server = {
   form: defineAction({
-    accept: "form",
+    // accept: "form",
     input: z.object({
       name: z.preprocess(
         (val) => (val === null ? "" : val),
@@ -48,47 +46,80 @@ export const server = {
       fax: z.string().optional(),
     }),
     handler: async (input) => {
+      const apiKey = import.meta.env.RESEND_API_KEY;
+
+      if (!apiKey) {
+        console.error("Missing RESEND_API_KEY in environment");
+        throw new ActionError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Server configuration error",
+        });
+      }
+
+      const resend = new Resend(apiKey);
+
+      console.log("=== FORM SUBMISSION START ===");
+      console.log("Raw input:", input);
+
+      // Honeypot check
       if (input[`fax`]?.trim()) {
+        console.log("Honeypot triggered. Possible bot submission.");
         return { success: true };
       }
 
       try {
-        const { error } = await resend.emails.send({
-          from: "Agency Contact Form <onboarding@resend.dev>", // Must be a verified domain in Resend
-          to: ["lockyyw@outlook.com"], // Your real email(s)
+        console.log("Preparing email payload...");
+
+        const emailPayload = {
+          from: "Vyteca Contact Form <contact@mail.vyteca.com>",
+          to: ["vyteca@gmail.com"],
           replyTo: input.email,
           subject: `New inquiry from ${input.name} @ ${input["restaurant-name"]}`,
           html: `
-            <h2>New Contact Form Submission</h2>
-            <p><strong>Name:</strong> ${input.name}</p>
-            <p><strong>Restaurant:</strong> ${input["restaurant-name"]}</p>
-            <p><strong>Email:</strong> ${input.email}</p>
-            <p><strong>Phone:</strong> ${input.phone || "Not provided"}</p>
-            <p><strong>Contact preference:</strong> ${input.contact.replace("contact-", "")}</p>
-            <hr />
-            <p><strong>Message:</strong></p>
-            <p style="white-space: pre-wrap;">${input.message}</p>
-          `,
-        });
+        <h2>New Contact Form Submission</h2>
+        <p><strong>Name:</strong> ${input.name}</p>
+        <p><strong>Restaurant:</strong> ${input["restaurant-name"]}</p>
+        <p><strong>Email:</strong> ${input.email}</p>
+        <p><strong>Phone:</strong> ${input.phone || "Not provided"}</p>
+        <p><strong>Contact preference:</strong> ${input.contact?.replace("contact-", "")}</p>
+        <hr />
+        <p><strong>Message:</strong></p>
+        <p style="white-space: pre-wrap;">${input.message}</p>
+      `,
+        };
 
-        if (error) {
-          console.error("Resend error:", error);
+        console.log("Email payload:", emailPayload);
+
+        const response = await resend.emails.send(emailPayload);
+
+        console.log("Resend response:", response);
+
+        if (response.error) {
+          console.error("Resend error object:", response.error);
+
           throw new ActionError({
             code: "INTERNAL_SERVER_ERROR",
-            message: "Failed to send message — please try again later.",
+            message: `Resend failed: ${response.error.message}`,
           });
         }
 
-        return { success: true, message: "Message sent successfully!" };
-      } catch (err) {
-        console.error(err);
+        console.log("=== EMAIL SENT SUCCESSFULLY ===");
+
+        return {
+          success: true,
+          message: "Message sent successfully!",
+        };
+      } catch (err: any) {
+        console.error("=== ERROR CAUGHT ===");
+        console.error("Full error object:", err);
+        console.error("Error message:", err?.message);
+        console.error("Stack trace:", err?.stack);
+
         throw new ActionError({
           code: "INTERNAL_SERVER_ERROR",
-          message: "Something went wrong. Please try again.",
+          message: err?.message || "Something went wrong. Please try again.",
         });
       }
-
-      return { success: true };
     },
   }),
 };

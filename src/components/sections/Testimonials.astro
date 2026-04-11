@@ -6,6 +6,8 @@ const sectionText =
   "My Melbourne web design studio is gearing up, so testimonials are pending as client collaborations begin. This section will soon showcase video feedback from our partners who've boosted their bookings, visibility and revenue through our tailored sites, providing real success stories.";
 const sectionTitleId = "testimonials";
 
+const { fadeIn } = Astro.props;
+
 // Images
 import TestimonialBGLeft from "@/assets/icons/cyber-bg/testimonial-bg-left.svg";
 import TestimonialBGRight from "@/assets/icons/cyber-bg/testimonial-bg-right.svg";
@@ -32,6 +34,7 @@ import SectionHeader from "../ui/SectionHeader.astro";
     supportingText={sectionText}
     titleTag="h2"
     titleId={sectionTitleId}
+    fadeIn={fadeIn}
     class="testimonials__header"
   />
 
@@ -55,6 +58,8 @@ import SectionHeader from "../ui/SectionHeader.astro";
           <div class="picture__wrapper">
             <Picture
               src={TestimonialImg1}
+              width={TestimonialImg1.width}
+              height={TestimonialImg1.height}
               formats={["avif", "webp"]}
               fallbackFormat="jpg"
               alt=""
@@ -74,6 +79,8 @@ import SectionHeader from "../ui/SectionHeader.astro";
           <div class="picture__wrapper">
             <Picture
               src={TestimonialImg2}
+              width={TestimonialImg2.width}
+              height={TestimonialImg2.height}
               formats={["avif", "webp"]}
               fallbackFormat="jpg"
               alt=""
@@ -93,6 +100,8 @@ import SectionHeader from "../ui/SectionHeader.astro";
           <div class="picture__wrapper">
             <Picture
               src={TestimonialImg3}
+              width={TestimonialImg3.width}
+              height={TestimonialImg3.height}
               formats={["avif", "webp"]}
               fallbackFormat="jpg"
               alt=""

@@ -5,7 +5,7 @@
     "title": "Dine",
     "text": "This was a project that I completed from Frontend Mentor to showcase a Restaurant website",
     "roles": ["featured", "portfolio"],
-    "websiteHref": ""
+    "websiteHref": "https://dine-fem-project.netlify.app/"
   },
   {
     "id": "2",
@@ -13,6 +13,14 @@
     "title": "Barra Recreation",
     "text": "da",
     "roles": ["featured", "portfolio"],
-    "websiteHref": ""
+    "websiteHref": "https://barra-recreation.netlify.app/"
+  },
+  {
+    "id": "3",
+    "imgSrc": "/src/assets/images/desktop/aurelia-house.jpg",
+    "title": "Aurelia House",
+    "text": "da",
+    "roles": ["featured", "portfolio"],
+    "websiteHref": "https://aurelia-house.netlify.app/"
   }
 ]
