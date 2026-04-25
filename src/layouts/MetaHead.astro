@@ -56,6 +56,32 @@ const defaultCanonical = new URL(Astro.url.pathname, Astro.site).href;
   <meta name="twitter:description" content={description} />
   <meta name="twitter:site" content="@Ares_HD" />
   <title>{title}</title>
+
+  <script is:inline>
+    (function () {
+      window.dataLayer = window.dataLayer || [];
+
+      function loadGTM() {
+        if (window.__gtmLoaded) return;
+        window.__gtmLoaded = true;
+        window.dataLayer.push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var s = document.createElement("script");
+        s.async = true;
+        s.src = "https://www.googletagmanager.com/gtm.js?id=GTM-K94TLQR6";
+        document.head.appendChild(s);
+      }
+
+      ["scroll", "pointerdown", "keydown", "mousemove"].forEach(function (evt) {
+        window.addEventListener(evt, loadGTM, { once: true, passive: true });
+      });
+
+      if ("requestIdleCallback" in window) {
+        requestIdleCallback(loadGTM, { timeout: 3000 });
+      } else {
+        setTimeout(loadGTM, 3000);
+      }
+    })();
+  </script>
 </head>
 
 <script type="application/ld+json">

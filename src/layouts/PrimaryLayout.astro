@@ -12,6 +12,10 @@ const { title, description } = Astro.props;
 <html lang="en">
   <MetaHead title={title} description={description} />
   <body>
+    <noscript>
+      <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K94TLQR6"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
     <a href="#main" class="skip-to-main">Skip to main content</a>
     <Header />
     <main id="main">
