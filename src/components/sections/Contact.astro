@@ -609,7 +609,25 @@ import LinkOrButton from "../ui/LinkOrButton.astro";
 <script>
   import { actions, isInputError } from "astro:actions";
 
+  declare global {
+    interface Window {
+      dataLayer: Record<string, unknown>[];
+    }
+  }
+
   const form = document?.querySelector<HTMLFormElement>(`.form`);
+  const liveFields = document.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>(
+    `[data-input]`,
+  );
+
+  let formStarted = false;
+  form?.addEventListener("focusin", (e) => {
+    if (formStarted) return;
+    if (!(e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement)) return;
+    formStarted = true;
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ event: "form_start" });
+  });
 
   function setFieldError(fieldName: string, message: string | null) {
     const inputEl = document.querySelector<HTMLInputElement>(`[name="${fieldName}"]`);
@@ -654,9 +672,9 @@ import LinkOrButton from "../ui/LinkOrButton.astro";
     controlEls.forEach((el) => {
       el.classList.remove(`has-error`, `has-success`);
     });
-    inputEls.forEach((el: any) => {
+    inputEls.forEach((el) => {
+      (el as HTMLInputElement | HTMLTextAreaElement).value = "";
       el.classList.remove(`error-input`, `success-input`);
-      el.value = "";
     });
     errorMessageEls.forEach((el) => {
       el.textContent = "";
@@ -700,7 +718,6 @@ import LinkOrButton from "../ui/LinkOrButton.astro";
     // Optimistic: Show success modal immediately
     const name = data.name;
     const restaurantName = data["restaurant-name"];
-    const email = data.email;
     const modalMessage = document.getElementById("modal-message");
     const modalEl = document.querySelector(`.modal`);
     const modalCloseBtnEl = document.querySelector(`#close-modal`);
@@ -748,7 +765,8 @@ import LinkOrButton from "../ui/LinkOrButton.astro";
             }
           }
         } else {
-          console.log("Background success!");
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({ event: "form_submission" });
         }
       })
       .catch((err) => {
@@ -760,7 +778,6 @@ import LinkOrButton from "../ui/LinkOrButton.astro";
 
     if (modalCloseBtnEl) {
       modalCloseBtnEl.addEventListener(`click`, () => {
-        console.log(`btn clicked`);
         modalEl?.classList.add(`hidden`);
         bodyEl?.classList.remove(`modal--visible`);
         resetForm();
@@ -768,9 +785,6 @@ import LinkOrButton from "../ui/LinkOrButton.astro";
     }
   });
 
-  const liveFields = document.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>(
-    `[data-input]`,
-  );
   liveFields.forEach((field) => {
     field.addEventListener(`input`, () => {
       validateAndUpdateField(field);

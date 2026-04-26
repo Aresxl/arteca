@@ -71,14 +71,21 @@ const defaultCanonical = new URL(Astro.url.pathname, Astro.site).href;
         document.head.appendChild(s);
       }
 
-      ["scroll", "pointerdown", "keydown", "mousemove"].forEach(function (evt) {
-        window.addEventListener(evt, loadGTM, { once: true, passive: true });
-      });
+      var isLocal =
+        window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
 
-      if ("requestIdleCallback" in window) {
-        requestIdleCallback(loadGTM, { timeout: 3000 });
+      if (isLocal) {
+        loadGTM();
       } else {
-        setTimeout(loadGTM, 3000);
+        ["scroll", "pointerdown", "keydown", "mousemove"].forEach(function (evt) {
+          window.addEventListener(evt, loadGTM, { once: true, passive: true });
+        });
+
+        if ("requestIdleCallback" in window) {
+          requestIdleCallback(loadGTM, { timeout: 3000 });
+        } else {
+          setTimeout(loadGTM, 3000);
+        }
       }
     })();
   </script>

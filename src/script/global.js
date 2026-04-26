@@ -6,4 +6,16 @@ if (typeof window !== "undefined") {
   } else {
     window.addEventListener("load", initScrollReveal);
   }
+
+  document.addEventListener("click", function (e) {
+    var btn = e.target.closest("[data-track='cta']");
+    if (!btn) return;
+
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: "cta_click",
+      cta_text: btn.textContent.trim(),
+      cta_destination: btn.href || "form_submit",
+    });
+  });
 }
