@@ -533,6 +533,10 @@
     line-height: 1;
     letter-spacing: -0.01em;
   }
+
+  .footer-title--landing {
+    font-size: clamp(2.875rem, 2.6549295774647885rem + 0.9389671361502347vw, 3.5rem);
+  }
 }
 
 @layer components {

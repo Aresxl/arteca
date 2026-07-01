@@ -151,8 +151,10 @@ const pageCount = String(navLinks.length).padStart(2, "0");
      over both dark and cream sections. */
   .site__header.is-scrolled {
     background-color: hsl(from var(--clr-neutral-900) h s l / 0.85);
+    /* Standard property only. Lightning CSS adds the -webkit- prefix from the
+       build's css targets; writing both by hand makes it collapse to -webkit-
+       only at minify time, which drops the blur in Firefox. */
     backdrop-filter: blur(20px) saturate(1.4);
-    -webkit-backdrop-filter: blur(20px) saturate(1.4);
     border-bottom-color: hsl(0 0% 100% / 0.06);
     box-shadow: 0 8px 32px hsl(0 0% 0% / 0.18);
   }
@@ -166,6 +168,11 @@ const pageCount = String(navLinks.length).padStart(2, "0");
   /* Wordmark hard left; everything else is pushed to the right. */
   .home-link {
     margin-right: auto;
+
+    /* The wordmark's -0.06em letter-spacing pulls the box in past the final
+       glyph, then RollLink's overflow:hidden clips the "A". A hair of inline-end
+       padding restores the clip edge without shifting the hard-left layout. */
+    padding-inline-end: 0.12em;
 
     /* Keep the wordmark gold through the roll. RollLink's own colour rule is
        unlayered, so it outranks .site-logo's gold (in @layer typography) and

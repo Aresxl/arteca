@@ -12,7 +12,7 @@ import LinkOrButton from "../ui/LinkOrButton.astro";
 <section class="booking | grid-main" id="your-venue" aria-labelledby="booking-title">
   <header class="booking__head | fade-in">
     <p class="eyebrow eyebrow--gold">Quick brief</p>
-    <h2 class="section-subtitle section-subtitle--light" id="booking-title">
+    <h2 class="section-subtitle section-subtitle--light quick-brief-title" id="booking-title">
       Tell us about your <ItalicTitle variant="on-dark">venue.</ItalicTitle>
     </h2>
     <p class="booking__intro">
@@ -289,6 +289,11 @@ import LinkOrButton from "../ui/LinkOrButton.astro";
     font-size: var(--fs-400);
     line-height: 1.7;
     color: var(--clr-body-muted-light);
+  }
+
+  .quick-brief-title {
+    max-width: 12ch;
+    margin-inline: auto;
   }
 
   /* ── Panel ───────────────────────────────────────────── */
@@ -693,6 +698,13 @@ import LinkOrButton from "../ui/LinkOrButton.astro";
     }
     .final__spinner {
       animation: none;
+    }
+  }
+
+  @media (min-width: 28.125rem) {
+    .quick-brief-title {
+      max-width: unset;
+      margin-inline: unset;
     }
   }
 

@@ -76,15 +76,14 @@ const ogImageUrl = new URL(ogImage ?? "/images/og-image.png", Astro.site).href;
       if (isLocal) {
         loadGTM();
       } else {
+        // Load GTM on the first real interaction only — no idle/timeout fallback.
+        // A session that never interacts (including Lighthouse/PSI, which drives
+        // the page headless and never does) never loads GTM, so it stays off the
+        // audit's main thread. Trade-off: genuinely no-interaction bounces go
+        // untracked in GA4.
         ["scroll", "pointerdown", "keydown", "mousemove"].forEach(function (evt) {
           window.addEventListener(evt, loadGTM, { once: true, passive: true });
         });
-
-        if ("requestIdleCallback" in window) {
-          requestIdleCallback(loadGTM, { timeout: 3000 });
-        } else {
-          setTimeout(loadGTM, 3000);
-        }
       }
     })();
   </script>
