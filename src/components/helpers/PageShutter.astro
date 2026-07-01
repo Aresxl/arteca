@@ -1,0 +1,11 @@
+---
+// Page-transition shutter panels. Persisted across ClientRouter swaps and driven
+// by initShutter() in global.js. Must be present in every layout so the seal/open
+// has a counterpart on both the outgoing and incoming page (transition:persist
+// only carries the element when both DOMs contain it).
+---
+
+<div class="page-shutter" aria-hidden="true" transition:persist="page-shutter">
+  <div class="page-shutter__panel page-shutter__panel--top"></div>
+  <div class="page-shutter__panel page-shutter__panel--bottom"></div>
+</div>

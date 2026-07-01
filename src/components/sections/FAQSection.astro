@@ -1,0 +1,222 @@
+---
+// Reusable FAQ section: an intro column + a short accordion. Plug into any
+// inner page (Home, Services, About, Contact) with page-specific questions.
+// For the tabbed, category-switching FAQ used on the dedicated FAQ page, see
+// FAQTabbed.astro.
+import ItalicTitle from "../ui/ItalicTitle.astro";
+import FAQList from "../ui/FAQList.astro";
+
+interface Props {
+  items: { question: string; answer: string }[];
+  /** Eyebrow above the heading. */
+  eyebrow?: string;
+  /** Heading text before the underlined accent word(s). */
+  titleLead: string;
+  /** Underlined accent word(s) closing the heading. */
+  titleAccent: string;
+  /** Supporting paragraph. HTML allowed (e.g. an inline link). */
+  note?: string;
+  /** Prefix for accordion panel ids — keep unique per page. */
+  idPrefix?: string;
+  /** When set, renders a "see all" link below the accordion. Omit on the FAQ page itself. */
+  viewAllHref?: string;
+  /** Label for the view-all link. */
+  viewAllText?: string;
+}
+
+const {
+  items,
+  eyebrow = "FAQ",
+  titleLead,
+  titleAccent,
+  note,
+  idPrefix = "faq",
+  viewAllHref,
+  viewAllText = "See all FAQs",
+} = Astro.props;
+---
+
+<section class="faq | grid-main" aria-labelledby={`${idPrefix}-title`}>
+  <div class="faq__inner">
+    <header class="faq__intro | fade-in">
+      <h2 class="eyebrow eyebrow--dark" id={`${idPrefix}-title`}>{eyebrow}</h2>
+      <p class="section-subtitle section-subtitle--dark faq__subtitle">
+        {titleLead}{" "}
+        <ItalicTitle variant="on-light">{titleAccent}</ItalicTitle>
+      </p>
+      {note && <p class="faq__note" set:html={note} />}
+    </header>
+
+    <div class="faq__main">
+      <FAQList items={items} idPrefix={idPrefix} class="fade-in" />
+
+      {
+        viewAllHref && (
+          <a class="faq__view-all | fade-in" href={viewAllHref}>
+            <span class="faq__view-all-text">{viewAllText}</span>
+            <svg
+              class="faq__view-all-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path
+                d="M5 12h14M13 6l6 6-6 6"
+                stroke="currentColor"
+                stroke-width="1.75"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </a>
+        )
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq {
+    padding-block: var(--section-space);
+    background-color: var(--clr-bg-primary-light);
+    color: var(--clr-body-text-dark);
+  }
+
+  /* The lone grid-main child spans the content columns and owns the split. */
+  .faq__inner {
+    display: grid;
+    gap: var(--spacing-xl);
+  }
+
+  .faq__intro {
+    text-align: center;
+  }
+
+  .section-subtitle {
+    font-size: 2.5rem;
+  }
+
+  .faq__note {
+    max-width: 50ch;
+    margin-block-start: var(--spacing-md);
+    margin-inline: auto;
+    font-size: var(--fs-400);
+    line-height: 1.5;
+    color: var(--clr-body-muted);
+  }
+
+  /* Links inside the note arrive via set:html, so reach them with :global(). */
+  .faq__note :global(a) {
+    position: relative;
+    color: var(--clr-body-text-dark);
+    font-weight: var(--fw-700);
+    white-space: nowrap;
+  }
+
+  .faq__note :global(a)::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    bottom: -1px;
+    height: 1px;
+    background-color: var(--clr-primary-gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s var(--ease);
+  }
+
+  .faq__note :global(a):hover::after,
+  .faq__note :global(a):focus-visible::after {
+    transform: scaleX(1);
+  }
+
+  /* Self-serve link to the full FAQ page. Sits at the foot of the accordion —
+     the moment a reader has run out of the short list — so it reads as a
+     continuation, not a competing CTA. */
+  .faq__view-all {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    width: fit-content;
+    margin-block-start: var(--spacing-lg);
+    font-size: var(--fs-400);
+    font-weight: var(--fw-700);
+    color: var(--clr-body-text-dark);
+  }
+
+  .faq__view-all:focus-visible {
+    outline: 2px solid var(--clr-primary-gold);
+    outline-offset: 4px;
+  }
+
+  .faq__view-all-text {
+    position: relative;
+  }
+
+  .faq__view-all-text::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    bottom: -2px;
+    height: 1px;
+    background-color: var(--clr-primary-gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s var(--ease);
+  }
+
+  .faq__view-all:hover .faq__view-all-text::after,
+  .faq__view-all:focus-visible .faq__view-all-text::after {
+    transform: scaleX(1);
+  }
+
+  .faq__view-all-icon {
+    width: 1.05em;
+    height: 1.05em;
+    transition: transform 0.35s var(--ease);
+  }
+
+  .faq__view-all:hover .faq__view-all-icon,
+  .faq__view-all:focus-visible .faq__view-all-icon {
+    transform: translateX(3px);
+  }
+
+  @media (min-width: 40rem) {
+    .faq__intro {
+      text-align: start;
+    }
+
+    .faq__note {
+      max-width: 43ch;
+      margin-inline: unset;
+    }
+  }
+
+  /* ── Stack on mobile, split into two columns at 768px ──── */
+  @media (min-width: 48rem) {
+    .faq__inner {
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: clamp(2.5rem, 5vw, 5.25rem);
+      align-items: start;
+    }
+
+    .section-subtitle {
+      font-size: 2.1875rem;
+    }
+  }
+
+  @media (min-width: 62.5rem) {
+    .section-subtitle {
+      font-size: clamp(2.625rem, 0.9204545454545456rem + 2.727272727272727vw, 3.375rem);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .faq__note :global(a)::after,
+    .faq__view-all-text::after,
+    .faq__view-all-icon {
+      transition: none;
+    }
+  }
+</style>

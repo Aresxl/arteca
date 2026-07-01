@@ -1,0 +1,34 @@
+---
+import LandingHeader from "@/components/sections/LandingHeader.astro";
+import LandingFooter from "@/components/sections/LandingFooter.astro";
+import PageShutter from "@/components/helpers/PageShutter.astro";
+import MetaHead from "./MetaHead.astro";
+
+import "@/styles/global.css";
+
+const { title, description, noindex } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en-AU">
+  <MetaHead title={title} description={description} noindex={noindex} />
+  <body>
+    <noscript>
+      <iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-K94TLQR6"
+        height="0"
+        width="0"
+        style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <a href="#main" class="skip-to-main">Skip to main content</a>
+    <PageShutter />
+    <LandingHeader />
+    <main id="main">
+      <slot />
+    </main>
+    <LandingFooter />
+    <script>
+      import "@/script/global.js";
+    </script>
+  </body>
+</html>

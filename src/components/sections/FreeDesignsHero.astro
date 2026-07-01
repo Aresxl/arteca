@@ -1,0 +1,959 @@
+---
+// Images
+import mockDesign1 from "../../assets/images/free-designs/mock-design-1.png";
+import mockDesign2 from "../../assets/images/free-designs/mock-design-2.png";
+import mockDesign3 from "../../assets/images/free-designs/mock-design-3.png";
+import ArrowDown from "@/assets/icons/arrow-down.svg";
+
+// Components
+import { Picture } from "astro:assets";
+import LinkOrButton from "../ui/LinkOrButton.astro";
+
+interface Props {
+  /** Fragment the primary CTA scrolls to (the brief form section). */
+  formHref?: string;
+}
+
+const { formHref = "#your-venue" } = Astro.props;
+
+// Three design directions for one venue shown in mock browser chrome. Same URL
+// across all three reinforces the offer: one venue, three directions.
+const mockUrl = "dripcafe.com.au";
+const mocks = [
+  { image: mockDesign1, variant: "left" },
+  { image: mockDesign3, variant: "center" },
+  { image: mockDesign2, variant: "right" },
+];
+---
+
+<section class="lhero | grid-main" aria-labelledby="lhero-title">
+  <div class="lhero__inner">
+    <header class="lhero__header">
+      <p class="lhero__eyebrow eyebrow eyebrow--gold">Your 3 free designs</p>
+
+      <h1 class="lhero__title hero-title--404" id="lhero-title">
+        <span class="lhero__title-lead">
+          <span class="hero-word"><span class="hero-word__inner">Three</span></span>{" "}
+          <span class="hero-word"><span class="hero-word__inner">designs</span></span>{" "}
+          <span class="hero-word"><span class="hero-word__inner">for</span></span>{" "}
+          <span class="hero-word"><span class="hero-word__inner">your</span></span>{" "}
+          <span class="hero-word"><span class="hero-word__inner">venue.</span></span>
+        </span>{" "}
+        <span class="hero-italic">
+          <span class="hero-word"><span class="hero-word__inner">On</span></span>{" "}
+          <span class="hero-word"><span class="hero-word__inner">the</span></span>{" "}
+          <span class="hero-word"><span class="hero-word__inner">house.</span></span>
+        </span>
+      </h1>
+
+      <p class="lhero__subtitle">
+        Three custom directions, hand-built for your place and made to turn more browsers into
+        <strong> booked tables.</strong> No cost, no obligation, nothing templated.
+      </p>
+
+      <div class="lhero__cta">
+        <LinkOrButton
+          as="a"
+          href={formHref}
+          text="Tell us about your venue"
+          variant="primary"
+          data-track="cta"
+        >
+          <ArrowDown />
+        </LinkOrButton>
+        <p class="lhero__cta-note">
+          <span class="lhero__cta-dot" aria-hidden="true"></span>
+          Revealed live on a short call
+        </p>
+      </div>
+    </header>
+
+    <div class="lhero__mocks" aria-hidden="true">
+      {
+        mocks.map(({ image, variant }) => (
+          <div class:list={["mock", `mock--${variant}`]}>
+            <div class="mock__bar">
+              <span class="mock__dots">
+                <span class="mock__dot mock__dot--red" />
+                <span class="mock__dot mock__dot--amber" />
+                <span class="mock__dot mock__dot--green" />
+              </span>
+              <span class="mock__url">{mockUrl}</span>
+            </div>
+            <div class="mock__shot">
+              <Picture
+                src={image}
+                alt=""
+                formats={["avif", "webp"]}
+                fallbackFormat="webp"
+                width={1440}
+                height={900}
+                fit="cover"
+                position="top"
+                widths={[420, 640, 960, 1200]}
+                sizes="(min-width: 62.5rem) 480px, (min-width: 48rem) 60vw, 82vw"
+                priority={variant === "center"}
+              />
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+
+  <canvas class="lhero__canvas" data-hero-canvas aria-hidden="true"></canvas>
+  <svg
+    class="hero-flair"
+    aria-hidden="true"
+    focusable="false"
+    viewBox="0 0 560 560"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <defs>
+      <radialGradient id="lhero-flair-glow" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="var(--clr-primary-gold)" stop-opacity="0.16"></stop>
+        <stop offset="50%" stop-color="var(--clr-primary-gold)" stop-opacity="0.05"></stop>
+        <stop offset="100%" stop-color="var(--clr-primary-gold)" stop-opacity="0"></stop>
+      </radialGradient>
+    </defs>
+
+    <circle class="hero-flair__glow" cx="280" cy="280" r="220" fill="url(#lhero-flair-glow)"
+    ></circle>
+
+    <circle class="hero-flair__ring hero-flair__ring--lg" cx="280" cy="280" r="279"></circle>
+    <circle class="hero-flair__ring hero-flair__ring--md" cx="280" cy="280" r="209"></circle>
+    <circle class="hero-flair__ring hero-flair__ring--sm" cx="280" cy="280" r="149"></circle>
+    <circle class="hero-flair__ring hero-flair__ring--xs" cx="280" cy="280" r="89"></circle>
+
+    <g class="hero-flair__orbit hero-flair__orbit--1">
+      <circle class="hero-flair__dot" cx="280" cy="1" r="1.5"></circle>
+    </g>
+    <g class="hero-flair__orbit hero-flair__orbit--2">
+      <circle class="hero-flair__dot hero-flair__dot--lg" cx="280" cy="71" r="2"></circle>
+    </g>
+    <g class="hero-flair__orbit hero-flair__orbit--3">
+      <circle class="hero-flair__dot hero-flair__dot--sm" cx="280" cy="131" r="1"></circle>
+    </g>
+  </svg>
+
+  <div class="hero-arc hero-arc--1" aria-hidden="true"></div>
+  <div class="hero-arc hero-arc--2" aria-hidden="true"></div>
+  <div class="hero-arc hero-arc--3" aria-hidden="true"></div>
+
+  <span class="corner tl" aria-hidden="true"></span>
+  <span class="corner tr" aria-hidden="true"></span>
+  <span class="corner bl" aria-hidden="true"></span>
+  <span class="corner br" aria-hidden="true"></span>
+</section>
+
+<style>
+  .lhero {
+    position: relative;
+    overflow: hidden;
+    padding-block: var(--spacing-3xl) var(--spacing-2xl);
+    text-align: center;
+  }
+
+  .lhero__inner {
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ── Eyebrow ─────────────────────────────────────────── */
+  .lhero__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-block-end: var(--spacing-md);
+  }
+
+  .lhero__eyebrow-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--clr-primary-gold);
+  }
+
+  /* ── Title + subtitle ────────────────────────────────── */
+  .lhero__title {
+    margin-inline: auto;
+    max-width: 16ch;
+    line-height: 1;
+  }
+
+  /* ── Headline word masks + italic underline (mirrors the homepage hero) ──
+     Each word slides up from behind its mask. .lhero__title is line-height: 1,
+     so the mask bottom is padded to give descenders + the underline room, then
+     pulled back with a matching negative margin so line spacing is unchanged. */
+  .hero-word {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: bottom;
+    /* Vertical room for descenders + underline; horizontal room for the
+       italic glyphs' slant overhang. Negative margins pull both back so
+       layout and word spacing stay unchanged. */
+    padding-block-end: 0.15em;
+    padding-inline: 0.12em;
+    margin-block-end: -0.15em;
+    margin-inline: -0.12em;
+  }
+
+  .hero-word__inner {
+    display: inline-block;
+  }
+
+  .hero-italic {
+    position: relative;
+    display: inline-block;
+    vertical-align: bottom;
+    color: var(--clr-body-muted-light);
+    font-weight: var(--fw-400);
+    font-style: italic;
+  }
+
+  .hero-italic::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -0.15em;
+    width: 100%;
+    height: 2px;
+    background-color: var(--clr-primary-gold);
+    transform-origin: left;
+  }
+
+  .lhero__subtitle {
+    margin-block-start: var(--spacing-lg);
+    margin-inline: auto;
+    max-width: 52ch;
+    font-size: clamp(1rem, 0.95rem + 0.3vw, 1.1875rem);
+    line-height: 1.7;
+    color: var(--clr-body-muted-light);
+  }
+
+  .lhero__subtitle strong {
+    font-weight: var(--fw-700);
+    color: var(--clr-body-text);
+  }
+
+  /* ── CTA ─────────────────────────────────────────────── */
+  .lhero__cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm) var(--spacing-lg);
+    margin-block-start: var(--spacing-xl);
+  }
+
+  .lhero__cta-note {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: var(--fs-350);
+    color: var(--clr-body-muted-light);
+  }
+
+  .lhero__cta-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: oklch(66% 0.115 152);
+  }
+
+  /* ── Mock browser frames ─────────────────────────────────
+     Center frame is in flow (sets the height); the side frames are absolutely
+     positioned behind it and fanned out. Pure transform/opacity work only.
+  ─────────────────────────────────────────────────────────── */
+  .lhero__mocks {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    margin-block-start: var(--spacing-2xl);
+  }
+
+  .mock {
+    border: 1px solid hsl(30, 6%, 22%);
+    border-radius: 10px;
+    background: var(--clr-bg-card);
+    box-shadow: 0 24px 60px -24px hsl(0 0% 0% / 0.7);
+    overflow: hidden;
+  }
+
+  .mock--center {
+    position: relative;
+    z-index: 3;
+    width: min(420px, 82%);
+  }
+
+  .mock--left,
+  .mock--right {
+    position: absolute;
+    top: 2%;
+    z-index: 1;
+    width: min(360px, 70%);
+    opacity: 0.85;
+  }
+
+  .mock--left {
+    right: 50%;
+    transform-origin: bottom right;
+    transform: translateX(24%) rotate(-14deg);
+  }
+
+  .mock--right {
+    left: 50%;
+    transform-origin: bottom left;
+    transform: translateX(-24%) rotate(14deg);
+  }
+
+  .mock__bar {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: 11px var(--spacing-sm);
+    border-bottom: 1px solid hsl(30, 6%, 18%);
+    background: hsl(30, 5%, 13%);
+  }
+
+  .mock__dots {
+    display: inline-flex;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  .mock__dot {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+  }
+  .mock__dot--red {
+    background: #ff5f56;
+  }
+  .mock__dot--amber {
+    background: #ffbd2e;
+  }
+  .mock__dot--green {
+    background: #27c93f;
+  }
+
+  .mock__url {
+    flex: 1;
+    min-width: 0;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: hsl(30, 5%, 9%);
+    font-size: var(--fs-300);
+    color: var(--clr-body-muted-light);
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Design screenshot — fills the frame below the chrome, top-anchored so the
+     hero of each mock is always visible regardless of frame width. The <img>
+     comes from the Picture component, so it must be targeted with :global. */
+  .mock__shot {
+    position: relative;
+    aspect-ratio: 3 / 2;
+    /* aspect-ratio: 3 / 1; */
+    background: var(--clr-bg-card);
+    overflow: hidden;
+  }
+
+  .mock__shot :global(picture) {
+    position: absolute;
+    inset: 0;
+  }
+
+  .mock__shot :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+  }
+
+  /* ── Flair (rings / orbiting dots / glow) — from Hero404 ── */
+  .lhero__canvas {
+    grid-column: 1 / -1;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .hero-flair {
+    position: absolute;
+    top: 34%;
+    left: 50%;
+    translate: -50% -50%;
+    width: min(560px, 92vmin);
+    height: min(560px, 92vmin);
+    pointer-events: none;
+    contain: layout style paint;
+    z-index: 1;
+  }
+
+  .hero-flair__ring {
+    fill: none;
+    stroke: var(--clr-primary-gold);
+    stroke-width: 1;
+  }
+  .hero-flair__ring--lg {
+    stroke-opacity: 0.07;
+  }
+  .hero-flair__ring--md {
+    stroke-opacity: 0.09;
+  }
+  .hero-flair__ring--sm {
+    stroke-opacity: 0.1;
+  }
+  .hero-flair__ring--xs {
+    stroke-opacity: 0.12;
+  }
+
+  .hero-flair__orbit {
+    transform-origin: 280px 280px;
+  }
+  .hero-flair__orbit--1 {
+    animation: flair-spin 22s linear infinite;
+  }
+  .hero-flair__orbit--2 {
+    animation: flair-spin 14s linear infinite reverse;
+  }
+  .hero-flair__orbit--3 {
+    animation: flair-spin 9s linear infinite;
+  }
+
+  .hero-flair__dot {
+    fill: var(--clr-primary-gold);
+    fill-opacity: 0.7;
+  }
+  .hero-flair__dot--lg {
+    fill-opacity: 0.9;
+  }
+  .hero-flair__dot--sm {
+    fill-opacity: 0.5;
+  }
+
+  .hero-flair__glow {
+    animation: glow-pulse 4s ease-in-out infinite;
+  }
+
+  @keyframes flair-spin {
+    to {
+      rotate: 1turn;
+    }
+  }
+
+  @keyframes glow-pulse {
+    0%,
+    100% {
+      opacity: 0.5;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+
+  .hero-arc {
+    position: absolute;
+    top: 34%;
+    left: 50%;
+    border-radius: 50%;
+    pointer-events: none;
+    translate: -50% -50%;
+    z-index: 1;
+  }
+  .hero-arc::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+  }
+  .hero-arc--1 {
+    width: min(560px, 92vmin);
+    height: min(560px, 92vmin);
+    animation: flair-spin 18s linear infinite;
+  }
+  .hero-arc--1::before {
+    background: conic-gradient(
+      from 0deg,
+      transparent 0%,
+      transparent 55%,
+      color-mix(in srgb, var(--clr-primary-gold) 15%, transparent) 72%,
+      color-mix(in srgb, var(--clr-primary-gold) 5%, transparent) 88%,
+      transparent 100%
+    );
+  }
+  .hero-arc--2 {
+    width: min(420px, 69vmin);
+    height: min(420px, 69vmin);
+    animation: flair-spin 32s linear infinite reverse;
+  }
+  .hero-arc--2::before {
+    background: conic-gradient(
+      from 180deg,
+      transparent 0%,
+      transparent 65%,
+      color-mix(in srgb, var(--clr-primary-gold) 8%, transparent) 80%,
+      transparent 100%
+    );
+  }
+
+  .hero-arc--3 {
+    width: min(300px, 48.21vmin);
+    height: min(300px, 48.21vmin);
+    animation: flair-spin 10s linear infinite;
+    opacity: 0.6;
+  }
+  .hero-arc--3::before {
+    background: conic-gradient(
+      from 0deg,
+      transparent 0%,
+      transparent 55%,
+      color-mix(in srgb, var(--clr-primary-gold) 15%, transparent) 72%,
+      color-mix(in srgb, var(--clr-primary-gold) 5%, transparent) 88%,
+      transparent 100%
+    );
+  }
+
+  .corner {
+    position: absolute;
+    z-index: 30;
+    display: block;
+    width: 20px;
+    height: 20px;
+    opacity: 0.28;
+  }
+
+  .corner::before,
+  .corner::after {
+    content: "";
+    position: absolute;
+    background: var(--clr-primary-gold);
+  }
+
+  .corner::before {
+    width: 1px;
+    height: 100%;
+  }
+  .corner::after {
+    width: 100%;
+    height: 1px;
+  }
+  .corner.tl {
+    top: 30px;
+    left: 10px;
+  }
+  .corner.tl::before {
+    top: 0;
+    left: 0;
+  }
+  .corner.tl::after {
+    top: 0;
+    left: 0;
+  }
+  .corner.tr {
+    top: 30px;
+    right: 10px;
+  }
+  .corner.tr::before {
+    top: 0;
+    right: 0;
+  }
+  .corner.tr::after {
+    top: 0;
+    right: 0;
+  }
+  .corner.bl {
+    bottom: 30px;
+    left: 10px;
+  }
+  .corner.bl::before {
+    bottom: 0;
+    left: 0;
+  }
+  .corner.bl::after {
+    bottom: 0;
+    left: 0;
+  }
+  .corner.br {
+    bottom: 30px;
+    right: 10px;
+  }
+  .corner.br::before {
+    bottom: 0;
+    right: 0;
+  }
+  .corner.br::after {
+    bottom: 0;
+    right: 0;
+  }
+
+  /* ── Staggered entrance (motion-gated, pure CSS, runs once on load) ──────
+     Default (reduced motion / no-JS needed) leaves everything at its natural,
+     visible state. Only inside no-preference do we set the hidden pre-state and
+     animate in — so a reduced-motion visitor sees the final layout instantly.
+  ─────────────────────────────────────────────────────────────────────────── */
+  @media (prefers-reduced-motion: no-preference) {
+    .lhero__eyebrow {
+      animation: lhero-rise 0.7s var(--ease) 0.05s backwards;
+    }
+
+    /* Title reveals word-by-word: each word rises out from behind its mask. */
+    .hero-word__inner {
+      animation: hero-word-rise 0.9s var(--ease) backwards;
+    }
+    .lhero__title-lead .hero-word:nth-child(1) .hero-word__inner {
+      animation-delay: 0.14s;
+    }
+    .lhero__title-lead .hero-word:nth-child(2) .hero-word__inner {
+      animation-delay: 0.19s;
+    }
+    .lhero__title-lead .hero-word:nth-child(3) .hero-word__inner {
+      animation-delay: 0.24s;
+    }
+    .lhero__title-lead .hero-word:nth-child(4) .hero-word__inner {
+      animation-delay: 0.29s;
+    }
+    .lhero__title-lead .hero-word:nth-child(5) .hero-word__inner {
+      animation-delay: 0.34s;
+    }
+    .hero-italic .hero-word:nth-child(1) .hero-word__inner {
+      animation-delay: 0.39s;
+    }
+    .hero-italic .hero-word:nth-child(2) .hero-word__inner {
+      animation-delay: 0.44s;
+    }
+    .hero-italic .hero-word:nth-child(3) .hero-word__inner {
+      animation-delay: 0.49s;
+    }
+    /* Gold underline draws last, after the italic words have settled. */
+    .hero-italic::after {
+      animation: hero-underline 1s var(--ease) 1s backwards;
+    }
+
+    .lhero__subtitle {
+      animation: lhero-rise 0.75s var(--ease) 0.56s backwards;
+    }
+    .lhero__cta {
+      animation: lhero-rise 0.75s var(--ease) 0.66s backwards;
+    }
+
+    /* Frames fade in together then fan to their resting angle. */
+    .mock--center {
+      animation: mock-center-in 0.9s var(--ease) 0.74s backwards;
+    }
+    .mock--left {
+      animation: mock-left-in 1s var(--ease) 0.78s backwards;
+    }
+    .mock--right {
+      animation: mock-right-in 1s var(--ease) 0.78s backwards;
+    }
+
+    /* During a page-transition navigation the shutter JS tags <html> so the
+       entrance holds at its first frame beneath the sealed curtain, then plays
+       as the curtain opens. The class is only ever added by client JS during a
+       motion navigation, so a no-JS or reduced-motion visit animates on load. */
+    :global(html.hold-entrance) .lhero__eyebrow,
+    :global(html.hold-entrance) .hero-word__inner,
+    :global(html.hold-entrance) .hero-italic::after,
+    :global(html.hold-entrance) .lhero__subtitle,
+    :global(html.hold-entrance) .lhero__cta,
+    :global(html.hold-entrance) .mock--center,
+    :global(html.hold-entrance) .mock--left,
+    :global(html.hold-entrance) .mock--right {
+      animation-play-state: paused;
+    }
+  }
+
+  @keyframes lhero-rise {
+    from {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes hero-word-rise {
+    from {
+      opacity: 0;
+      transform: translateY(120%);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes hero-underline {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  @keyframes mock-center-in {
+    from {
+      opacity: 0;
+      transform: translateY(44px) scale(0.96);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes mock-left-in {
+    0% {
+      opacity: 0;
+      transform: translateX(24%) translateY(44px) rotate(0deg);
+    }
+    45% {
+      opacity: 0.85;
+      transform: translateX(24%) translateY(0) rotate(0deg);
+    }
+    to {
+      opacity: 0.85;
+      transform: translateX(24%) rotate(-14deg);
+    }
+  }
+
+  @keyframes mock-right-in {
+    0% {
+      opacity: 0;
+      transform: translateX(-24%) translateY(44px) rotate(0deg);
+    }
+    45% {
+      opacity: 0.85;
+      transform: translateX(-24%) translateY(0) rotate(0deg);
+    }
+    to {
+      opacity: 0.85;
+      transform: translateX(-24%) rotate(14deg);
+    }
+  }
+
+  /* ── Responsive ──────────────────────────────────────── */
+  @media (min-width: 48rem) {
+    .lhero {
+      padding-block: var(--spacing-4xl) var(--spacing-3xl);
+    }
+  }
+
+  @media (min-width: 62.5rem) {
+    .mock--center {
+      width: min(480px, 60%);
+    }
+    .mock--left,
+    .mock--right {
+      width: min(420px, 52%);
+    }
+    .mock--left {
+      transform: translateX(2%) rotate(-9deg);
+    }
+    .mock--right {
+      transform: translateX(-2%) rotate(9deg);
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .mock--left {
+        animation-name: mock-left-in-lg;
+      }
+      .mock--right {
+        animation-name: mock-right-in-lg;
+      }
+    }
+  }
+
+  @keyframes mock-left-in-lg {
+    0% {
+      opacity: 0;
+      transform: translateX(2%) translateY(44px) rotate(0deg);
+    }
+    45% {
+      opacity: 0.85;
+      transform: translateX(2%) translateY(0) rotate(0deg);
+    }
+    to {
+      opacity: 0.85;
+      transform: translateX(2%) rotate(-9deg);
+    }
+  }
+
+  @keyframes mock-right-in-lg {
+    0% {
+      opacity: 0;
+      transform: translateX(-2%) translateY(44px) rotate(0deg);
+    }
+    45% {
+      opacity: 0.85;
+      transform: translateX(-2%) translateY(0) rotate(0deg);
+    }
+    to {
+      opacity: 0.85;
+      transform: translateX(-2%) rotate(9deg);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-arc,
+    .hero-flair__orbit,
+    .hero-flair__glow {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  // Subtle drifting gold particles — IntersectionObserver- and visibility-gated
+  // so it never costs frames off-screen or in a background tab. Mirrors the
+  // homepage hero canvas (an established, Lighthouse-safe pattern here).
+  function initFreeDesignsHero() {
+    const canvas = document.querySelector<HTMLCanvasElement>("[data-hero-canvas]");
+    // Bail on routes without this hero. The astro:page-load listener is global,
+    // so this runs on every navigation.
+    if (!canvas || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const controller = new AbortController();
+    const { signal } = controller;
+
+    const GOLD = "225,189,104";
+
+    // Particle density scales with viewport (rem breakpoints mirror the CSS:
+    // 40rem/62.5rem/90rem). resize() reads this, so crossing a breakpoint
+    // re-seeds the field at the new count for free.
+    function getCount() {
+      if (window.matchMedia("(min-width: 90rem)").matches) return 100;
+      if (window.matchMedia("(min-width: 62.5rem)").matches) return 70;
+      if (window.matchMedia("(min-width: 40rem)").matches) return 45;
+      return 35;
+    }
+
+    let W = 0,
+      H = 0,
+      particles: { x: number; y: number; r: number; vx: number; vy: number; a: number }[] = [],
+      rafId: number | null = null,
+      active = false,
+      visible = false,
+      observer: IntersectionObserver | null = null;
+
+    const rand = (a: number, b: number) => a + Math.random() * (b - a);
+
+    function resize() {
+      const section = canvas!.closest("section") as HTMLElement;
+      W = canvas!.width = section.offsetWidth;
+      H = canvas!.height = section.offsetHeight;
+      particles = Array.from({ length: getCount() }, () => ({
+        x: rand(0, W),
+        y: rand(0, H),
+        r: rand(0.5, 2.2),
+        vx: rand(-0.09, 0.09),
+        vy: rand(-0.07, 0.07),
+        a: rand(0.1, 0.4),
+      }));
+    }
+
+    // The drift is throttled to ~30fps. Each particle moves a fraction of a
+    // pixel between native frames, so redrawing the whole canvas at a 144Hz
+    // display is wasted rasterisation — 30fps looks identical here and cuts the
+    // full-canvas repaints ~5x. Motion is time-based (referenced to one 144Hz
+    // frame, the cadence the field was tuned at) so the real drift speed holds
+    // steady on any refresh rate.
+    const FRAME_MS = 1000 / 30;
+    const BASE_MS = 1000 / 144;
+    let lastFrame = 0;
+
+    function draw(now: number) {
+      if (active) rafId = requestAnimationFrame(draw);
+      if (!lastFrame) lastFrame = now;
+      const elapsed = now - lastFrame;
+      if (elapsed < FRAME_MS) return;
+      lastFrame = now - (elapsed % FRAME_MS);
+      // Clamp the step so returning from a background tab can't teleport the
+      // field: cap it at four 144Hz frames' worth of drift.
+      const step = Math.min(elapsed / BASE_MS, 4);
+
+      ctx!.clearRect(0, 0, W, H);
+      for (const p of particles) {
+        ctx!.beginPath();
+        ctx!.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx!.fillStyle = `rgba(${GOLD},${p.a})`;
+        ctx!.fill();
+        p.x += p.vx * step;
+        p.y += p.vy * step;
+        if (p.x < 0) p.x = W;
+        else if (p.x > W) p.x = 0;
+        if (p.y < 0) p.y = H;
+        else if (p.y > H) p.y = 0;
+      }
+    }
+
+    function start() {
+      if (active) return;
+      active = true;
+      lastFrame = 0;
+      rafId = requestAnimationFrame(draw);
+    }
+
+    function stop() {
+      active = false;
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+      }
+    }
+
+    document.addEventListener(
+      "visibilitychange",
+      () => (document.hidden ? stop() : visible && start()),
+      { signal },
+    );
+
+    observer = new IntersectionObserver(
+      ([e]) => ((visible = e.isIntersecting) ? start() : stop()),
+      { threshold: 0 },
+    );
+    observer.observe(canvas.closest("section")!);
+
+    let resizeTimer: ReturnType<typeof setTimeout>;
+    window.addEventListener(
+      "resize",
+      () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(resize, 150);
+      },
+      { signal },
+    );
+
+    resize();
+
+    // Tear down before the page is swapped away: stop the rAF loop, drop the
+    // observer, and remove the window/document listeners via the controller.
+    // Without this, navigating away would leak a running canvas loop per visit.
+    document.addEventListener(
+      "astro:before-swap",
+      () => {
+        stop();
+        observer?.disconnect();
+        clearTimeout(resizeTimer);
+        controller.abort();
+      },
+      { once: true },
+    );
+  }
+
+  document.addEventListener("astro:page-load", initFreeDesignsHero);
+</script>

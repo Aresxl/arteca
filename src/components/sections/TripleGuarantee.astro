@@ -1,0 +1,716 @@
+---
+// Images
+import ArrowIcon from "@/assets/icons/arrow-up-right.svg";
+
+// Components
+import LinkOrButton from "@/ui/LinkOrButton.astro";
+import ItalicTitle from "../ui/ItalicTitle.astro";
+---
+
+<section class="guarantee | grid-main" aria-labelledby="guarantee-heading">
+  <header class="g-head fade-in">
+    <p class="g-eyebrow eyebrow eyebrow--gold">Guarantees</p>
+    <h2 id="guarantee-heading" class="section-subtitle section-subtitle--light">
+      The Vyteca Triple <ItalicTitle variant="on-dark">Guarantee.</ItalicTitle>
+    </h2>
+    <p class="g-sub">
+      Most web studios just hope you'll be happy. <strong>Vyteca puts it in writing.</strong>
+      <em class="g-sub-accent"> Love it. Fast. Booked.</em> Or you don't pay.
+    </p>
+  </header>
+
+  <div class="g-ledger">
+    <span class="g-corner tl" aria-hidden="true"></span>
+    <span class="g-corner tr" aria-hidden="true"></span>
+    <span class="g-corner bl" aria-hidden="true"></span>
+    <span class="g-corner br" aria-hidden="true"></span>
+
+    <div class="g-ledger-tag g-reveal-block">
+      <span class="lbl">Put in writing</span>
+      <span class="meta">Every build · No exceptions</span>
+    </div>
+
+    <div class="g-row g-reveal-block">
+      <div class="g-gutter">
+        <span class="g-node" aria-hidden="true"></span>
+        <span class="g-index">01</span>
+      </div>
+      <div class="g-stat g-reveal">
+        <span class="g-cat">Design Guarantee</span>
+        <span class="g-stat-num"><span class="sym">$</span>0</span>
+        <span class="g-stat-unit">Down · no upfront cost</span>
+      </div>
+      <div class="g-main g-reveal">
+        <h3 class="g-name">The No-Deposit Promise</h3>
+        <p class="g-promise">
+          No deposit, no upfront cost. Vyteca designs it, you review it, and you only start paying
+          after your first month live.
+        </p>
+      </div>
+      <div class="g-remedy g-reveal">
+        <span class="g-remedy-tag">Or you walk</span>
+        <span class="g-remedy-text">Don't love it? <em>Walk away and owe nothing.</em></span>
+      </div>
+    </div>
+
+    <div class="g-row g-reveal-block">
+      <div class="g-gutter">
+        <span class="g-node" aria-hidden="true"></span>
+        <span class="g-index">02</span>
+      </div>
+      <div class="g-stat g-reveal">
+        <span class="g-cat">Performance Guarantee</span>
+        <span class="g-stat-num">98-100</span>
+        <span class="g-stat-unit">Google PageSpeed · at launch</span>
+      </div>
+      <div class="g-main g-reveal">
+        <h3 class="g-name">The Page-Speed Promise</h3>
+        <p class="g-promise">
+          Most hospitality sites score under 50. Yours loads in about 1.5s and scores 98-100, and
+          you can check it yourself anytime.
+        </p>
+      </div>
+      <div class="g-remedy g-reveal">
+        <span class="g-remedy-tag">Or you don't pay</span>
+        <span class="g-remedy-text">Not there at launch? <em>You don't pay until it is.</em></span>
+      </div>
+    </div>
+
+    <div class="g-row g-reveal-block">
+      <div class="g-gutter">
+        <span class="g-node" aria-hidden="true"></span>
+        <span class="g-index">03</span>
+      </div>
+      <div class="g-stat g-reveal">
+        <span class="g-cat">Bookings Guarantee</span>
+        <span class="g-stat-num">5+</span>
+        <span class="g-stat-unit">Bookings · every month</span>
+      </div>
+      <div class="g-main g-reveal">
+        <h3 class="g-name">The Full-Tables Promise</h3>
+        <p class="g-promise">
+          Your new site brings in at least five bookings every month, straight through the door.
+          Diners who found you, chose you, and reserved.
+        </p>
+      </div>
+      <div class="g-remedy g-reveal">
+        <span class="g-remedy-tag">Or it's free</span>
+        <span class="g-remedy-text">Fall short? <em>That month's on Vyteca.</em></span>
+      </div>
+    </div>
+
+    <div class="g-sign g-reveal-block">
+      <p class="g-sign-line">
+        Three promises. One developer willing to put his <strong>own money on the line.</strong>
+      </p>
+      <LinkOrButton as="a" href="/free-designs" variant="primary" text="Get your 3 free designs">
+        <ArrowIcon />
+      </LinkOrButton>
+    </div>
+  </div>
+</section>
+
+<style>
+  .guarantee {
+    /* section-scoped helpers — keep the gold tied to the project token */
+    --g-gold: var(--clr-primary-gold);
+    --g-border: hsl(30, 6%, 24%);
+    --g-gold-faint: color-mix(in srgb, var(--clr-primary-gold) 3%, transparent);
+    --g-gold-hover: color-mix(in srgb, var(--clr-primary-gold) 2%, transparent);
+    --g-gold-soft: color-mix(in srgb, var(--clr-primary-gold) 28%, transparent);
+    --g-gold-glow: color-mix(in srgb, var(--clr-primary-gold) 12%, transparent);
+
+    position: relative;
+    z-index: 2;
+    padding-block: var(--section-space);
+    background: var(--clr-bg-primary-dark);
+    border-bottom: 1px solid var(--g-border);
+    color: var(--clr-body-text);
+  }
+
+  /* ── header ── */
+  .g-head {
+    margin-bottom: var(--spacing-xl);
+    text-align: center;
+  }
+
+  .g-eyebrow-dot {
+    flex-shrink: 0;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--g-gold);
+  }
+
+  .g-sub {
+    margin-top: var(--spacing-md);
+    max-width: 52ch;
+    font-size: var(--fs-400);
+    line-height: 1.7;
+    color: var(--clr-body-muted-light);
+  }
+
+  .g-sub strong {
+    color: var(--clr-body-text);
+    font-weight: var(--fw-700);
+  }
+
+  .g-sub-accent {
+    color: var(--g-gold);
+    font-style: normal;
+    font-weight: var(--fw-700);
+  }
+
+  /* ── ledger frame ── */
+  .g-ledger {
+    position: relative;
+    border: 1px solid var(--g-border);
+    background: linear-gradient(180deg, var(--g-gold-faint), transparent 220px);
+  }
+
+  .g-ledger-tag {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-xxs);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-bottom: 1px solid var(--g-border);
+  }
+
+  .g-ledger-tag .lbl {
+    font-size: var(--fs-200);
+    font-weight: var(--fw-700);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--clr-body-muted-light);
+  }
+
+  .g-ledger-tag .rule {
+    flex: 1;
+    height: 1px;
+    background: var(--g-border);
+  }
+
+  .g-ledger-tag .meta {
+    font-size: var(--fs-200);
+    font-weight: var(--fw-700);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--g-gold);
+  }
+
+  /* corner brackets */
+  .g-corner {
+    position: absolute;
+    z-index: 4;
+    width: 14px;
+    height: 14px;
+    pointer-events: none;
+  }
+  .g-corner::before,
+  .g-corner::after {
+    content: "";
+    position: absolute;
+    background: var(--g-gold);
+    opacity: 0.5;
+  }
+  .g-corner::before {
+    width: 1px;
+    height: 100%;
+  }
+  .g-corner::after {
+    width: 100%;
+    height: 1px;
+  }
+  .g-corner.tl {
+    top: -1px;
+    left: -1px;
+  }
+  .g-corner.tl::before,
+  .g-corner.tl::after {
+    top: 0;
+    left: 0;
+  }
+  .g-corner.tr {
+    top: -1px;
+    right: -1px;
+  }
+  .g-corner.tr::before,
+  .g-corner.tr::after {
+    top: 0;
+    right: 0;
+  }
+  .g-corner.bl {
+    bottom: -1px;
+    left: -1px;
+  }
+  .g-corner.bl::before,
+  .g-corner.bl::after {
+    bottom: 0;
+    left: 0;
+  }
+  .g-corner.br {
+    bottom: -1px;
+    right: -1px;
+  }
+  .g-corner.br::before,
+  .g-corner.br::after {
+    bottom: 0;
+    right: 0;
+  }
+
+  /* ── a guarantee row (mobile-first: index gutter + stacked content) ── */
+  .g-row {
+    position: relative;
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    border-bottom: 1px solid var(--g-border);
+    transition: background 0.4s var(--ease);
+  }
+  .g-row:last-child {
+    border-bottom: none;
+  }
+  .g-row:hover {
+    background: var(--g-gold-hover);
+  }
+
+  /* gold left-bar sweep on hover */
+  .g-row::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 3;
+    width: 2px;
+    background: var(--g-gold);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.6s var(--ease);
+  }
+  .g-row:hover::before {
+    transform: scaleY(1);
+  }
+
+  /* gutter — index + node */
+  .g-gutter {
+    position: relative;
+    grid-row: 1 / 4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-block: var(--spacing-lg);
+    border-right: 1px solid var(--g-border);
+  }
+
+  /* faint gold thread running through the nodes + indices */
+  .g-gutter::before {
+    content: "";
+    position: absolute;
+    /* left: 50%; */
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    transform: translateX(-50%);
+    background: linear-gradient(
+      180deg,
+      transparent,
+      var(--g-gold-soft) 18%,
+      var(--g-gold-soft) 82%,
+      transparent
+    );
+  }
+  .g-row:first-child .g-gutter::before {
+    top: var(--spacing-lg);
+  }
+
+  .g-node {
+    position: relative;
+    z-index: 2;
+    width: 9px;
+    height: 9px;
+    margin-bottom: 12px;
+    border-radius: 50%;
+    background: var(--clr-bg-primary-dark);
+    border: 1px solid var(--g-gold);
+    transition:
+      background 0.4s var(--ease),
+      box-shadow 0.4s var(--ease);
+  }
+  .g-row:hover .g-node {
+    background: var(--g-gold);
+    box-shadow: 0 0 0 4px var(--g-gold-glow);
+  }
+
+  .g-index {
+    font-size: var(--fs-300);
+    font-weight: var(--fw-700);
+    letter-spacing: 0.12em;
+    color: var(--clr-body-muted-light);
+    writing-mode: vertical-rl;
+  }
+
+  /* stat column */
+  .g-stat {
+    grid-column: 2;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 0 var(--spacing-sm);
+    padding: var(--spacing-lg) var(--spacing-md) var(--spacing-md);
+  }
+
+  .g-cat {
+    width: 100%;
+    margin-bottom: var(--spacing-sm);
+    font-size: 0.65625rem;
+    font-weight: var(--fw-700);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--g-gold);
+  }
+
+  .g-stat-num {
+    font-size: clamp(2.75rem, 13vw, 4rem);
+    font-weight: var(--fw-700);
+    line-height: 0.92;
+    letter-spacing: -0.03em;
+    color: var(--clr-body-text);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .g-stat-unit {
+    font-size: var(--fs-300);
+    font-weight: var(--fw-400);
+    letter-spacing: 0.08em;
+    line-height: 1.5;
+    text-transform: uppercase;
+    color: var(--clr-body-muted-light);
+  }
+
+  /* promise column */
+  .g-main {
+    grid-column: 2;
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing-md);
+    border-top: 1px solid var(--g-border);
+  }
+
+  .g-name {
+    margin-bottom: var(--spacing-sm);
+    font-size: clamp(1.3125rem, 2.1vw, 1.6875rem);
+    font-weight: var(--fw-700);
+    line-height: 1.18;
+    letter-spacing: -0.01em;
+    color: var(--clr-body-text);
+  }
+
+  .g-promise {
+    max-width: 52ch;
+    font-size: var(--fs-375);
+    line-height: 1.72;
+    color: var(--clr-body-muted-light);
+  }
+
+  /* remedy column — floating gold accent bar (mobile) */
+  .g-remedy {
+    grid-column: 2;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xxs);
+    padding: var(--spacing-md) var(--spacing-md) var(--spacing-md) calc(var(--spacing-md) + 14px);
+    border-top: 1px solid var(--g-border);
+  }
+  .g-remedy::before {
+    content: "";
+    position: absolute;
+    left: var(--spacing-md);
+    top: var(--spacing-md);
+    bottom: var(--spacing-md);
+    width: 2px;
+    background: var(--g-gold);
+  }
+
+  .g-remedy-tag {
+    font-size: var(--fs-350);
+    font-weight: var(--fw-700);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--g-gold);
+  }
+
+  .g-remedy-text {
+    font-size: var(--fs-400);
+    font-weight: var(--fw-700);
+    line-height: 1.5;
+    color: var(--clr-body-text);
+  }
+  .g-remedy-text em {
+    font-style: italic;
+    font-weight: var(--fw-400);
+    color: var(--clr-body-muted-light);
+  }
+
+  /* ── signature footer ── */
+  .g-sign {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: var(--spacing-md) var(--spacing-lg);
+    padding: var(--spacing-lg) var(--spacing-md);
+    border-top: 1px solid var(--g-border);
+    background: var(--g-gold-faint);
+  }
+
+  .g-sign-line {
+    /* max-width: 48ch; */
+    font-size: var(--fs-350);
+    color: var(--clr-body-muted-light);
+  }
+  .g-sign-line strong {
+    color: var(--clr-body-text);
+    font-weight: var(--fw-700);
+  }
+
+  @media (min-width: 30rem) {
+    .g-ledger-tag {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+
+  @media (min-width: 40rem) {
+    .g-head {
+      text-align: left;
+    }
+
+    .g-eyebrow {
+      justify-content: start;
+    }
+  }
+
+  /* ── desktop: index | stat | promise | remedy ── */
+  @media (min-width: 62.5rem) {
+    .g-row {
+      grid-template-columns: 64px minmax(190px, 240px) minmax(0, 1fr) minmax(200px, 260px);
+      align-items: stretch;
+    }
+
+    .g-ledger-tag {
+      padding: var(--spacing-sm) var(--spacing-lg);
+    }
+
+    .g-gutter {
+      grid-row: auto;
+      justify-content: flex-start;
+      padding-block: var(--spacing-xl);
+    }
+    /* continuous gold thread linking the nodes */
+    .g-gutter::before {
+      background: linear-gradient(
+        180deg,
+        transparent,
+        var(--g-gold-soft) 18%,
+        var(--g-gold-soft) 82%,
+        transparent
+      );
+    }
+    .g-row:first-child .g-gutter::before {
+      top: var(--spacing-xl);
+    }
+    .g-row:last-child .g-gutter::before {
+      bottom: var(--spacing-xl);
+    }
+    .g-node {
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .g-stat {
+      grid-column: 2;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0;
+      padding: var(--spacing-xl) var(--spacing-lg) var(--spacing-xl) var(--spacing-xs);
+      border-right: 1px solid var(--g-border);
+    }
+    .g-cat {
+      width: auto;
+      margin-bottom: var(--spacing-md);
+    }
+    .g-stat-num {
+      font-size: clamp(3rem, 5.4vw, 4rem);
+    }
+    .g-stat-unit {
+      margin-top: var(--spacing-sm);
+    }
+
+    .g-main {
+      grid-column: 3;
+      justify-content: center;
+      padding: var(--spacing-xl) var(--spacing-lg);
+      border-top: none;
+    }
+
+    .g-remedy {
+      grid-column: 4;
+      justify-content: center;
+      gap: var(--spacing-xs);
+      padding: var(--spacing-xl) var(--spacing-lg);
+      border-top: none;
+    }
+    /* gold accent becomes the full-height column divider on desktop */
+    .g-remedy::before {
+      left: 0;
+      top: 0;
+      bottom: 0;
+    }
+
+    .g-sign {
+      justify-content: space-between;
+      text-align: left;
+      padding: var(--spacing-md) var(--spacing-lg);
+    }
+  }
+
+  /* ── Staggered element reveal (mobile + tablet) ─────────────
+     Below 1000px the ledger stacks, so each row's inner blocks (stat, promise,
+     remedy) reveal individually the first time they cross the trigger line — the
+     section script adds .is-revealed per element, so they fade in one after the
+     other as you scroll rather than a whole row (or the whole ledger) at once.
+     Mirrors WhyHandCoded's `.approach__reveal` and the global `.fade-in` keyframe
+     exactly — same 700ms, easing, scale + opacity. Desktop keeps the single
+     whole-ledger .fade-in instead: there the compact 4-column rows read as one
+     table, so a per-element stagger would leave blank cells beside filled ones.
+     Gated to no-preference so reduced-motion visitors get every block in place. */
+  @media (max-width: 62.4375rem) and (prefers-reduced-motion: no-preference) {
+    .g-reveal {
+      scale: 0.985;
+      opacity: 0;
+    }
+
+    .g-reveal.is-revealed {
+      animation: fade-in 700ms cubic-bezier(0.66, 0, 0.34, 1) forwards;
+    }
+  }
+
+  /* ── Staggered block reveal (desktop) ───────────────────────
+     At ≥1000px the ledger is a compact table, so revealing inner elements would
+     leave blank cells beside filled ones. Instead each of the five blocks — the
+     "put in writing" tag, the three rows, and the signature footer — reveals as a
+     single unit the first time it crosses the trigger line. Same `fade-in`
+     keyframe as everything else; the start state is gated to ≥1000px so it never
+     collides with the mobile per-element reveal above, and to no-preference so
+     reduced-motion visitors get every block in place. */
+  @media (min-width: 62.5rem) and (prefers-reduced-motion: no-preference) {
+    .g-reveal-block {
+      scale: 0.985;
+      opacity: 0;
+    }
+
+    .g-reveal-block.is-revealed {
+      animation: fade-in 700ms cubic-bezier(0.66, 0, 0.34, 1) forwards;
+    }
+  }
+
+  /* ── reduced motion ── */
+  @media (prefers-reduced-motion: reduce) {
+    .g-heading em::after {
+      transition: none;
+      transform: scaleX(1);
+    }
+    .g-row,
+    .g-row::before,
+    .g-node {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  function initGuaranteeReveal() {
+    const ledger = document.querySelector<HTMLElement>(".guarantee .g-ledger");
+    // Bail on routes without this section — astro:page-load is global.
+    if (!ledger) return;
+
+    // Hidden start states are CSS-gated to no-preference motion, so there's
+    // nothing to reveal for reduced-motion visitors; they see every block in place.
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const controller = new AbortController();
+    const { signal } = controller;
+
+    // One-shot reveal observer: add .is-revealed the first time a target crosses
+    // the trigger line, then stop watching it.
+    const makeRevealObserver = (options: IntersectionObserverInit) =>
+      new IntersectionObserver((entries, obs) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          entry.target.classList.add("is-revealed");
+          obs.unobserve(entry.target);
+        }
+      }, options);
+
+    let innerObserver: IntersectionObserver | null = null;
+    let blockObserver: IntersectionObserver | null = null;
+
+    // Mobile + tablet (<1000px): each row's inner blocks (stat, promise, remedy)
+    // reveal individually. The hidden start state is CSS-gated to <1000px, so on
+    // desktop these have nothing to hide — gate the observer to match, and start
+    // once if a resize later crosses down into that range.
+    const mobile = matchMedia("(max-width: 62.4375rem)");
+    const innerTargets = [...ledger.querySelectorAll<HTMLElement>(".g-reveal")];
+
+    const startInner = () => {
+      if (innerObserver || !mobile.matches || !innerTargets.length) return;
+
+      // Mirror scrollReveal's fade observer (and WhyHandCoded's): phones fire off
+      // the top edge crossing a line near the bottom of the viewport, wider
+      // screens want a fraction of the element in view first.
+      const isPhone = window.innerWidth < 600;
+      innerObserver = makeRevealObserver({
+        threshold: isPhone ? 0 : 0.2,
+        rootMargin: isPhone ? "0px 0px -12% 0px" : "0px 0px -10% 0px",
+      });
+      innerTargets.forEach((el) => innerObserver!.observe(el));
+    };
+
+    // Desktop (≥1000px): the ledger reads as one table, so reveal whole blocks —
+    // the tag, the three rows, and the signature — rather than their inner parts.
+    // Trip each block once it's genuinely in view (a fifth of it past a line near
+    // the bottom of the viewport), so the fade plays where you can see it rather
+    // than off-screen below the fold. Gated to ≥1000px to match the CSS start
+    // state. Mirrors scrollReveal's non-phone fade trigger.
+    const desktop = matchMedia("(min-width: 62.5rem)");
+    const blockTargets = [...ledger.querySelectorAll<HTMLElement>(".g-reveal-block")];
+
+    const startBlocks = () => {
+      if (blockObserver || !desktop.matches || !blockTargets.length) return;
+
+      blockObserver = makeRevealObserver({ threshold: 0.2, rootMargin: "0px 0px -10% 0px" });
+      blockTargets.forEach((el) => blockObserver!.observe(el));
+    };
+
+    startInner();
+    startBlocks();
+    mobile.addEventListener("change", startInner, { signal });
+    desktop.addEventListener("change", startBlocks, { signal });
+
+    // Tear down before the page swaps: drop both observers and the media listeners.
+    document.addEventListener(
+      "astro:before-swap",
+      () => {
+        innerObserver?.disconnect();
+        blockObserver?.disconnect();
+        controller.abort();
+      },
+      { once: true },
+    );
+  }
+
+  document.addEventListener("astro:page-load", initGuaranteeReveal);
+</script>

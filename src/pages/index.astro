@@ -1,30 +1,33 @@
 ---
+// Data
+import faqHome from "@/data/faq-home.json";
+
 // Components
 import Hero from "@/components/sections/Hero.astro";
-import Packages from "@/components/sections/Packages.astro";
 import OurOffer from "@/components/sections/OurOffer.astro";
 import PrimaryLayout from "@/layouts/PrimaryLayout.astro";
 import Portfolio from "@/components/sections/Portfolio.astro";
-import Testimonials from "@/components/sections/Testimonials.astro";
-import Performance from "@/components/sections/Performance.astro";
-import SectionDivider from "@/components/ui/SectionDivider.astro";
-import CTA from "@/components/sections/Cta.astro";
+import Marquee from "@/components/sections/Marquee.astro";
+import FAQSection from "@/components/sections/FAQSection.astro";
+import TripleGuarantee from "@/components/sections/TripleGuarantee.astro";
+import Membership from "@/components/sections/Membership.astro";
 ---
 
 <PrimaryLayout
-  title="Vyteca"
-  description="Custom hand-coded websites for Melbourne restaurants. Lightning-fast loads, flawless mobile, local SEO foundations. More direct bookings and fuller tables. Built from scratch in 3–4 weeks."
+  title="Melbourne Hospitality Websites | Vyteca"
+  description="Hand-coded websites for Melbourne hospitality venues. Faster loads, flawless mobile, more direct bookings. Built from scratch and live in about a week."
 >
   <Hero />
+  <Marquee />
   <OurOffer />
-  <SectionDivider />
-  <Performance />
-  <SectionDivider />
+  <TripleGuarantee />
   <Portfolio fadeIn={true} />
-  <SectionDivider />
-  <Testimonials fadeIn={true} />
-  <SectionDivider />
-  <Packages fadeIn={true} />
-  <SectionDivider />
-  <CTA />
+  <Membership />
+  <FAQSection
+    items={faqHome}
+    titleLead="Common"
+    titleAccent="questions"
+    note="Quick answers to what most hospitality owners ask before getting started. Can't find yours? <a href='/contact'>Get in touch</a>."
+    viewAllHref="/faq"
+  />
 </PrimaryLayout>

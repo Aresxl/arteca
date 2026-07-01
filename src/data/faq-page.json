@@ -1,0 +1,146 @@
+[
+  {
+    "id": "pricing",
+    "category": "Pricing & Plans",
+    "items": [
+      {
+        "question": "How much does a Vyteca website cost?",
+        "answer": "There's no upfront cost and no big one-off invoice. You pay <strong>from $150 a month</strong>, with nothing down to start. The exact figure depends on the size of your site, but $150 covers most venues, and it only moves if you want more than the standard build. If you'd rather pay once and own it outright, that's an option too, and I cover it further down."
+      },
+      {
+        "question": "If there's no upfront cost, what's the catch?",
+        "answer": "None. The designs have to win you over before anything else happens. See them, and if they're not for you, walk away and owe nothing. Only once you're happy do I build it, with your first payment held back until the site is live, so there's nothing to pay upfront and nothing to risk in finding out. <strong>No deposit, no build fee, just designs that have to earn your yes.</strong>"
+      },
+      {
+        "question": "What's included in the monthly fee?",
+        "answer": "Everything that keeps your site earning, not just the site itself. Your monthly covers <strong>your hand-coded website, fast and secure hosting, and 24/7 support</strong>, plus the ongoing work that actually brings in bookings: your Google Business Profile managed, every Google review responded to, and your own dashboard to update menus, hours, and photos in seconds. Small tweaks and updates are handled for you, and the triple guarantee sits behind all of it."
+      },
+      {
+        "question": "Why a monthly subscription instead of paying once?",
+        "answer": "Because a website isn't a one-and-done purchase, it's a tool that either keeps working for you or quietly falls behind. A one-off site starts ageing the day it launches: it slows down, the tech moves on, and within a year it's costing you bookings instead of winning them. The monthly exists so that never happens. <strong>Your site stays fast, current, and looked after the whole time you're with me</strong>, rather than being something you buy once and slowly watch rot."
+      },
+      {
+        "question": "Can I pay upfront and own it outright instead?",
+        "answer": "Yes, you can. If you'd rather own your site outright, I can build it as a one-off from <strong>$1,999</strong>, and it's yours to keep. The trade-off is that the ongoing side, the hosting, support, updates, review management, and the guarantees, all live in the monthly, so a one-off build is just the site on its own. For most venues the monthly works out better and carries far less risk, but if owning it outright suits you better, just say so and I'll set it up."
+      },
+      {
+        "question": "Am I tied into a contract, and what happens if I cancel afterwards?",
+        "answer": "There's a <strong>six-month minimum</strong> to start, which gives your new site the time it needs to prove itself. After that, you're on a simple month-to-month basis. If you ever choose to move on, your <strong>domain, content, and copy are always yours</strong>, but you don't keep the site."
+      },
+      {
+        "question": "What if I cancel before the six months is up?",
+        "answer": "Before your site goes live, <strong>you can walk away any time and owe nothing</strong>, that's the whole point of the no-deposit start. Once it's live, there's a six-month minimum. Cancel inside that window and you cover the <strong>months left on it</strong>, and the site comes down, though your domain, content, and copy are always yours. So leave after month one and you'd have five months left to settle, nothing more. No build fee sprung on you at the end, and no deposit to lose, because you never paid one to begin with. The minimum is there because a no-deposit start only works when we both go in planning to stick around."
+      },
+      {
+        "question": "What if I need extra pages?",
+        "answer": "Your site comes with <strong>five pages</strong>, which is plenty for most venues. If you want more, they're <strong>$150 per extra page</strong>, added to your first invoice after month one rather than charged upfront, so your $0-to-start stays exactly that. Most restaurants never need them, so you only pay for extra room if your menu or your story genuinely calls for it."
+      },
+      {
+        "question": "How do payments work?",
+        "answer": "All payments run through <strong>Stripe</strong>, so everything is secure and you'll never deal with cash or invoices to chase. You add your card once through a secure Stripe link, and from there your monthly is billed in arrears: at the end of each month I confirm your site brought in its bookings, and only then is your card charged. <strong>If it didn't hit five, that month is free and nothing comes out</strong>, no awkward refund to ask for. Nothing is ever charged upfront, and you'll have it all in writing before you start."
+      }
+    ]
+  },
+  {
+    "id": "process",
+    "category": "Process",
+    "items": [
+      {
+        "question": "How does the whole process work, from first call to launch?",
+        "answer": "Five simple steps. First, you send a quick form and book a call; ahead of it, I create <strong>three free designs</strong> for your venue. Second, I walk you through them live on the call, so you see exactly how your site could look before committing to anything. Third, once you're happy, you confirm the direction, sign off, and send your photos, menu, and a few notes on the venue. Fourth, I write your copy and finalise the design, with one round of revisions on each. Fifth, I hand-code the site, send a private link to review, then push it live with a full handover. Once your content's in, most venues are <strong>live in about a week.</strong>"
+      },
+      {
+        "question": "How long until my site is live?",
+        "answer": "From the day your contract's signed and your content's in my hands, most sites go <strong>live in about a week</strong>. The main variable is you, since it moves as fast as you can approve the copy and design."
+      },
+      {
+        "question": "What do you need from me to get started?",
+        "answer": "Not much, and that's the point. A short brief about your venue, plus whatever you already have: your logo, some photos, and your menu. <strong>You don't need to write polished website copy.</strong> You tell me what makes your place special, and I turn it into the words on the page, written to read well and get diners booking. The less time this takes you the better, because you've got a venue to run."
+      },
+      {
+        "question": "Do I need professional photos?",
+        "answer": "No. Good photos help, but you don't need a professional shoot to start. I'll give you my <strong>Shoot-It-Yourself Playbook</strong>, a simple walkthrough for shooting your food and your space beautifully on just your phone, and if you'd rather have it done properly, I can connect you with a photographer. Either way, your venue ends up looking the part."
+      },
+      {
+        "question": "How many rounds of revisions do I get?",
+        "answer": "After I show you the design, you get <strong>one round of revisions</strong> to refine it together. From there it's simple: approve it and I start building, or if it's still not right for you, walk away and owe nothing. Nothing gets hand-coded until you're happy, and you pay nothing until launch, so there's no risk in being sure."
+      },
+      {
+        "question": "What happens after my site goes live?",
+        "answer": "You're not handed the keys and left alone. Once you're live, I hand over full access and walk you through everything, and from there your monthly keeps the site looked after: <strong>hosting, security, updates, and support are all ongoing for as long as you're with me</strong>. If something needs changing, I'm a message away. Launch is the start of the relationship, not the end of it."
+      },
+      {
+        "question": "How do I request changes or updates once I'm live?",
+        "answer": "Day-to-day changes are yours to make in seconds. You get a simple dashboard to update your menu, hours, photos, and text yourself, no waiting on me. Beyond that, the rule of thumb is simple: <strong>changing what's already there is handled for you, building something new is quoted first</strong>. So small tweaks and fixes are part of your monthly; a whole new page or section gets a quick quote upfront, so there are never any surprises."
+      }
+    ]
+  },
+  {
+    "id": "performance",
+    "category": "Results",
+    "items": [
+      {
+        "question": "What PageSpeed scores do you actually hit?",
+        "answer": "Every Vyteca site is built to score <strong>98 to 100 on Google PageSpeed</strong>, on mobile and desktop, and to load in around 1.5s. Most restaurant sites sit under 50. Speed isn't something I bolt on at the end, it's where I start the build, and you can check the score yourself any time."
+      },
+      {
+        "question": "Does a faster site really bring in more bookings?",
+        "answer": "Hugely, and the reason is mobile. Most people deciding where to eat are searching on their phone, and <strong>Google found that 53% of them leave a site that takes longer than three seconds to load</strong>. That's a hungry, ready-to-book diner gone before they ever see your menu. Most restaurant sites are slow; yours loads in about 1.5s, so the people who find you actually stay, look, and book."
+      },
+      {
+        "question": "Is SEO included?",
+        "answer": "Yes and no, and the difference matters. SEO splits into two halves: the work on your site, and the work off it. Everything on your site I handle with every build: <strong>fast load times, clean code, flawless mobile, proper page structure, meta tags, and a sitemap.</strong> That foundation is the part most restaurant sites get wrong, and a slow or messy site quietly caps how well you can rank no matter what else you do. The off-site half, things like backlinks, citations, and ongoing content, is a specialist discipline of its own and isn't part of the build. If you want to take it further, I'll point you the right way."
+      },
+      {
+        "question": "Will my restaurant rank higher on Google?",
+        "answer": "You'll be set up to, but anyone who promises you the top spot in a month is lying. The honest version: a fast, clean, properly built site is the strongest foundation you can have, and because you're competing locally rather than nationally, a well-built restaurant site is in good shape to climb. I also manage your <strong>Google Business Profile, the biggest lever for local searches</strong>. What I can't do is flip a switch and put you at number one. Ranking builds over time and depends on ongoing work too. I handle the foundation and give you the best possible shot, I just won't sell you magic."
+      },
+      {
+        "question": "Do you handle my Google Business Profile and reviews?",
+        "answer": "Yes, both, and for restaurants this is where a lot of bookings actually start. I <strong>optimise and maintain your Google Business Profile</strong> so it's complete, accurate, and working as hard as it can when locals search, and I <strong>respond to every Google review for you</strong>, so every diner sees a venue that's on top of things and your reputation keeps building, without you lifting a finger. It's all part of your monthly."
+      },
+      {
+        "question": "Why does active review management matter?",
+        "answer": "Because reviews quietly decide two things: <strong>whether you get found, and whether you get chosen</strong>. Reviews are one of the strongest signals in local SEO, so a steady stream of recent, responded-to reviews helps you surface when someone nearby searches for somewhere to eat. And once a diner finds you, your rating and how you reply to feedback are often what tips them from browsing to booking. Most owners are too busy to keep up with it, so I handle it for you, every review, every time."
+      },
+      {
+        "question": "How does the bookings guarantee work?",
+        "answer": "Your site brings in <strong>at least five new bookings every month, or that month is free</strong>. I count bookings made through your site, so I set up booking capture with you at launch and the numbers stay clear on both sides. It isn't a vague promise to \"help you grow\", it's a specific number I put in writing and stand behind, because the months I don't deliver, <strong>I don't get paid</strong>."
+      },
+      {
+        "question": "What happens if you don't hit your guarantees?",
+        "answer": "You're covered on all three. Don't love the design? Walk away and owe nothing. Site not scoring 98 to 100 at launch? You don't start paying until it is. Doesn't bring in five bookings in a given month? That month is free. <strong>Every promise has a real consequence for me</strong>, which is exactly why I can make them."
+      }
+    ]
+  },
+  {
+    "id": "the-build",
+    "category": "The Build",
+    "items": [
+      {
+        "question": "Why hand-coded instead of Wix, Squarespace, or WordPress?",
+        "answer": "I hand-code every site from scratch, which is the whole difference. Builders like Wix and Squarespace work by stacking on <strong>plugins, pre-made themes, and drag-and-drop blocks</strong>, and every one of those piles extra code onto your site whether you use it or not. All that weight is why they load slowly. Yours is built with only the code your venue actually needs, nothing spare, so it loads fast, holds up on mobile, and gives Google the clean foundation it rewards. You also get a design shaped around your room and your menu, <strong>not squeezed into a template a thousand other restaurants are already using</strong>."
+      },
+      {
+        "question": "Who will I actually be working with?",
+        "answer": "Me, Lachlan, from start to finish. I take your first call, design your site, write the code, and press go on launch day. You won't be handed to a junior or managed through a project coordinator, and you'll never repeat yourself to three different people. <strong>One person, fully accountable</strong>, who knows your project inside out because I built every part of it myself."
+      },
+      {
+        "question": "Can you connect my booking system, menu, and socials?",
+        "answer": "Yes. I can connect the booking platform you already use, your menus, your socials, and your Google profile, so <strong>everything a diner needs sits a single tap away</strong>. The goal is simple: someone lands on your site and can see your menu, check your hours, and lock in a table without ever leaving the page or hunting for a link."
+      },
+      {
+        "question": "Can customers order online or book directly through the site?",
+        "answer": "Yes. Direct booking is built into every site, and I can add <strong>online ordering</strong> so customers place a pickup or delivery order straight from your page. The whole point is to make going from \"I'm hungry\" to a booking or an order as few taps as possible."
+      },
+      {
+        "question": "Do you only work with Melbourne restaurants?",
+        "answer": "Melbourne hospitality is my focus, but it's not a hard border. I <strong>can work with venues anywhere in Australia</strong>, since everything runs over video calls and a shared workspace, so distance makes no difference to what you get. Restaurants, cafes, bars, and wine bars are my specialty, but if you're a different kind of business and like what you see, get in touch and I'll tell you honestly whether I'm the right fit."
+      },
+      {
+        "question": "Is my site secure?",
+        "answer": "Yes, and hand-coding is a big reason why. Sites built on WordPress lean on dozens of plugins, and every one of them needs regular updating to stay safe. Most owners forget, or never realise they have to, and <strong>out-of-date plugins are the single most common way sites get hacked</strong>. Your site has no plugins to fall behind on and no bloated back end to exploit. Add monitored, secure hosting on top and it stays safe, stable, and online, which is exactly what you want when it's taking bookings for you."
+      }
+    ]
+  }
+]

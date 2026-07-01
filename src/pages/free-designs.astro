@@ -1,0 +1,39 @@
+---
+// Dedicated conversion landing page for the "3 free designs" offer — the
+// destination for the primary "Get your 3 free designs" CTA across the site.
+import LandingLayout from "@/layouts/LandingLayout.astro";
+import FreeDesignsHero from "@/components/sections/FreeDesignsHero.astro";
+import Marquee from "@/components/sections/Marquee.astro";
+import NoCatch from "@/components/sections/NoCatch.astro";
+import BookingFlow from "@/components/sections/BookingFlow.astro";
+---
+
+<LandingLayout
+  title="Get 3 Free Website Designs for Your Melbourne Venue | Vyteca"
+  description="Three custom website designs for your Melbourne restaurant or bar, hand-built and revealed live on a short call. No cost, no obligation, nothing templated."
+>
+  <FreeDesignsHero />
+  <Marquee
+    items={[
+      "Three free designs",
+      "Built for your venue",
+      "Revealed live",
+      "No obligation",
+      "Hand-coded",
+      "No templates",
+      "Under a minute to start",
+      "Melbourne",
+    ]}
+    theme="dark"
+  />
+  <NoCatch />
+  <BookingFlow />
+</LandingLayout>
+
+<style is:global>
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+</style>

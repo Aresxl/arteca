@@ -1,0 +1,153 @@
+---
+import type { ImageMetadata } from "astro";
+import BeforeAfter from "./BeforeAfter.astro";
+
+interface Tab {
+  label: string;
+  afterSrc: ImageMetadata;
+  afterAlt: string;
+  beforeSrc: ImageMetadata;
+  beforeAlt: string;
+}
+
+interface Props {
+  tabs: Tab[];
+}
+
+const { tabs } = Astro.props;
+---
+
+<div class="ba-tabbed">
+  <div class="ba__tabs" role="tablist" aria-label="Portfolio projects">
+    {
+      tabs.map((tab, i) => (
+        <button
+          type="button"
+          role="tab"
+          id={`ba-tab-${i}`}
+          class="ba__tab"
+          aria-selected={i === 0 ? "true" : "false"}
+          aria-controls={`ba-panel-${i}`}
+          data-index={String(i)}
+        >
+          {tab.label}
+        </button>
+      ))
+    }
+  </div>
+
+  {
+    tabs.map((tab, i) => (
+      <div
+        class="ba__slide"
+        id={`ba-panel-${i}`}
+        data-slide={String(i)}
+        role="tabpanel"
+        aria-labelledby={`ba-tab-${i}`}
+        aria-hidden={i === 0 ? "false" : "true"}
+      >
+        <BeforeAfter
+          afterSrc={tab.afterSrc}
+          afterAlt={tab.afterAlt}
+          beforeSrc={tab.beforeSrc}
+          beforeAlt={tab.beforeAlt}
+          eager={i === 0}
+        />
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  /* ── Tabs ───────────────────────────────── */
+
+  .ba__tabs {
+    display: flex;
+    border: 1px solid var(--border-light);
+    border-bottom: none;
+    border-radius: 3px 3px 0 0;
+    overflow: hidden;
+  }
+
+  .ba__tab {
+    flex: 1;
+    padding: var(--spacing-xs);
+    font-size: var(--fs-200);
+    font-family: var(--ff-main);
+    font-weight: var(--fw-700);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-align: center;
+    color: var(--clr-body-muted);
+    border-right: 1px solid var(--border-light);
+    cursor: pointer;
+    background: hsl(0 0% 0% / 0.04);
+    transition:
+      background 0.2s,
+      color 0.2s;
+  }
+
+  .ba__tab:last-child {
+    border-right: none;
+  }
+
+  .ba__tab:hover {
+    background: hsl(0 0% 0% / 0.08);
+    color: var(--clr-body-text-dark);
+  }
+
+  .ba__tab[aria-selected="true"] {
+    background: var(--clr-body-text-dark);
+    color: var(--clr-bg-primary-light);
+  }
+
+  /* ── Slides ─────────────────────────────── */
+
+  .ba__slide {
+    display: none;
+  }
+
+  .ba__slide[aria-hidden="false"] {
+    display: block;
+  }
+
+  .ba__slide :global(.ba__panel) {
+    border-radius: 0 0 3px 3px;
+  }
+
+  /* ── Reduced motion ─────────────────────── */
+
+  @media (prefers-reduced-motion: reduce) {
+    .ba__tab {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  const tabBtns = Array.from(document.querySelectorAll<HTMLButtonElement>(".ba__tab"));
+  const slides = Array.from(document.querySelectorAll<HTMLElement>(".ba__slide"));
+
+  function activateTab(idx: number) {
+    tabBtns.forEach((btn, i) => btn.setAttribute("aria-selected", String(i === idx)));
+    slides.forEach((slide, i) => slide.setAttribute("aria-hidden", String(i !== idx)));
+  }
+
+  tabBtns.forEach((btn, i) => {
+    btn.addEventListener("click", () => activateTab(i));
+
+    btn.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight") {
+        e.preventDefault();
+        const next = (i + 1) % tabBtns.length;
+        activateTab(next);
+        tabBtns[next].focus();
+      } else if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        const prev = (i - 1 + tabBtns.length) % tabBtns.length;
+        activateTab(prev);
+        tabBtns[prev].focus();
+      }
+    });
+  });
+</script>

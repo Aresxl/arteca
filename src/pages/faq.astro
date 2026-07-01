@@ -1,0 +1,50 @@
+---
+import PrimaryLayout from "@/layouts/PrimaryLayout.astro";
+import InnerPageHero from "@/components/sections/InnerPageHero.astro";
+import Marquee from "@/components/sections/Marquee.astro";
+import FAQTabbed from "@/components/sections/FAQTabbed.astro";
+import faqCategories from "@/data/faq-page.json";
+
+// FAQPage structured data, built from the same source FAQTabbed renders so the
+// schema can never drift from what's on the page. Inline HTML (e.g. <strong>) is
+// stripped from each answer for the plain-text the schema expects.
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqCategories.flatMap((category) =>
+    category.items.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer.replace(/<[^>]+>/g, ""),
+      },
+    })),
+  ),
+};
+---
+
+<PrimaryLayout
+  title="FAQ | Vyteca"
+  description="Answers on pricing, process, performance, and the build. It's everything Melbourne hospitality owners ask before commissioning a custom, hand-coded website from Vyteca."
+>
+  <InnerPageHero
+    eyebrow="Before you commit"
+    title="FAQ"
+    subtitle={["Pricing", "Process", "Performance", "The build"]}
+  />
+  <Marquee
+    items={[
+      "Pricing upfront",
+      "Fixed scope",
+      "One-week builds",
+      "98–100 PageSpeed",
+      "You own the code",
+      "Local SEO foundations",
+      "Results guarantee",
+      "No lock-in",
+    ]}
+  />
+  <FAQTabbed />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+</PrimaryLayout>

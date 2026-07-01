@@ -116,7 +116,6 @@ const mobileJpg = await getImage({
 ---
 
 <picture class={className} {...rest}>
-  <!-- Desktop -->
   <source
     media="(min-width: 40rem)"
     srcset={desktopAvif.srcSet.attribute}
@@ -135,12 +134,9 @@ const mobileJpg = await getImage({
     sizes={desktopJpg.attributes.sizes}
     type="image/jpeg"
   />
-  <!-- Tablet -->
-
   {tabletAvif && <source media="(min-width: 40rem)" srcset={tabletAvif.src} type="image/avif" />}
   {tabletWebp && <source media="(min-width: 40rem)" srcset={tabletWebp.src} type="image/webp" />}
   {tabletJpg && <source media="(min-width: 40rem)" srcset={tabletJpg.src} type="image/jpg" />}
-  <!-- Mobile -->
   <source
     media="(max-width: 40rem)"
     srcset={mobileAvif.srcSet.attribute}

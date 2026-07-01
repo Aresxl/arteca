@@ -1,4 +1,14 @@
 User-agent: *
 Allow: /
 
+# Design references / scratch pages — dev only, never index
+Disallow: /redesign
+Disallow: /claudeAbout
+Disallow: /claudeContact
+Disallow: /claudeFAQ
+Disallow: /claudeMembership
+Disallow: /claudePortfolio
+Disallow: /ogImage
+Disallow: /tripleGuaranteeClaude
+
 Sitemap: https://vyteca.com/sitemap-index.xml

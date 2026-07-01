@@ -1,0 +1,501 @@
+---
+import ItalicTitle from "../ui/ItalicTitle.astro";
+
+const steps = [
+  {
+    kicker: "Get started",
+    title: "A 30-second form to kick things off",
+    body: "You start with a short form: your name, your venue, and where things stand now. No brief to write, nothing to commit to. Then you book your call, and I get to work on your designs before we even speak.",
+    effort: "~30 seconds",
+  },
+  {
+    kicker: "See your designs",
+    title: "Three concepts, walked through live",
+    body: "I design three concepts for your venue and walk you through them live on the call. You see exactly how your site could look, and what working together involves. Love a direction and you're in; if it's not for you, walk away and owe nothing.",
+    effort: "~15 min",
+  },
+  {
+    kicker: "Make it official",
+    title: "Confirm the details and hand over the raw material",
+    body: "You fill out a short brief on the direction you've picked, then a quick call locks the scope and you sign off. From there you send what I build from: photos, your menu, and dot-point notes on the venue. No polished copy required; that part's on me.",
+    effort: "~30 min",
+  },
+  {
+    kicker: "Copy and design",
+    title: "Your words and your full design",
+    body: "I turn your notes into the copy for every page, then design your site in full around it. You get one round of revisions on the copy and one on the design, so it lands exactly how you want before a line of code is written.",
+    effort: "~20 min",
+  },
+  {
+    kicker: "Build and launch",
+    title: "Hand-coded, reviewed, then live",
+    body: "With everything approved, I hand-code your site and send a private link to review before it goes anywhere near live. Give the word and I push it live, hand over access, and walk you through it. From content in hand to live, that's about a week.",
+    effort: "~5 min",
+  },
+];
+---
+
+<section class="process | grid-main" aria-labelledby="process-title">
+  <header class="process__head">
+    <div class="process__head-lead | fade-in">
+      <h2 class="eyebrow eyebrow--dark" id="process-title">Process</h2>
+      <p class="section-subtitle section-subtitle--dark">
+        I handle everything.<br />You focus on the <ItalicTitle variant="on-light"
+          >restaurant.</ItalicTitle
+        >
+      </p>
+    </div>
+    <p class="process__intro | fade-in">
+      Three free designs, walked through live on a call before you commit to anything. From there
+      it's simple: you confirm the direction, hand over your photos and a few notes, and I take care
+      of the rest. Copy, design, build, and launch with a full handover. Your part stays light and
+      self-paced, and once your content's in, most venues are live about a week later.
+    </p>
+  </header>
+
+  <div class="process__timeline">
+    <span class="process__rail" aria-hidden="true"></span>
+    <span class="process__rail-fill" aria-hidden="true"></span>
+    <ol class="process__steps">
+      {
+        steps.map((step, i) => (
+          <li class="process__step">
+            <span class="process__numeral" aria-hidden="true">
+              {String(i + 1).padStart(2, "0")}
+            </span>
+            <span class="process__node" aria-hidden="true" />
+            <div class="process__content">
+              <p class="process__kicker">{step.kicker}</p>
+              <h3 class="process__title">{step.title}</h3>
+              <p class="process__body">{step.body}</p>
+              <p class="process__effort">
+                <span class="process__effort-label">Your time</span>
+                <span class="process__effort-value">{step.effort}</span>
+              </p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .process {
+    padding-block: var(--section-space);
+    background-color: var(--clr-bg-primary-light);
+    color: var(--clr-body-text-dark);
+  }
+
+  /* ── Heading + intro ───────────────────────────────────── */
+  .process__head {
+    display: grid;
+    gap: var(--spacing-md);
+    text-align: center;
+  }
+
+  .process__intro {
+    font-size: var(--fs-400);
+    line-height: 1.78;
+    color: var(--clr-body-muted);
+  }
+
+  /* ── Timeline ──────────────────────────────────────────── */
+  .process__timeline {
+    position: relative;
+    max-width: 48rem;
+    margin-block-start: var(--spacing-2xl);
+    margin-inline: auto;
+  }
+
+  .process__rail,
+  .process__rail-fill {
+    position: absolute;
+    left: 19px;
+    width: 2px;
+  }
+
+  .process__rail {
+    top: 1.25rem;
+    bottom: 1.25rem;
+    background-color: var(--border-light);
+  }
+
+  .process__rail-fill {
+    top: 1.25rem;
+    height: calc(100% - 2.5rem);
+    background-color: var(--clr-primary-gold);
+    /* Soft gold haze along the filled portion — a static paint; the bar itself
+       is moved on the compositor via scaleY, so no per-frame rasterisation. */
+    box-shadow: 0 0 8px color-mix(in srgb, var(--clr-primary-gold) 45%, transparent);
+    transform: scaleY(var(--process-progress, 0));
+    transform-origin: top;
+    transition: transform 0.5s var(--ease);
+  }
+
+  .process__steps {
+    counter-reset: step;
+  }
+
+  .process__step {
+    counter-increment: step;
+    position: relative;
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    gap: var(--spacing-md);
+    padding-block-end: var(--spacing-2xl);
+  }
+
+  .process__step:last-child {
+    padding-block-end: 0;
+  }
+
+  /* ── Ghost numeral (decorative; hidden until there's room for it) ── */
+  .process__numeral {
+    display: none;
+    align-self: start;
+    line-height: 0.8;
+    font-size: clamp(4rem, 7vw, 6.5rem);
+    font-weight: var(--fw-700);
+    letter-spacing: -0.02em;
+    color: color-mix(in srgb, var(--clr-primary-gold) 18%, transparent);
+    user-select: none;
+    transition: color 0.5s var(--ease);
+  }
+
+  .process__step.is-active .process__numeral {
+    color: color-mix(in srgb, var(--clr-primary-gold) 32%, transparent);
+  }
+
+  /* ── Node ──────────────────────────────────────────────── */
+  .process__node {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border: 1.5px solid var(--border-light);
+    border-radius: 50%;
+    background-color: var(--clr-bg-primary-light);
+    color: var(--clr-body-muted-light);
+    font-size: var(--fs-350);
+    font-weight: var(--fw-700);
+    transition:
+      border-color 0.45s var(--ease),
+      background-color 0.45s var(--ease),
+      color 0.45s var(--ease),
+      box-shadow 0.45s var(--ease);
+  }
+
+  .process__node::before {
+    content: counter(step, decimal-leading-zero);
+  }
+
+  .process__step.is-active .process__node {
+    border-color: var(--clr-primary-gold);
+    background-color: var(--clr-primary-gold);
+    color: var(--clr-bg-primary-light);
+    box-shadow: 0 0 0 5px color-mix(in srgb, var(--clr-primary-gold) 12%, transparent);
+  }
+
+  /* ── Content ───────────────────────────────────────────── */
+  .process__content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-block-start: 0.3125rem;
+  }
+
+  .process__kicker {
+    font-size: var(--fs-300);
+    font-weight: var(--fw-700);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--clr-body-muted);
+    transition: color 0.4s var(--ease);
+  }
+
+  .process__step.is-active .process__kicker {
+    color: var(--clr-primary-gold);
+  }
+
+  .process__title {
+    margin-block: var(--spacing-xxs) var(--spacing-xs);
+    font-size: clamp(1.1875rem, 1.05rem + 0.6vw, 1.4375rem);
+    font-weight: var(--fw-700);
+    letter-spacing: -0.01em;
+    color: var(--clr-body-text-dark);
+  }
+
+  .process__body {
+    max-width: 46ch;
+    font-size: var(--fs-375);
+    line-height: 1.72;
+    color: var(--clr-body-muted);
+  }
+
+  /* ── Effort marker ─────────────────────────────────────── */
+  .process__effort {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-block-start: var(--spacing-sm);
+    font-size: var(--fs-300);
+  }
+
+  .process__effort::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--clr-primary-gold);
+  }
+
+  .process__effort-label {
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--clr-body-muted);
+  }
+
+  .process__effort-value {
+    font-weight: var(--fw-700);
+    color: var(--clr-body-text-dark);
+  }
+
+  /* ── Directional reveal ────────────────────────────────────
+     Content + numeral start offset and fade in once, as each step
+     enters. transform + opacity only (compositor-friendly). On mobile
+     it's a simple fade-up; the horizontal direction is added at desktop. */
+  .process__content,
+  .process__numeral {
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+      opacity 0.7s var(--ease),
+      transform 0.7s var(--ease);
+  }
+
+  .process__step.is-revealed .process__content,
+  .process__step.is-revealed .process__numeral {
+    opacity: 1;
+    /* Settle on a static 3D layer rather than `none`. Mid-reveal these are
+       composited (opacity/transform), which forces grayscale text AA; landing
+       on `none` tears the layer down and flips back to subpixel AA, snapping
+       glyphs by a fraction of a pixel. Holding translateZ(0) keeps the raster
+       path stable so the text never re-snaps. */
+    transform: translateZ(0);
+  }
+
+  /* ── Alternating layout: content ping-pongs across a centred rail.
+     Kicks in at 768px — where the single column starts leaving dead space
+     on the right. Columns land ~305px wide here: tight but readable. ── */
+  @media (min-width: 48rem) {
+    .process__intro {
+      max-width: 70ch;
+      margin-inline: auto;
+    }
+
+    .process__timeline {
+      max-width: none;
+      margin-block-start: var(--spacing-3xl);
+    }
+
+    .process__rail,
+    .process__rail-fill {
+      left: calc(50% - 1px);
+    }
+
+    .process__step {
+      grid-template-columns: 1fr 40px 1fr;
+      column-gap: clamp(2rem, 5vw, 4.5rem);
+      align-items: start;
+      padding-block-end: var(--spacing-3xl);
+    }
+
+    /* Default = even step: numeral left, node centre, content right */
+    .process__numeral {
+      display: block;
+      grid-column: 1;
+      text-align: right;
+      align-self: center;
+    }
+
+    .process__node {
+      grid-column: 2;
+    }
+
+    .process__content {
+      grid-column: 3;
+    }
+
+    /* Odd step: flip — content hugs the rail from the left, numeral to the right */
+    .process__step:nth-child(odd) .process__content {
+      grid-column: 1;
+      grid-row: 1;
+      align-items: flex-end;
+      text-align: right;
+    }
+
+    .process__step:nth-child(odd) .process__numeral {
+      grid-column: 3;
+      grid-row: 1;
+      text-align: left;
+    }
+
+    /* Directional reveal: each side slides in from its own edge */
+    .process__content {
+      transform: translateX(28px);
+    }
+
+    .process__step:nth-child(odd) .process__content {
+      transform: translateX(-28px);
+    }
+
+    /* Settle (declared last so it wins the specificity tie with :nth-child).
+       translateZ(0), not `none` — see the base settle rule above. */
+    .process__step.is-revealed .process__content {
+      transform: translateZ(0);
+    }
+  }
+
+  /* ── Heading + intro side by side. Held back to 1000px: side by side any
+     narrower and the large display heading gets cramped. ── */
+  @media (min-width: 62.5rem) {
+    .process__head {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--spacing-2xl);
+      text-align: left;
+    }
+
+    .process__head-lead {
+      /* align-self: center; */
+    }
+  }
+
+  /* ── Reduced motion: everything visible, nothing moves ─── */
+  @media (prefers-reduced-motion: reduce) {
+    .process__node,
+    .process__kicker,
+    .process__numeral,
+    .process__rail-fill {
+      transition: none;
+    }
+
+    .process__content,
+    .process__numeral {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+
+  /* ── Continuous rail fill (progressive enhancement) ──────
+     Where scroll-driven animations are supported, the gold fill
+     tracks scroll position continuously on the compositor thread —
+     no per-frame main-thread work, no scroll listeners. Browsers
+     without support keep the IntersectionObserver-driven discrete
+     fill above. Dot activation (.is-active) stays IntersectionObserver-
+     driven in both cases. */
+  @supports (animation-timeline: view()) {
+    .process__timeline {
+      view-timeline-name: --process-rail;
+      view-timeline-axis: block;
+    }
+
+    .process__rail-fill {
+      animation: process-rail-fill linear both;
+      animation-timeline: --process-rail;
+      /* Tuned so the fill's bottom tracks roughly the same line ~55%
+         down the viewport where the dots activate (the IntersectionObserver's
+         -45% bottom margin), so the bar reaches each node as it lights up.
+         These two values are the tuning knobs. */
+      animation-range: cover 20% cover 75%;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      /* Drop back to the discrete, JS-driven fill — no growing motion. */
+      .process__rail-fill {
+        animation: none;
+      }
+    }
+  }
+
+  @keyframes process-rail-fill {
+    from {
+      transform: scaleY(0);
+    }
+    to {
+      transform: scaleY(1);
+    }
+  }
+</style>
+
+<script>
+  function initProcess() {
+    const timeline = document.querySelector<HTMLElement>(".process__timeline");
+    const steps = timeline ? [...timeline.querySelectorAll<HTMLElement>(".process__step")] : [];
+    // Bail on routes without this section. The astro:page-load listener is
+    // global, so this runs on every navigation.
+    if (!steps.length) return;
+
+    const total = steps.length;
+    const active = new Set<number>();
+
+    // Activation + rail progress: tracks the furthest step reached.
+    const activeObserver = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          const i = steps.indexOf(entry.target as HTMLElement);
+          if (i === -1) continue;
+          if (entry.isIntersecting) active.add(i);
+          else active.delete(i);
+        }
+
+        // Keep the last state while the section sits fully off-screen.
+        if (active.size === 0) return;
+
+        const max = Math.max(...active);
+        steps.forEach((step, i) => step.classList.toggle("is-active", i <= max));
+        timeline!.style.setProperty("--process-progress", String((max + 1) / total));
+      },
+      { rootMargin: "0px 0px -45% 0px", threshold: 0 },
+    );
+
+    // Directional reveal as each step enters. Plays again only if the reader
+    // scrolls back up past a step (it leaves below the viewport) and then comes
+    // back down — leaving via the top, on the way down, never resets it.
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-revealed");
+          } else if (entry.boundingClientRect.top > 0) {
+            // Exited below the viewport → reader scrolled back up; reset to replay.
+            entry.target.classList.remove("is-revealed");
+          }
+        }
+      },
+      { rootMargin: "0px 0px -12% 0px", threshold: 0.1 },
+    );
+
+    steps.forEach((step) => {
+      activeObserver.observe(step);
+      revealObserver.observe(step);
+    });
+
+    // Drop both observers before the next swap so neither leaks across
+    // navigations; the section swapped in re-observes on the following
+    // astro:page-load.
+    document.addEventListener(
+      "astro:before-swap",
+      () => {
+        activeObserver.disconnect();
+        revealObserver.disconnect();
+      },
+      { once: true },
+    );
+  }
+
+  document.addEventListener("astro:page-load", initProcess);
+</script>

@@ -1,0 +1,87 @@
+---
+import { getCollection } from "astro:content";
+import PortfolioCard from "../ui/PortfolioCard.astro";
+import ProjectCaseModal from "../ui/ProjectCaseModal.astro";
+import ItalicTitle from "../ui/ItalicTitle.astro";
+
+const projects = (await getCollection("portfolioCard")).filter((project) =>
+  project.data.roles.includes("portfolio"),
+);
+---
+
+<section class="project__showcase | grid-main" aria-labelledby="project-title">
+  <header class="project__showcase-header">
+    <h2 class="eyebrow eyebrow--dark" id="project-title">Melbourne Hospitality Sites</h2>
+    <p class="section-subtitle section-subtitle--dark">
+      Built to turn first-time diners into <ItalicTitle variant="on-light">regulars</ItalicTitle>
+    </p>
+    <p class="supporting__text">
+      Every Vyteca build answers to one question: does it fill tables? Each site here is engineered
+      for the speed, polish, and booking-first design your venue gets from day one. This is the
+      benchmark. Yours is next.
+    </p>
+  </header>
+
+  <ul class="project__showcase-list" role="list">
+    {
+      projects.map(({ data }, i) => (
+        <li class="project-showcase__item">
+          <PortfolioCard
+            title={data.title}
+            eyebrow={data.eyebrow}
+            image={data.desktopImgSrc}
+            pageSpeed={data.pageSpeed}
+            loadSpeed={data.loadSpeed}
+            type={data.type}
+            websiteUrl={data.websiteUrl}
+            caseKey={data.id}
+            index={i + 1}
+          />
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<ProjectCaseModal projects={projects.map(({ data }) => data)} />
+
+<style>
+  .project__showcase {
+    padding-block: var(--section-space);
+    background-color: var(--clr-bg-primary-light);
+  }
+  /* color: var(--clr-body-muted); */
+
+  .project__showcase-header {
+    text-align: center;
+    margin-block-end: var(--spacing-xl);
+  }
+
+  .supporting__text {
+    max-width: 65ch;
+    margin-inline: auto;
+    color: var(--clr-body-muted);
+    margin-block-start: var(--spacing-md);
+  }
+
+  .project__showcase-list {
+    display: grid;
+    gap: var(--spacing-lg);
+  }
+
+  @media (min-width: 40rem) {
+    .project__showcase-list {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 62.5rem) {
+    .project__showcase-list {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .supporting__text {
+      margin-block-start: var(--spacing-lg);
+    }
+  }
+</style>

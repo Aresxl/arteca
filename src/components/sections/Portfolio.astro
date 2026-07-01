@@ -1,85 +1,133 @@
 ---
 import { getCollection } from "astro:content";
-
-// Data
-const allProjects = await getCollection(`projects`);
-const featuredProjects = allProjects.filter((project) => {
-  return project.data.roles.includes(`featured`);
-});
-
-const sectionTitle = "Portfolio";
-const sectionSubtitle = "Proof of what's coming";
-const sectionText =
-  "Every project at Vyteca is held to one standard: does this fill tables? These concept builds represent the design craft, performance, and attention to detail you can expect from day one. The benchmark is set. Yours is next.";
-const sectionTitleId = "portfolio";
-
-const { fadeIn } = Astro.props;
-
-// Components
 import PortfolioCard from "../ui/PortfolioCard.astro";
-import SectionHeader from "../ui/SectionHeader.astro";
+import ProjectCaseModal from "../ui/ProjectCaseModal.astro";
+import ItalicTitle from "../ui/ItalicTitle.astro";
+
+interface Props {
+  /** Reveal the section on scroll via the shared `.fade-in` observer. */
+  fadeIn?: boolean;
+}
+
+const { fadeIn = false } = Astro.props;
+
+const projects = (await getCollection("portfolioCard")).filter((project) =>
+  project.data.roles.includes("featured"),
+);
 ---
 
-<section class="portfolio | grid-main" aria-labelledby={sectionTitleId}>
-  <SectionHeader
-    title={sectionTitle}
-    subtitle={sectionSubtitle}
-    supportingText={sectionText}
-    titleTag="h2"
-    titleId={sectionTitleId}
-    fadeIn={fadeIn}
-    class="portfolio__header"
-  />
-  <ul class="portfolio__grid">
+<section class="portfolio | grid-main" aria-labelledby="portfolio-title">
+  <header class:list={["portfolio__header", fadeIn && "fade-in"]}>
+    <h2 class="eyebrow eyebrow--dark" id="portfolio-title">Melbourne Hospitality Sites</h2>
+    <p class="section-subtitle section-subtitle--dark">
+      Built to turn first-time diners into <ItalicTitle variant="on-light">regulars</ItalicTitle>
+    </p>
+    <p class="supporting__text">
+      Every Vyteca build answers to one question: does it fill tables? Each site here is engineered
+      for the speed, polish, and booking-first design your venue gets from day one. This is the
+      benchmark. Yours is next.
+    </p>
+  </header>
+
+  <ul class="portfolio__list" role="list">
     {
-      featuredProjects.map(({ data }, i) => (
-        <PortfolioCard
-          title={data.title}
-          imgSrc={data.imgSrc}
-          text={data.text}
-          websiteHref={data.websiteHref}
-        />
+      projects.map(({ data }, i) => (
+        <li class:list={["portfolio__item", fadeIn && "fade-in"]}>
+          <PortfolioCard
+            title={data.title}
+            eyebrow={data.eyebrow}
+            image={data.desktopImgSrc}
+            pageSpeed={data.pageSpeed}
+            loadSpeed={data.loadSpeed}
+            type={data.type}
+            websiteUrl={data.websiteUrl}
+            caseKey={data.id}
+            index={i + 1}
+          />
+        </li>
       ))
     }
   </ul>
-
-  <style>
-    .portfolio__grid {
-      display: grid;
-      gap: 48px;
-      margin-block-start: 48px;
-      padding-inline: 15px;
-    }
-
-    @media (min-width: 40rem) {
-      .portfolio__grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    .portfolio__header {
-      p {
-        max-width: 75ch;
-        margin-inline: auto;
-      }
-    }
-
-    @media (min-width: 62.5rem) {
-      .portfolio__grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .portfolio__header {
-        p {
-          margin-block-start: var(--spacing-lg);
-        }
-      }
-    }
-
-    @media (min-width: 90rem) {
-      .portfolio__grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
-  </style>
 </section>
+
+<ProjectCaseModal projects={projects.map(({ data }) => data)} surface="dark" />
+
+<style>
+  .portfolio {
+    background-color: var(--clr-bg-primary-light);
+    padding-block: var(--section-space);
+  }
+
+  .portfolio__header {
+    margin-block-end: var(--spacing-xl);
+    text-align: center;
+  }
+
+  .supporting__text {
+    max-width: 65ch;
+    margin-block-start: var(--spacing-md);
+    margin-inline: auto;
+    color: var(--clr-body-muted);
+  }
+
+  .portfolio__list {
+    display: grid;
+    gap: var(--spacing-lg);
+  }
+
+  @media (min-width: 40rem) {
+    .portfolio__list {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 62.5rem) {
+    .supporting__text {
+      margin-block-start: var(--spacing-lg);
+    }
+
+    .portfolio__list {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  /* ── staggered card reveal ──
+     Each card carries `.fade-in` and is observed individually. On mobile
+     (single column) that means cards reveal top-to-bottom as they scroll in;
+     on the multi-column grid the row deals out left-to-right via the nth-child
+     delays. Transform + opacity only — the card's own hover lift lives in
+     PortfolioCard and is untouched. */
+  .portfolio__item.fade-in {
+    scale: 1;
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  .portfolio__item.fade-in.is-visible {
+    animation: none;
+    opacity: 1;
+    transform: none;
+    /* Longer duration + --ease-reveal (gentle ease-out) so each card glides up
+       instead of snapping in. */
+    transition:
+      opacity 1s var(--ease-reveal),
+      transform 1s var(--ease-reveal);
+  }
+  /* Wider gaps between cards so the cascade reads as a deliberate deal-out
+       rather than a "1-2-3" flash. */
+  .portfolio__item.fade-in:nth-child(2).is-visible {
+    transition-delay: 0.2s;
+  }
+  .portfolio__item.fade-in:nth-child(3).is-visible {
+    transition-delay: 0.4s;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .portfolio__item.fade-in {
+      opacity: 1;
+      transform: none;
+    }
+    .portfolio__item.fade-in.is-visible {
+      transition: none;
+    }
+  }
+</style>

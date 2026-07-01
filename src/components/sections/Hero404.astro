@@ -1,0 +1,698 @@
+---
+// Components
+import LinkOrButton from "../ui/LinkOrButton.astro";
+
+interface Props {
+  title: string;
+  subtitle: string | string[];
+  eyebrow: string;
+}
+
+const { title, subtitle, eyebrow } = Astro.props;
+
+const quickLinks = [
+  { num: "01", title: "About", href: "/about" },
+  { num: "02", title: "Our work", href: "/portfolio" },
+  { num: "03", title: "FAQs", href: "/faq" },
+  { num: "04", title: "Contact", href: "/contact" },
+];
+---
+
+<section class="hero | grid-main">
+  <div class="hero__center">
+    <header class="hero__header">
+      <div class="eyebrow__wrapper">
+        <span class="eyebrow eyebrow--gold">{eyebrow}</span>
+      </div>
+      <div class="hero__header-content">
+        <h1 class="hero-title--404">{title}</h1>
+        <p class="hero__subtitle--404">
+          {subtitle}
+        </p>
+        <div class="btn__wrapper">
+          <LinkOrButton as="a" href="/" text="Back to home ↗" variant="primary" />
+        </div>
+      </div>
+    </header>
+
+    <nav class="quick-links" aria-label="Popular pages">
+      <p class="quick-links__label eyebrow">Or pick up where you left off</p>
+      <ul class="quick-links__grid" role="list">
+        {
+          quickLinks.map(({ num, title, href }) => (
+            <li>
+              <a class="quick-link" href={href}>
+                <span class="quick-link__head">
+                  <span class="quick-link__num">{num}</span>
+                  <span class="quick-link__arrow" aria-hidden="true">
+                    ↗
+                  </span>
+                </span>
+                <span class="quick-link__title">{title}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+
+  <canvas class="hero-canvas" id="hero-canvas" aria-hidden="true"></canvas>
+  <svg
+    class="hero-flair"
+    aria-hidden="true"
+    focusable="false"
+    viewBox="0 0 560 560"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <defs>
+      <radialGradient id="hero-flair-glow" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="var(--clr-primary-gold)" stop-opacity="0.16"></stop>
+        <stop offset="50%" stop-color="var(--clr-primary-gold)" stop-opacity="0.05"></stop>
+        <stop offset="100%" stop-color="var(--clr-primary-gold)" stop-opacity="0"></stop>
+      </radialGradient>
+    </defs>
+
+    <circle class="hero-flair__glow" cx="280" cy="280" r="220" fill="url(#hero-flair-glow)"
+    ></circle>
+
+    <circle class="hero-flair__ring hero-flair__ring--lg" cx="280" cy="280" r="279"></circle>
+    <circle class="hero-flair__ring hero-flair__ring--md" cx="280" cy="280" r="209"></circle>
+    <circle class="hero-flair__ring hero-flair__ring--sm" cx="280" cy="280" r="149"></circle>
+    <circle class="hero-flair__ring hero-flair__ring--xs" cx="280" cy="280" r="89"></circle>
+
+    <g class="hero-flair__orbit hero-flair__orbit--1">
+      <circle class="hero-flair__dot" cx="280" cy="1" r="1.5"></circle>
+    </g>
+    <g class="hero-flair__orbit hero-flair__orbit--2">
+      <circle class="hero-flair__dot hero-flair__dot--lg" cx="280" cy="71" r="2"></circle>
+    </g>
+    <g class="hero-flair__orbit hero-flair__orbit--3">
+      <circle class="hero-flair__dot hero-flair__dot--sm" cx="280" cy="131" r="1"></circle>
+    </g>
+  </svg>
+
+  <div class="hero-arc hero-arc--1" aria-hidden="true"></div>
+  <div class="hero-arc hero-arc--2" aria-hidden="true"></div>
+  <div class="hero-arc hero-arc--3" aria-hidden="true"></div>
+
+  <span class="corner tl" aria-hidden="true"></span>
+  <span class="corner tr" aria-hidden="true"></span>
+  <span class="corner bl" aria-hidden="true"></span>
+  <span class="corner br" aria-hidden="true"></span>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    overflow: hidden;
+    min-height: 95dvh;
+    margin-block-end: var(--section-space);
+    text-align: center;
+  }
+
+  .hero__center {
+    position: relative;
+    z-index: 2;
+    align-self: center;
+    width: 100%;
+  }
+
+  .hero__subtitle {
+    position: relative;
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xs);
+    margin-block-start: var(--spacing-lg);
+  }
+
+  .hero__subtitle::before {
+    content: "";
+    position: absolute;
+    top: -20px;
+    left: 1.25rem;
+    right: 1.25rem;
+    /* ? */
+    width: 100%;
+    height: 1px;
+    background-color: var(--clr-body-muted-light);
+  }
+
+  .hero__subtitle-divider {
+    flex-shrink: 0;
+    inline-size: 0.25rem;
+    block-size: 0.25rem;
+    border-radius: 50%;
+    background-color: currentColor;
+    opacity: 0.5;
+  }
+
+  .eyebrow__wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-block-end: var(--spacing-md);
+  }
+
+  .eyebrow__dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--clr-primary-gold);
+  }
+
+  .btn__wrapper {
+    margin-block-start: var(--spacing-lg);
+  }
+
+  /* ── quick-link tiles ─────────────────────────────────────────
+     The default --clr-border-default is near-invisible on the dark
+     background, so the tiles get a brighter, gold-tied border — same
+     fix used in Contact / TripleGuarantee.
+  ───────────────────────────────────────────────────────────────── */
+  .quick-links {
+    --ql-gold: var(--clr-primary-gold);
+    --ql-border: hsl(30, 6%, 20%);
+    --ql-gold-tint: color-mix(in srgb, var(--clr-primary-gold) 5%, transparent);
+
+    --ql-border-clr: oklch(20% 0.008 62);
+
+    --ql-bg-card-hover: hsl(34, 11%, 12%);
+    --ql-border-clr-hover: hsl(32, 20%, 17%);
+
+    max-width: 800px;
+
+    margin-inline: auto;
+    margin-block-start: var(--spacing-2xl);
+  }
+
+  .quick-links__label {
+    margin-block-end: var(--spacing-md);
+    color: var(--clr-body-muted-light);
+  }
+
+  .quick-links__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 2×2 on mobile */
+    gap: var(--spacing-xs);
+  }
+
+  .quick-link {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm);
+    overflow: hidden;
+    text-align: left;
+    text-decoration: none;
+    background-color: var(--clr-bg-card);
+    border: 1px solid var(--ql-border);
+    border: 1px solid var(--ql-border-clr);
+    border-radius: 3px;
+    transition:
+      transform 0.4s var(--ease),
+      border-color 0.4s var(--ease),
+      background-color 0.4s var(--ease);
+  }
+
+  /* gold bar sweeps down on hover — the shared card hover */
+  .quick-link::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--ql-gold);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.55s var(--ease);
+  }
+
+  .quick-link__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .quick-link__num {
+    font-size: var(--fs-350);
+    font-weight: var(--fw-700);
+    letter-spacing: 0.1em;
+    color: var(--ql-gold);
+  }
+
+  .quick-link__arrow {
+    font-size: var(--fs-450);
+    line-height: 1;
+    color: var(--clr-body-muted);
+    transition: color 0.4s var(--ease);
+  }
+
+  .quick-link__title {
+    font-size: var(--fs-450);
+    font-weight: var(--fw-700);
+    color: var(--clr-body-text);
+  }
+
+  /* hover / keyboard focus — lift the tile and turn the arrow gold */
+  .quick-link:hover,
+  .quick-link:focus-visible {
+    transform: translateY(-4px);
+    background-color: var(--ql-gold-tint);
+    background-color: var(--ql-bg-card-hover);
+    border-color: var(--ql-gold);
+    border-color: var(--ql-border-clr-hover);
+  }
+
+  .quick-link:hover::before,
+  .quick-link:focus-visible::before {
+    transform: scaleY(1);
+  }
+
+  .quick-link:hover .quick-link__arrow,
+  .quick-link:focus-visible .quick-link__arrow {
+    color: var(--ql-gold);
+  }
+
+  .quick-link:focus-visible {
+    outline: 2px solid var(--ql-gold);
+    outline-offset: 3px;
+  }
+
+  .hero-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .hero-flair {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    width: min(560px, 90vmin);
+    height: min(560px, 90vmin);
+    pointer-events: none;
+    contain: layout style paint;    z-index: 1;
+  }
+
+  .hero-flair__ring {
+    fill: none;
+    stroke: var(--clr-primary-gold);
+    stroke-width: 1;
+  }
+  .hero-flair__ring--lg {
+    stroke-opacity: 0.07;
+  }
+  .hero-flair__ring--md {
+    stroke-opacity: 0.09;
+  }
+  .hero-flair__ring--sm {
+    stroke-opacity: 0.1;
+  }
+  .hero-flair__ring--xs {
+    stroke-opacity: 0.12;
+  }
+
+  .hero-flair__orbit {
+    transform-origin: 280px 280px;
+  }
+
+  .hero-flair__orbit--1 {
+    animation: flair-spin 22s linear infinite;
+  }
+  .hero-flair__orbit--2 {
+    animation: flair-spin 14s linear infinite reverse;
+  }
+  .hero-flair__orbit--3 {
+    animation: flair-spin 9s linear infinite;
+  }
+
+  .hero-flair__dot {
+    fill: var(--clr-primary-gold);
+    fill-opacity: 0.7;
+  }
+  .hero-flair__dot--lg {
+    fill-opacity: 0.9;
+  }
+  .hero-flair__dot--sm {
+    fill-opacity: 0.5;
+  }
+
+  .hero-flair__glow {
+    animation: glow-pulse 4s ease-in-out infinite;
+  }
+
+  @keyframes flair-spin {
+    to {
+      rotate: 1turn;
+    }
+  }
+
+  @keyframes glow-pulse {
+    0%,
+    100% {
+      opacity: 0.5;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+
+  /* ── Hero Arc (conic-gradient DOM elements) ─────────────────── */
+  .hero-arc {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border-radius: 50%;
+    pointer-events: none;
+    translate: -50% -50%;    z-index: 1;
+  }
+
+  .hero-arc::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+  }
+
+  .hero-arc--1 {
+    width: min(560px, 90vmin);
+    height: min(560px, 90vmin);
+    animation: flair-spin 18s linear infinite;
+  }
+  .hero-arc--1::before {
+    background: conic-gradient(
+      from 0deg,
+      transparent 0%,
+      transparent 55%,
+      color-mix(in srgb, var(--clr-primary-gold) 15%, transparent) 72%,
+      color-mix(in srgb, var(--clr-primary-gold) 5%, transparent) 88%,
+      transparent 100%
+    );
+  }
+
+  .hero-arc--2 {
+    width: min(420px, 67.5vmin);
+    height: min(420px, 67.5vmin);
+    animation: flair-spin 32s linear infinite reverse;
+  }
+  .hero-arc--2::before {
+    background: conic-gradient(
+      from 180deg,
+      transparent 0%,
+      transparent 65%,
+      color-mix(in srgb, var(--clr-primary-gold) 8%, transparent) 80%,
+      transparent 100%
+    );
+  }
+
+  .hero-arc--3 {
+    width: min(300px, 48.21vmin);
+    height: min(300px, 48.21vmin);
+    animation: flair-spin 10s linear infinite;
+    opacity: 0.6;
+  }
+  .hero-arc--3::before {
+    background: conic-gradient(
+      from 0deg,
+      transparent 0%,
+      transparent 55%,
+      color-mix(in srgb, var(--clr-primary-gold) 15%, transparent) 72%,
+      color-mix(in srgb, var(--clr-primary-gold) 5%, transparent) 88%,
+      transparent 100%
+    );
+  }
+
+  .corner {
+    position: absolute;
+    z-index: 30;
+    display: block;
+    width: 20px;
+    height: 20px;
+    opacity: 0.28;
+  }
+
+  .corner::before,
+  .corner::after {
+    content: "";
+    position: absolute;
+    background: var(--clr-primary-gold);
+  }
+
+  .corner::before {
+    width: 1px;
+    height: 100%;
+  }
+  .corner::after {
+    width: 100%;
+    height: 1px;
+  }
+  .corner.tl {
+    top: 30px;
+    left: 10px;
+  }
+  .corner.tl::before {
+    top: 0;
+    left: 0;
+  }
+  .corner.tl::after {
+    top: 0;
+    left: 0;
+  }
+  .corner.tr {
+    top: 30px;
+    right: 10px;
+  }
+  .corner.tr::before {
+    top: 0;
+    right: 0;
+  }
+  .corner.tr::after {
+    top: 0;
+    right: 0;
+  }
+  .corner.bl {
+    bottom: 30px;
+    left: 10px;
+  }
+  .corner.bl::before {
+    bottom: 0;
+    left: 0;
+  }
+  .corner.bl::after {
+    bottom: 0;
+    left: 0;
+  }
+  .corner.br {
+    bottom: 30px;
+    right: 10px;
+  }
+  .corner.br::before {
+    bottom: 0;
+    right: 0;
+  }
+  .corner.br::after {
+    bottom: 0;
+    right: 0;
+  }
+
+  @media (min-width: 40rem) {
+    .hero {
+      padding-block: var(--spacing-4xl) var(--spacing-2xl);
+    }
+
+    /* four tiles across once there's room */
+    .quick-links__grid {
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--spacing-sm);
+    }
+  }
+
+  @media (min-width: 48rem) {
+    .hero {
+      padding-block: var(--spacing-4xl) var(--spacing-2xl);
+    }
+  }
+
+  @media (min-width: 62.5rem) {
+    .hero {
+      padding-block: var(--spacing-4xl) var(--spacing-3xl);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-arc,
+    .hero-flair__orbit,
+    .hero-flair__glow {
+      animation: none;
+    }
+
+    .quick-link,
+    .quick-link::before,
+    .quick-link__arrow {
+      transition: none;
+    }
+
+    .quick-link:hover,
+    .quick-link:focus-visible {
+      transform: none;
+    }
+  }
+</style>
+
+<script>
+  function initHero404() {
+    const canvas = document.getElementById("hero-canvas") as HTMLCanvasElement | null;
+    // Bail on routes without this hero. The astro:page-load listener is global,
+    // so this runs on every navigation, including pages without the 404 hero.
+    if (!canvas || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const controller = new AbortController();
+    const { signal } = controller;
+
+    const ctx = canvas.getContext("2d")!;
+    const GOLD = "225,189,104";
+
+    // Particle density scales with viewport (rem breakpoints mirror the CSS:
+    // 40rem/62.5rem/90rem). resize() reads this, so crossing a breakpoint
+    // re-seeds the field at the new count for free.
+    function getCount() {
+      if (window.matchMedia("(min-width: 90rem)").matches) return 100;
+      if (window.matchMedia("(min-width: 62.5rem)").matches) return 70;
+      if (window.matchMedia("(min-width: 40rem)").matches) return 45;
+      return 35;
+    }
+
+    let W = 0,
+      H = 0,
+      particles: { x: number; y: number; r: number; vx: number; vy: number; a: number }[] = [],
+      rafId: number | null = null,
+      onscreen = true,
+      active = true;
+
+    function rand(a: number, b: number) {
+      return a + Math.random() * (b - a);
+    }
+
+    function resize() {
+      const hero = canvas!.closest("section") as HTMLElement;
+      W = canvas!.width = hero.offsetWidth;
+      H = canvas!.height = hero.offsetHeight;
+      particles = Array.from({ length: getCount() }, () => ({
+        x: rand(0, W),
+        y: rand(0, H),
+        r: rand(0.5, 2.2),
+        vx: rand(-0.09, 0.09),
+        vy: rand(-0.07, 0.07),
+        a: rand(0.1, 0.4),
+      }));
+    }
+
+    // The drift is throttled to ~30fps. Each particle moves a fraction of a
+    // pixel between native frames, so redrawing the whole canvas at a 144Hz
+    // display is wasted rasterisation — 30fps looks identical here and cuts the
+    // full-canvas repaints ~5x. Motion is time-based (referenced to one 144Hz
+    // frame, the cadence the field was tuned at) so the real drift speed holds
+    // steady on any refresh rate.
+    const FRAME_MS = 1000 / 30;
+    const BASE_MS = 1000 / 144;
+    let lastFrame = 0;
+
+    function draw(now: number) {
+      if (active) rafId = requestAnimationFrame(draw);
+      if (!lastFrame) lastFrame = now;
+      const elapsed = now - lastFrame;
+      if (elapsed < FRAME_MS) return;
+      lastFrame = now - (elapsed % FRAME_MS);
+      // Clamp the step so returning from a background tab can't teleport the
+      // field: cap it at four 144Hz frames' worth of drift.
+      const step = Math.min(elapsed / BASE_MS, 4);
+
+      ctx.clearRect(0, 0, W, H);
+      for (const p of particles) {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${GOLD},${p.a})`;
+        ctx.fill();
+        p.x += p.vx * step;
+        p.y += p.vy * step;
+        if (p.x < 0) p.x = W;
+        else if (p.x > W) p.x = 0;
+        if (p.y < 0) p.y = H;
+        else if (p.y > H) p.y = 0;
+      }
+    }
+
+    function stop() {
+      active = false;
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+      }
+    }
+
+    function start() {
+      if (active) return;
+      active = true;
+      lastFrame = 0;
+      rafId = requestAnimationFrame(draw);
+    }
+
+    document.addEventListener(
+      "visibilitychange",
+      () => {
+        if (document.hidden) stop();
+        else if (onscreen) start();
+      },
+      { signal },
+    );
+
+    const observer = new IntersectionObserver(
+      ([e]) => {
+        onscreen = e.isIntersecting;
+        if (onscreen) start();
+        else stop();
+      },
+      { threshold: 0 },
+    );
+    observer.observe(canvas.closest("section")!);
+
+    let resizeTimer: ReturnType<typeof setTimeout>;
+    window.addEventListener(
+      "resize",
+      () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(resize, 150);
+      },
+      { signal },
+    );
+
+    resize();
+    rafId = requestAnimationFrame(draw);
+
+    // Tear down before the page is swapped away: stop the rAF loop, drop the
+    // observer, and remove the window/document listeners via the controller.
+    // Without this, navigating away would leak a running canvas loop per visit.
+    document.addEventListener(
+      "astro:before-swap",
+      () => {
+        stop();
+        observer.disconnect();
+        clearTimeout(resizeTimer);
+        controller.abort();
+      },
+      { once: true },
+    );
+  }
+
+  document.addEventListener("astro:page-load", initHero404);
+</script>

@@ -1,18 +1,43 @@
 ---
 export const prerender = false;
 
+// data
+import faqContact from "@/data/faq-contact.json";
+
 import PrimaryLayout from "@/layouts/PrimaryLayout.astro";
 import InnerPageHero from "@/components/sections/InnerPageHero.astro";
+import Marquee from "@/components/sections/Marquee.astro";
 import Contact from "@/components/sections/Contact.astro";
+import FAQSection from "@/components/sections/FAQSection.astro";
 ---
 
 <PrimaryLayout
   title="Contact | Vyteca"
-  description="Ready for a better website for your Melbourne restaurant? Contact Vyteca today. Email or call Lachlan directly — fast replies, no pressure, just a real chat about your venue's online growth."
+  description="Want more bookings for your Melbourne venue? Contact Vyteca. Email or call Lachlan directly for a fast reply and a no-pressure chat."
 >
   <InnerPageHero
-    title="Contact Us"
-    subtitle="Ready to fill more tables with a custom Melbourne site?"
+    eyebrow="Straight to the founder"
+    title="Contact"
+    subtitle="Quick chat, fast reply"
+  />
+  <Marquee
+    items={[
+      "Fast replies",
+      "No pressure",
+      "Talk to Lachlan",
+      "Free quote",
+      "Melbourne-based",
+      "Direct email",
+      "Real conversation",
+      "Let's chat",
+    ]}
+    theme="dark"
   />
   <Contact />
+  <FAQSection
+    items={faqContact}
+    titleLead="Common"
+    titleAccent="questions"
+    note="Quick answers to what most hospitality owners ask before getting started. Can’t find yours? <a href='/faq'>See all FAQs</a>."
+  />
 </PrimaryLayout>

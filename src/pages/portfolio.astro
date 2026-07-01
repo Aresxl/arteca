@@ -1,0 +1,36 @@
+---
+// Data
+import faqPortfolio from "@/data/faq-portfolio.json";
+
+import InnerPageHero from "@/components/sections/InnerPageHero.astro";
+import ProjectShowcase from "@/components/sections/ProjectShowcase.astro";
+import Marquee from "@/components/sections/Marquee.astro";
+import PrimaryLayout from "@/layouts/PrimaryLayout.astro";
+import FAQSection from "@/components/sections/FAQSection.astro";
+---
+
+<PrimaryLayout
+  title="Portfolio | Vyteca"
+  description="See Melbourne hospitality websites hand-coded by Vyteca: fast-loading, mobile-perfect, conversion-focused sites built to fill more tables."
+>
+  <InnerPageHero eyebrow="Recent work" title="Portfolio" subtitle="Sites built to fill tables" />
+  <Marquee
+    items={[
+      "Real restaurants",
+      "Custom builds",
+      "Mobile-perfect",
+      "Fast by default",
+      "Conversion-focused",
+      "No templates",
+      "Hand-coded",
+      "Built to book",
+    ]}
+  />
+  <ProjectShowcase />
+  <FAQSection
+    items={faqPortfolio}
+    titleLead="Common"
+    titleAccent="questions"
+    note="Quick answers to what most hospitality owners ask before getting started. Can’t find yours? <a href='/contact'>Get in touch</a>."
+  />
+</PrimaryLayout>

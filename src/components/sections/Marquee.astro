@@ -1,0 +1,139 @@
+---
+interface Props {
+  items?: string[];
+  /** Colour scheme for the band. Set per page so the marquee maintains the
+      dark/cream section rhythm around it. */
+  theme?: "cream" | "dark";
+}
+
+const {
+  items = [
+    "Hand-coded",
+    "No templates",
+    "Melbourne",
+    "98-100 PageSpeed",
+    "Restaurant specialists",
+    "~1.5s load time",
+    "$0 upfront",
+    "Triple Guarantee",
+  ],
+  theme = "dark",
+} = Astro.props;
+
+// Duplicate the list so the track loops seamlessly (the keyframe shifts by -50%).
+const loopItems = [...items, ...items];
+---
+
+<div class:list={["marquee", `marquee--${theme}`]} aria-hidden="true">
+  <div class="marquee__viewport">
+    <div class="marquee__track">
+      {
+        loopItems.map((item) => (
+          <span class="marquee__item">
+            <span class="marquee__label">{item}</span>
+            <span class="marquee__sep" />
+          </span>
+        ))
+      }
+    </div>
+  </div>
+</div>
+
+<style>
+  .marquee {
+    /* Even spacing carried by each item, so the doubled track tiles perfectly
+       and the -50% loop lands seam-to-seam with no gap or jump.
+       (Was 3rem; +15% separation.) */
+    --marquee-gap: 3.45rem;
+
+    background-color: var(--marquee-bg);
+    border-top: 1px solid var(--marquee-border);
+    /* The bottom edge is the seam into the next section. A semi-transparent gold
+       reads here only when the section below is dark; over a cream section it
+       collapses to a near-black line and the gold accent disappears. The solid
+       brand gold is a mid-tone, so it stays a visible gold divider on any
+       background below — dark or cream. */
+    border-bottom: 1px solid var(--marquee-border-bottom);
+  }
+
+  /* The fade lives on the viewport, not the band: masking the whole .marquee
+     would fade its background away at the edges and let the section behind peek
+     through (visible on narrow viewports). Keeping the mask on this inner
+     wrapper fades only the moving content while the band stays opaque edge-to-edge. */
+  .marquee__viewport {
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  }
+
+  .marquee--dark {
+    --marquee-bg: var(--clr-bg-secondary);
+    /* Hairline rules in low-opacity gold frame the band as a deliberate divider. */
+    --marquee-border: color-mix(in srgb, var(--clr-primary-gold) 22%, transparent);
+    --marquee-border-bottom: var(--clr-primary-gold);
+  }
+
+  .marquee--cream {
+    --marquee-bg: var(--clr-bg-primary-light);
+    --marquee-border: color-mix(in srgb, var(--clr-primary-gold) 30%, transparent);
+    --marquee-border-bottom: var(--clr-primary-gold);
+  }
+
+  .marquee__track {
+    display: flex;
+    align-items: center;
+    width: max-content;
+    padding-block: var(--spacing-md);
+    animation: marquee 48s linear infinite;
+  }
+
+  .marquee__item {
+    display: inline-flex;
+    align-items: center;
+    /* Trailing space lives on every item (including the last), unlike flex gap.
+       This is what keeps the two halves symmetric for a seamless -50% loop. */
+    gap: var(--marquee-gap);
+    padding-inline-end: var(--marquee-gap);
+  }
+
+  /* Match the .eyebrow idiom: uppercase, tracked-out, bold, gold. */
+  .marquee__label {
+    white-space: nowrap;
+    font-size: var(--fs-350);
+    font-weight: var(--fw-700);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--clr-body-muted-light);
+  }
+
+  .marquee__sep {
+    width: 5px;
+    height: 5px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--clr-primary-gold);
+  }
+
+  /* translate3d (not translateX) keeps the track on its own GPU layer, so the
+     text rasterizes once and slides with sub-pixel precision. Plain translateX
+     can re-paint on the main thread and snap to whole pixels, which at this slow
+     speed (< 1px/frame) reads as stuttering / low FPS. */
+  @keyframes marquee {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+
+  .marquee:hover .marquee__track {
+    animation-play-state: paused;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .marquee__track {
+      animation: none;
+    }
+  }
+</style>
