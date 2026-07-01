@@ -1,0 +1,920 @@
+---
+// Images
+import ArrowIcon from "@/assets/icons/arrow-up-right.svg";
+
+// Components
+import LinkOrButton from "@/ui/LinkOrButton.astro";
+import ItalicTitle from "../ui/ItalicTitle.astro";
+
+const inclusions = [
+  {
+    lead: "Your website itself.",
+    body: "Built for your venue and kept fast, current, and live for as long as you're with Vyteca. Up and booking within a week.",
+    featured: true,
+  },
+  {
+    lead: "24/7 priority support.",
+    body: "If your booking button goes down before a Friday rush, I'm on it, day or night.",
+  },
+  {
+    lead: "Fast, secure hosting,",
+    body: "monitored around the clock so your site never goes dark.",
+  },
+  {
+    lead: "Google Business Profile optimisation,",
+    body: "so you're the first venue locals see when they search.",
+  },
+  {
+    lead: "Fully managed Google reviews.",
+    body: "I reply to every one for you, so the next person deciding where to eat sees a venue that shows up and cares, without you lifting a finger.",
+  },
+  {
+    lead: "Your own dashboard",
+    body: "to update menus, hours, and photos in seconds.",
+  },
+  {
+    lead: "Ongoing tweaks and updates handled for you.",
+    body: "Bigger changes are quoted up front.",
+  },
+];
+
+// Headline metrics shown in the console strip.
+const metrics = [
+  { label: "PageSpeed", value: "98-100", unit: null },
+  { label: "Uptime", value: "99.9", unit: "%" },
+  { label: "Load time", value: "1.5", unit: "s" },
+];
+
+// "Managed for you" activity log. `tone` drives the status-dot colour only.
+const activity = [
+  { tone: "live", lead: "Hosting & security", rest: "monitored", meta: "24/7 · live" },
+  { tone: "gold", lead: "4 Google reviews", rest: "responded", meta: "today" },
+  { tone: "gold", lead: "Menu & hours", rest: "updated", meta: "1h ago" },
+  { tone: "gold", lead: "Google Business", rest: "optimised", meta: "this week" },
+  { tone: "live", lead: "Support", rest: "replies", meta: "avg 2 hours" },
+];
+
+// Uptime sparkline. Heights are computed at build time and drawn as an SVG bar
+// field — geometry attributes, not inline CSS — so there is no per-frame work
+// and no inline styles. Two scripted dips stop it reading as synthetic.
+const SPARK_SLOT = 5; // viewBox units per bar (bar + gap)
+const SPARK_BAR = 3.4; // bar width in viewBox units
+const uptimeBars = Array.from({ length: 46 }, (_, i) => {
+  const dip = i === 9 || i === 31;
+  const raw = dip ? 46 : 72 + Math.round(Math.sin(i * 1.27) * 12 + (i % 3) * 5);
+  return Math.min(100, Math.max(44, raw));
+});
+const sparkWidth = uptimeBars.length * SPARK_SLOT;
+---
+
+<section class="membership | grid-main" aria-labelledby="membership-title">
+  <div class="membership__inner">
+    <header class="membership__head | fade-in">
+      <p class="eyebrow eyebrow--gold membership__eyebrow">Membership</p>
+      <h2 class="section-subtitle section-subtitle--light" id="membership-title">
+        A website that pays its own <ItalicTitle variant="on-dark">rent.</ItalicTitle>
+      </h2>
+      <p class="membership__intro">
+        Your website works every shift: fast to load, easy to book, and always up to date. It earns
+        its keep by turning local searches into tables, while I handle everything that keeps it
+        running.
+      </p>
+    </header>
+
+    <ul class="membership__inclusions | fade-in" role="list">
+      {
+        inclusions.map((item) => (
+          <li class:list={["membership__inc", { "membership__inc--featured": item.featured }]}>
+            <span class="membership__inc-mark" aria-hidden="true" />
+            <p class="membership__inc-text">
+              <b>{item.lead}</b> {item.body}
+            </p>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="membership__panel">
+      <div class="membership__panel-inner | fade-in">
+        <figure class="membership__console-frame">
+          <figcaption class="sr-only">
+            Example dashboard for a Vyteca-managed hospitality website, showing live performance
+            metrics and recent maintenance handled for the owner.
+          </figcaption>
+
+          <span class="membership__bracket membership__bracket--tl" aria-hidden="true"></span>
+          <span class="membership__bracket membership__bracket--tr" aria-hidden="true"></span>
+          <span class="membership__bracket membership__bracket--bl" aria-hidden="true"></span>
+          <span class="membership__bracket membership__bracket--br" aria-hidden="true"></span>
+
+          <div class="membership__console">
+            <div class="console__bar">
+              <span class="console__domain">
+                <svg
+                  class="console__globe"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  <circle cx="12" cy="12" r="9"></circle>
+                  <path d="M3 12h18"></path>
+                  <path d="M12 3a15 15 0 0 1 0 18"></path>
+                  <path d="M12 3a15 15 0 0 0 0 18"></path>
+                </svg>
+                maisonrouge.com.au
+              </span>
+              <span class="console__status">
+                <span class="console__pulse" aria-hidden="true"></span>
+                Live &amp; managed
+              </span>
+            </div>
+
+            <dl class="console__metrics">
+              {
+                metrics.map((metric) => (
+                  <div class="console__metric">
+                    <dt class="console__metric-label">{metric.label}</dt>
+                    <dd class="console__metric-val">
+                      {metric.value}
+                      {metric.unit && <span class="console__metric-unit">{metric.unit}</span>}
+                    </dd>
+                  </div>
+                ))
+              }
+            </dl>
+
+            <div class="console__log">
+              <div class="console__log-head">
+                <span class="console__log-title">Managed for you</span>
+                <span class="console__log-by">Vyteca · last 30 days</span>
+              </div>
+              <ul class="console__rows" role="list">
+                {
+                  activity.map((row) => (
+                    <li class="console__row">
+                      <span
+                        class:list={["console__dot", `console__dot--${row.tone}`]}
+                        aria-hidden="true"
+                      />
+                      <span class="console__row-label">
+                        <b>{row.lead}</b> {row.rest}
+                      </span>
+                      <span class="console__row-meta">{row.meta}</span>
+                    </li>
+                  ))
+                }
+              </ul>
+            </div>
+
+            <div class="console__uptime">
+              <span class="console__uptime-label">Uptime · 30d</span>
+              <svg
+                class="console__spark"
+                viewBox={`0 0 ${sparkWidth} 100`}
+                preserveAspectRatio="none"
+                aria-hidden="true"
+                focusable="false"
+              >
+                {
+                  uptimeBars.map((height, i) => (
+                    <rect
+                      class="console__spark-bar"
+                      x={i * SPARK_SLOT}
+                      y={100 - height}
+                      width={SPARK_BAR}
+                      height={height}
+                    />
+                  ))
+                }
+              </svg>
+              <span class="console__uptime-val">0 incidents</span>
+            </div>
+          </div>
+        </figure>
+
+        <p class="membership__price">
+          <span class="membership__price-from">from</span>
+          <span class="membership__price-num"><span class="membership__price-cur">$</span>150</span>
+          <span class="membership__price-per">/ month</span>
+        </p>
+      </div>
+    </div>
+
+    <p class="membership__close | fade-in">
+      Fill three extra tables a month and the site has paid for itself. Everything after that is <ItalicTitle
+        variant="on-dark">yours.</ItalicTitle
+      >
+    </p>
+
+    <div class="membership__cta | fade-in">
+      <LinkOrButton
+        as="a"
+        href="/free-designs"
+        variant="primary"
+        text="Get your 3 free designs"
+        data-track="cta"
+      >
+        <ArrowIcon />
+      </LinkOrButton>
+    </div>
+    <p class="membership__note | fade-in">No upfront build cost. Live within a week.</p>
+  </div>
+</section>
+
+<style>
+  .membership {
+    /* Section-scoped tokens. Borders on the near-black surface need a mid-tone
+       to read at all (the global --clr-border-default is almost the bg). Per
+       the brief, every original `--muted` maps to --clr-body-muted-light. */
+    --m-gold: var(--clr-primary-gold);
+    --m-muted: var(--clr-body-muted-light);
+    --m-border: hsl(30, 6%, 18%);
+    --m-border-strong: hsl(30, 6%, 24%);
+    --m-card-warm: hsl(30, 13%, 9%);
+    --m-live: hsl(150, 89%, 43%);
+
+    /* Bespoke desaturated "terminal" palette, local to the console artifact. */
+    --console-bg: hsl(30, 17%, 5%);
+    --console-bar-bg: hsl(0, 6%, 6%);
+    --console-line: hsl(30, 13%, 9%);
+    --console-text: hsl(40, 7%, 84%);
+    --console-text-dim: hsl(40, 6%, 70%);
+    /* 52% keeps these labels muted while still clearing 4.5:1 on the console
+       surface (Lighthouse accessibility holds at 100). */
+    --console-text-faint: hsl(40, 6%, 52%);
+
+    position: relative;
+    z-index: 2;
+    /* Clips the corner brackets / price plate so they never spill past the
+       viewport edge on narrow screens. overflow-y stays visible, so the
+       desktop sticky panel is unaffected. */
+    overflow-x: clip;
+    padding-block: var(--section-space);
+    background: var(--clr-bg-primary-dark);
+    border-bottom: 1px solid var(--m-border);
+    color: var(--clr-body-text);
+  }
+
+  /* ── Layout shell ──────────────────────────────────────────
+     Mobile-first "Stage": a single centred column. */
+  .membership__inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "head"
+      "inclusions"
+      "panel"
+      "closing"
+      "cta"
+      "note";
+  }
+
+  .membership__head {
+    grid-area: head;
+    text-align: center;
+  }
+  .membership__panel {
+    grid-area: panel;
+    position: relative;
+    margin-block-start: var(--spacing-2xl);
+  }
+  .membership__inclusions {
+    grid-area: inclusions;
+    margin-block-start: var(--spacing-2xl);
+  }
+  .membership__close {
+    grid-area: closing;
+    margin-block-start: var(--spacing-2xl);
+  }
+  .membership__cta {
+    grid-area: cta;
+    display: flex;
+    justify-content: center;
+    margin-block-start: var(--spacing-lg);
+  }
+  .membership__note {
+    grid-area: note;
+    margin-block-start: var(--spacing-sm);
+    text-align: center;
+  }
+
+  /* ── Heading ───────────────────────────────────────────── */
+
+  .membership__intro {
+    max-width: 38rem;
+    margin-block-start: var(--spacing-md);
+    margin-inline: auto;
+    font-size: var(--fs-400);
+    line-height: 1.72;
+    color: var(--clr-body-muted-light);
+  }
+
+  /* ── Price ─────────────────────────────────────────────────
+     Stage: a centred "moment" with a short rule above the figure. */
+  .membership__price {
+    position: relative;
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-block-start: var(--spacing-lg);
+    padding-block-start: var(--spacing-lg);
+  }
+  .membership__price::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 56px;
+    height: 1px;
+    background: var(--m-border-strong);
+    transform: translateX(-50%);
+  }
+
+  .membership__price-from {
+    align-self: flex-start;
+    margin-block-start: 0.9em;
+    font-size: var(--fs-300);
+    font-weight: var(--fw-700);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--m-muted);
+  }
+
+  .membership__price-num {
+    font-weight: var(--fw-700);
+    font-size: clamp(3.75rem, 9vw, 6.5rem);
+    line-height: 0.82;
+    letter-spacing: -0.04em;
+    color: var(--clr-body-text);
+    font-variant-numeric: tabular-nums;
+  }
+  .membership__price-cur {
+    margin-inline-end: 0.04em;
+    font-size: 0.62em;
+    color: var(--m-gold);
+    vertical-align: 0.06em;
+  }
+
+  .membership__price-per {
+    font-size: var(--fs-450);
+    font-weight: var(--fw-400);
+    color: var(--m-muted);
+  }
+
+  /* ── Console artifact ──────────────────────────────────── */
+  .membership__console-frame {
+    position: relative;
+    margin: 0;
+  }
+
+  .membership__bracket {
+    position: absolute;
+    z-index: 4;
+    width: 18px;
+    height: 18px;
+    opacity: 0.5;
+    pointer-events: none;
+  }
+  .membership__bracket::before,
+  .membership__bracket::after {
+    content: "";
+    position: absolute;
+    background: var(--m-gold);
+  }
+  .membership__bracket::before {
+    width: 1px;
+    height: 100%;
+  }
+  .membership__bracket::after {
+    width: 100%;
+    height: 1px;
+  }
+  .membership__bracket--tl {
+    top: -7.5px;
+    left: -7.5px;
+  }
+  .membership__bracket--tr {
+    top: -7.5px;
+    right: -7.5px;
+  }
+  .membership__bracket--tr::before,
+  .membership__bracket--tr::after {
+    right: 0;
+  }
+  .membership__bracket--bl {
+    bottom: -7.5px;
+    left: -7.5px;
+  }
+  .membership__bracket--bl::before,
+  .membership__bracket--bl::after {
+    bottom: 0;
+  }
+  .membership__bracket--br {
+    bottom: -7.5px;
+    right: -7.5px;
+  }
+  .membership__bracket--br::before,
+  .membership__bracket--br::after {
+    right: 0;
+    bottom: 0;
+  }
+
+  .membership__console {
+    overflow: hidden;
+    background: var(--console-bg);
+    border: 1px solid var(--m-border-strong);
+    border-radius: 3px;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+  }
+
+  /* header row */
+  .console__bar {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    height: 47px;
+    padding-inline: 1.125rem;
+    background: var(--console-bar-bg);
+    border-bottom: 1px solid var(--console-line);
+  }
+
+  .console__domain {
+    display: flex;
+    align-items: center;
+    gap: 0.5625rem;
+    min-width: 0;
+    overflow: hidden;
+    font-size: var(--fs-300);
+    color: var(--console-text-dim);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .console__globe {
+    flex-shrink: 0;
+    width: 12px;
+    height: 12px;
+    fill: none;
+    stroke: var(--m-gold);
+    stroke-width: 1.5;
+  }
+
+  .console__status {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-inline-start: auto;
+    font-size: var(--fs-200);
+    font-weight: var(--fw-700);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--m-live);
+  }
+
+  /* live dot — a scaling/fading ring (compositor-only, never box-shadow) */
+  .console__pulse {
+    position: relative;
+    flex-shrink: 0;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--m-live);
+  }
+  .console__pulse::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: var(--m-live);
+    transform-origin: center;
+    animation: membership-pulse 2.6s var(--ease) infinite;
+  }
+  @keyframes membership-pulse {
+    0% {
+      transform: scale(1);
+      opacity: 0.5;
+    }
+    70%,
+    100% {
+      transform: scale(3);
+      opacity: 0;
+    }
+  }
+
+  /* metrics strip */
+  .console__metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin: 0;
+    border-bottom: 1px solid var(--console-line);
+  }
+  .console__metric {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5625rem;
+    min-width: 0; /* keep the three columns equal; never let a value force-expand one */
+    padding: 1rem 0.875rem;
+    border-right: 1px solid var(--console-line);
+  }
+  .console__metric:last-child {
+    border-right: none;
+  }
+  .console__metric-label {
+    font-size: var(--fs-200);
+    font-weight: var(--fw-700);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--console-text-faint);
+  }
+  .console__metric-val {
+    margin: 0;
+    font-size: clamp(1.125rem, 4.2vw, 2rem);
+    font-size: clamp(1.125rem, 0.8169014084507042rem + 1.3145539906103285vw, 2rem);
+    font-weight: var(--fw-700);
+    line-height: 1;
+    letter-spacing: -0.025em;
+    color: var(--console-text);
+    font-variant-numeric: tabular-nums;
+  }
+  .console__metric-unit {
+    margin-inline-start: 2px;
+    font-size: 0.46em;
+    font-weight: var(--fw-700);
+    letter-spacing: 0;
+    color: var(--m-gold);
+  }
+
+  /* activity log */
+  .console__log {
+    padding: 1.1875rem 1.375rem 0.375rem;
+  }
+  .console__log-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-block-end: 0.25rem;
+  }
+  .console__log-title {
+    font-size: var(--fs-200);
+    font-weight: var(--fw-700);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--m-gold);
+  }
+  .console__log-by {
+    font-size: var(--fs-200);
+    font-weight: var(--fw-700);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--console-text-faint);
+  }
+  .console__row {
+    display: flex;
+    align-items: center;
+    gap: 0.8125rem;
+    padding-block: 0.6875rem;
+    border-top: 1px solid var(--console-line);
+  }
+  .console__row:first-child {
+    border-top: none;
+  }
+  .console__dot {
+    flex-shrink: 0;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+  .console__dot--live {
+    background: var(--m-live);
+  }
+  .console__dot--gold {
+    background: var(--m-gold);
+  }
+  .console__row-label {
+    font-size: var(--fs-300);
+    color: var(--console-text-dim);
+  }
+  .console__row-label b {
+    font-weight: var(--fw-700);
+    color: var(--console-text);
+  }
+  .console__row-meta {
+    margin-inline-start: auto;
+    padding-inline-start: 0.75rem;
+    font-size: var(--fs-200);
+    letter-spacing: 0.04em;
+    color: var(--console-text-faint);
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* uptime footer */
+  .console__uptime {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.9375rem 1.375rem 1.0625rem;
+    border-top: 1px solid var(--console-line);
+  }
+  .console__uptime-label {
+    flex-shrink: 0;
+    font-size: var(--fs-200);
+    font-weight: var(--fw-700);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--console-text-faint);
+    white-space: nowrap;
+  }
+  .console__spark {
+    flex: 1;
+    width: 100%;
+    height: 22px;
+  }
+  .console__spark-bar {
+    fill: color-mix(in srgb, var(--m-live) 30%, transparent);
+  }
+  .console__uptime-val {
+    flex-shrink: 0;
+    font-size: var(--fs-200);
+    font-weight: var(--fw-700);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--m-live);
+    white-space: nowrap;
+  }
+
+  /* ── Inclusions ────────────────────────────────────────────
+     Stage: a bordered cell grid (single column on phones, two from 40rem).
+     The featured item spans full width with a gold edge. */
+  .membership__inclusions {
+    display: grid;
+    gap: 1px;
+    overflow: hidden;
+    background: var(--m-border);
+    border: 1px solid var(--m-border);
+    border-radius: 3px;
+  }
+  .membership__inc {
+    position: relative;
+    display: flex;
+    gap: 0.9375rem;
+    align-items: flex-start;
+    overflow: hidden;
+    padding: var(--spacing-md);
+    background: var(--clr-bg-primary-dark);
+    transition: background 0.4s var(--ease);
+  }
+
+  /* Gold bar sweeps down from the top on hover (OurOfferCard / TripleGuarantee idiom). */
+  .membership__inc::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--m-gold);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.55s var(--ease);
+  }
+
+  /* Gold shimmer sweeps across on hover. */
+  .membership__inc::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      105deg,
+      transparent 30%,
+      color-mix(in srgb, var(--m-gold) 6%, transparent) 50%,
+      transparent 70%
+    );
+    transform: translateX(-100%);
+    transition: transform 0.7s var(--ease);
+    pointer-events: none;
+  }
+
+  .membership__inc:hover {
+    background: color-mix(in srgb, var(--m-gold) 4%, var(--clr-bg-primary-dark));
+  }
+  .membership__inc:hover::before {
+    transform: scaleY(1);
+  }
+  .membership__inc:hover::after {
+    transform: translateX(100%);
+  }
+
+  /* The headline inclusion wears the hover treatment permanently so it leads. */
+  .membership__inc--featured {
+    background: var(--m-card-warm);
+  }
+  .membership__inc--featured::before {
+    transform: scaleY(1);
+  }
+  .membership__inc-mark {
+    flex-shrink: 0;
+    width: 6px;
+    height: 6px;
+    margin-block-start: 0.5rem;
+    background: var(--m-gold);
+    transform: rotate(45deg);
+  }
+  .membership__inc-text {
+    font-size: var(--fs-350);
+    line-height: 1.62;
+    color: var(--m-muted);
+  }
+  .membership__inc-text b {
+    font-weight: var(--fw-700);
+    color: var(--clr-body-text);
+  }
+
+  /* ── Closing + CTA ─────────────────────────────────────── */
+  .membership__close {
+    max-width: 45rem;
+    margin-inline: auto;
+    font-size: clamp(1.1875rem, 1rem + 1vw, 1.5625rem);
+    font-weight: var(--fw-400);
+    line-height: 1.42;
+    letter-spacing: -0.01em;
+    text-align: center;
+    color: var(--clr-body-text);
+  }
+
+  .membership__note {
+    font-size: var(--fs-300);
+    letter-spacing: 0.04em;
+    color: var(--m-muted);
+  }
+
+  /* ── Console reveal ──
+     Base (mobile / tablet, single-column): a gentle fade-up — no lateral motion
+     where the console spans the full width. The ≥62.5rem layer below overrides
+     the hidden transform with a slide from the right (it sits later in source so
+     it wins, since specificity is equal). Resolves to transform:none, so
+     the desktop sticky pin is unaffected. Transform + opacity only. */
+  .membership__panel-inner.fade-in {
+    scale: 1;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  .membership__panel-inner.fade-in.is-visible {
+    animation: none;
+    opacity: 1;
+    transform: none;
+    /* Longer, gently-decelerating glide (--ease-reveal) so the console eases in
+       rather than snapping into place. */
+    transition:
+      opacity 0.9s var(--ease-reveal),
+      transform 0.9s var(--ease-reveal);
+  }
+
+  @media (min-width: 30rem) {
+    .console__row-label {
+      font-size: var(--fs-350);
+    }
+
+    .console__row-meta {
+      font-size: var(--fs-300);
+    }
+  }
+
+  @media (min-width: 40rem) {
+    .membership__inclusions {
+      grid-template-columns: 1fr 1fr;
+    }
+    .membership__inc--featured {
+      grid-column: 1 / -1;
+    }
+
+    .membership__bracket--tl {
+      top: -15px;
+      left: -15px;
+    }
+    .membership__bracket--tr {
+      top: -15px;
+      right: -15px;
+    }
+
+    .membership__bracket--bl {
+      bottom: -15px;
+      left: -15px;
+    }
+
+    .membership__bracket--br {
+      bottom: -15px;
+      right: -15px;
+    }
+  }
+
+  /* ── ≥1000px · "Overlap" ───────────────────────────────────
+     Two columns up top — the value + inclusions lead on the left, the proof
+     console sits smaller on the right with its price below it — then a centred
+     conclusion (closing + CTA + note) spans full width beneath. */
+  @media (min-width: 62.5rem) {
+    .membership__inner {
+      grid-template-columns: 1.25fr 1fr;
+      column-gap: clamp(2rem, 6vw, 6rem);
+      align-items: start;
+      grid-template-areas:
+        "head        panel"
+        "inclusions  panel"
+        "closing     closing"
+        "cta         cta"
+        "note        note";
+    }
+
+    /* Full-height track for the console; spans head→inclusions in the grid. */
+    .membership__panel {
+      align-self: stretch;
+      max-width: none;
+      margin: 0;
+    }
+
+    /* Pin the console inside its track. The sticky element's containing block is
+       this plain wrapper, so the pinning is bounded by the two-column region and
+       releases before the conclusion. (A sticky grid item, by contrast, is
+       bounded by the whole grid container — which let it run on into the rows
+       below.) */
+    .membership__panel-inner {
+      position: sticky;
+      top: 6rem;
+    }
+
+    /* The console lives in the right column here, so it enters from the right
+       rather than fading up. Settles at translateX(0), leaving the sticky pin
+       untouched; the section's overflow-x: clip absorbs the off-screen start. */
+    .membership__panel-inner.fade-in {
+      transform: translateX(52px);
+    }
+
+    .membership__inclusions {
+      /* Keep the bordered-cell look from Stage, narrowed to a single column so
+         the offer track stays tall enough to give the pinned console room. */
+      grid-template-columns: 1fr;
+      margin-block-start: var(--spacing-xl);
+    }
+    .membership__inc--featured {
+      grid-column: auto;
+    }
+
+    /* CTA + note now close out the section, centred beneath the closing line
+       (same flow as mobile). Base styles already centre them, so the desktop
+       layer only needs the conclusion's vertical rhythm. */
+    .membership__cta {
+      margin-block-start: var(--spacing-lg);
+    }
+    .membership__note {
+      margin-block-start: var(--spacing-sm);
+    }
+
+    .membership__close {
+      /* max-width: 48rem; */
+      /* margin-inline: 0; */
+      margin-block-start: var(--spacing-3xl);
+      padding-block-start: var(--spacing-lg);
+      /* text-align: left; */
+      border-block-start: 1px solid var(--m-border);
+    }
+
+    /* Hidden in Overlap — the console sits flush without the corner frame. */
+    .membership__bracket {
+      display: none;
+    }
+
+    /* Price stays in flow below the console (the mobile "moment"), so the whole
+       dashboard footer is visible. Numerals trimmed to suit the narrower column. */
+    .membership__price-num {
+      font-size: clamp(2.875rem, 5vw, 4rem);
+    }
+
+    .membership__head {
+      text-align: left;
+    }
+  }
+
+  /* ── Reduced motion ────────────────────────────────────── */
+  @media (prefers-reduced-motion: reduce) {
+    .membership__uline::after {
+      transition: none;
+      transform: scaleX(1);
+    }
+    .membership__panel-inner.fade-in {
+      opacity: 1;
+      transform: none;
+    }
+    .membership__panel-inner.fade-in.is-visible {
+      transition: none;
+    }
+    .console__pulse::after {
+      animation: none;
+    }
+    .membership__inc,
+    .membership__inc::before,
+    .membership__inc::after {
+      transition: none;
+    }
+  }
+</style>

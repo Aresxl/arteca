@@ -1,0 +1,167 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+/**
+ * RollLink — an anchor whose label rolls vertically on hover/focus, one
+ * character at a time. Two identical stacked copies of the text sit inside a
+ * clipped box: on hover the top copy slides up and out while the bottom copy
+ * rolls up into its place, staggered left to right.
+ *
+ * The text is split into characters here at build time (no runtime DOM work),
+ * and the whole effect is pure CSS — transform-only (`translateY`), so it
+ * composites on the GPU and never triggers layout or paint. It degrades to a
+ * plain colour change under `prefers-reduced-motion` and without JS.
+ *
+ * Tunable from any ancestor via inherited custom properties:
+ *   --roll-link-color          resting text colour        (default currentColor)
+ *   --roll-link-color-hover    hover/focus text colour     (default currentColor)
+ *   --roll-link-color-current  colour when aria-current    (default currentColor)
+ *   --roll-link-duration       per-character roll duration (default 0.5s)
+ *   --roll-link-stagger        delay added per character   (default 15ms)
+ *   --roll-link-ease           easing curve                (default a soft in-out)
+ */
+
+interface Props extends HTMLAttributes<"a"> {
+  href: string;
+  text: string;
+}
+
+const { href, text, class: className, ...rest } = Astro.props;
+
+// Spread keeps multi-byte glyphs intact; spaces become non-breaking so the
+// inline-block character cells don't collapse.
+const chars = [...text].map((ch) => (ch === " " ? " " : ch));
+---
+
+<a class:list={["roll-link", className]} href={href} {...rest}>
+  <span class="sr-only">{text}</span>
+  <span class="roll-link__face roll-link__face--top" aria-hidden="true">
+    {chars.map((ch) => <span class="roll-link__char">{ch}</span>)}
+  </span>
+  <span class="roll-link__face roll-link__face--bottom" aria-hidden="true">
+    {chars.map((ch) => <span class="roll-link__char">{ch}</span>)}
+  </span>
+</a>
+
+<style>
+  .roll-link {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    line-height: 1.2;
+    color: var(--roll-link-color, currentColor);
+    transition: color 0.25s var(--roll-link-ease, cubic-bezier(0.76, 0, 0.24, 1));
+  }
+
+  .roll-link:hover,
+  .roll-link:focus-visible {
+    color: var(--roll-link-color-hover, currentColor);
+  }
+
+  .roll-link[aria-current="page"] {
+    color: var(--roll-link-color-current, currentColor);
+  }
+
+  .roll-link__face {
+    display: block;
+    white-space: nowrap;
+  }
+
+  /* The bottom copy is lifted out of flow and parked directly over the top
+     copy; its characters start one line-height below the clip window. */
+  .roll-link__face--bottom {
+    position: absolute;
+    inset: 0;
+  }
+
+  .roll-link__char {
+    display: inline-block;
+    transition: transform var(--roll-link-duration, 0.5s)
+      var(--roll-link-ease, cubic-bezier(0.76, 0, 0.24, 1));
+  }
+
+  .roll-link__face--bottom .roll-link__char {
+    transform: translateY(100%);
+  }
+
+  .roll-link:hover .roll-link__face--top .roll-link__char,
+  .roll-link:focus-visible .roll-link__face--top .roll-link__char {
+    transform: translateY(-100%);
+  }
+
+  .roll-link:hover .roll-link__face--bottom .roll-link__char,
+  .roll-link:focus-visible .roll-link__face--bottom .roll-link__char {
+    transform: translateY(0);
+  }
+
+  /* Per-character stagger. The step is a single custom property; the index
+     multiplier is fixed per position. Covers labels up to 16 characters; any
+     longer and the remainder share the last step (graceful, still rolls). */
+  .roll-link__char {
+    transition-delay: calc(var(--roll-link-stagger, 15ms) * 0);
+  }
+  .roll-link__char:nth-child(2) {
+    transition-delay: calc(var(--roll-link-stagger, 15ms) * 1);
+  }
+  .roll-link__char:nth-child(3) {
+    transition-delay: calc(var(--roll-link-stagger, 15ms) * 2);
+  }
+  .roll-link__char:nth-child(4) {
+    transition-delay: calc(var(--roll-link-stagger, 15ms) * 3);
+  }
+  .roll-link__char:nth-child(5) {
+    transition-delay: calc(var(--roll-link-stagger, 15ms) * 4);
+  }
+  .roll-link__char:nth-child(6) {
+    transition-delay: calc(var(--roll-link-stagger, 15ms) * 5);
+  }
+  .roll-link__char:nth-child(7) {
+    transition-delay: calc(var(--roll-link-stagger, 15ms) * 6);
+  }
+  .roll-link__char:nth-child(8) {
+    transition-delay: calc(var(--roll-link-stagger, 15ms) * 7);
+  }
+  .roll-link__char:nth-child(9) {
+    transition-delay: calc(var(--roll-link-stagger, 15ms) * 8);
+  }
+  .roll-link__char:nth-child(10) {
+    transition-delay: calc(var(--roll-link-stagger, 15ms) * 9);
+  }
+  .roll-link__char:nth-child(11) {
+    transition-delay: calc(var(--roll-link-stagger, 15ms) * 10);
+  }
+  .roll-link__char:nth-child(12) {
+    transition-delay: calc(var(--roll-link-stagger, 15ms) * 11);
+  }
+  .roll-link__char:nth-child(13) {
+    transition-delay: calc(var(--roll-link-stagger, 15ms) * 12);
+  }
+  .roll-link__char:nth-child(14) {
+    transition-delay: calc(var(--roll-link-stagger, 15ms) * 13);
+  }
+  .roll-link__char:nth-child(15) {
+    transition-delay: calc(var(--roll-link-stagger, 15ms) * 14);
+  }
+  .roll-link__char:nth-child(16) {
+    transition-delay: calc(var(--roll-link-stagger, 15ms) * 15);
+  }
+  .roll-link__char:nth-child(n + 17) {
+    transition-delay: calc(var(--roll-link-stagger, 15ms) * 16);
+  }
+
+  /* No motion: the roll is dropped (both copies are identical, so freezing the
+     swap shows nothing jarring); the colour shift stays as hover affordance. */
+  @media (prefers-reduced-motion: reduce) {
+    .roll-link__char {
+      transition: none;
+    }
+    .roll-link:hover .roll-link__face--top .roll-link__char,
+    .roll-link:focus-visible .roll-link__face--top .roll-link__char {
+      transform: none;
+    }
+    .roll-link:hover .roll-link__face--bottom .roll-link__char,
+    .roll-link:focus-visible .roll-link__face--bottom .roll-link__char {
+      transform: translateY(100%);
+    }
+  }
+</style>

@@ -1,0 +1,300 @@
+---
+// Landing-page variant of Footer.astro: the closing shell (sticky reveal,
+// particle canvas, ghost wordmark) is identical — only the .closing__cta swaps
+// the site's heading + dual buttons for a calm sign-off, since the page's one
+// action already lives in the brief form above and the sticky header CTA.
+import ItalicTitle from "../ui/ItalicTitle.astro";
+---
+
+<div class="closing-sentinel" data-closing-sentinel aria-hidden="true"></div>
+<div class="closing" data-closing>
+  <canvas class="closing__particles" data-particles aria-hidden="true"></canvas>
+
+  <section class="closing__cta" aria-labelledby="closing-heading">
+    <h2 class="footer-title" id="closing-heading">
+      Secure your 3 free designs <ItalicTitle variant="on-dark">today</ItalicTitle>
+    </h2>
+  </section>
+
+  <footer class="closing__footer">
+    <span class="wordmark">
+      <span class="wordmark__layer wordmark__layer--sharp" aria-hidden="true">Vyteca</span>
+      <span class="wordmark__layer wordmark__layer--blur" aria-hidden="true">Vyteca</span>
+    </span>
+  </footer>
+</div>
+
+<style>
+  .closing {
+    position: sticky;
+    bottom: 0;
+    /* Sits at 0 (not negative) so it stays above the <body> background and
+       remains clickable. main is lifted to z-index 1 to cover it while
+       scrolling — see global.css. */
+    z-index: 0;
+    isolation: isolate;
+    overflow: hidden;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    /* Final height = max(min-height, content). To shrink further, reduce the
+       wordmark font-size and/or the CTA padding-block below. */
+    min-height: 55svh;
+    background-color: var(--clr-bg-primary-dark);
+    /* Promote the whole sticky block to its own compositing layer. As a
+       non-composited sticky element, Chrome re-snaps it to integer pixels on
+       every scroll frame during the reveal, shifting all its text a fraction
+       of a pixel ("stutter"). On its own layer the compositor translates it
+       with subpixel precision, so the heading and wordmark stay rock-steady. */
+    transform: translateZ(0);
+  }
+
+  .closing__particles {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+
+  /* ── CTA ─────────────────────────────────────── */
+  .closing__cta {
+    position: relative;
+    z-index: 1;
+    /* This subtree is a z-indexed stacking context (lifted above the particle
+       canvas) but carries no transform, so its position is reconciled by
+       main-thread layout and re-snapped each scroll frame — a ~0.1px shift as
+       the sticky block settles from pinned to static on the final scroll. The
+       wordmark below stays steady because its own translateY already gives it
+       a compositor-managed layer; this gives the cta the same. */
+    transform: translateZ(0);
+    display: grid;
+    place-content: center;
+    justify-items: center;
+    gap: var(--spacing-md);
+    padding-block: var(--spacing-2xl);
+    padding-inline: var(--spacing-lg);
+    text-align: center;
+  }
+
+  .closing__heading {
+    max-width: 18ch;
+    color: var(--clr-neutral-0);
+    font-size: clamp(1.75rem, 1rem + 3.5vw, 3.5rem);
+    font-weight: var(--fw-700);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+  }
+
+  /* ── Footer wordmark ─────────────────────────── */
+  .closing__footer {
+    position: relative;
+    z-index: 1;
+    align-self: end;
+  }
+
+  .wordmark {
+    display: block;
+    color: var(--clr-primary-gold);
+    font-size: clamp(5.625rem, 1.8838028169014085rem + 15.96244131455399vw, 16.25rem);
+    font-family: var(--ff-main);
+    font-weight: var(--fw-700);
+    letter-spacing: -0.09em;
+    line-height: 0.78;
+    text-align: center;
+    white-space: nowrap;
+    text-transform: uppercase;
+    /* Sink the wordmark so its base is clipped by .closing's overflow.
+       Increase to clip more of the glyph. */
+    transform: translateY(12%);
+  }
+
+  /* Two stacked copies: a sharp top half cross-fading into a blurred bottom
+     half around the 50% mark. Both filters/masks are static → painted once,
+     no per-frame cost even with the particles animating behind. */
+  .wordmark__layer {
+    display: block;
+    color: inherit;
+  }
+
+  .wordmark__layer--blur {
+    position: absolute;
+    inset: 0;
+    filter: blur(3px);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 40%, #000 78%);
+    mask-image: linear-gradient(to bottom, transparent 40%, #000 78%);
+  }
+
+  .wordmark__layer--sharp {
+    -webkit-mask-image: linear-gradient(to bottom, #000 40%, transparent 78%);
+    mask-image: linear-gradient(to bottom, #000 40%, transparent 78%);
+  }
+
+  @media (min-width: 62.5rem) {
+    .closing__cta {
+      padding-block: var(--spacing-3xl);
+    }
+  }
+
+  @media (min-width: 40rem) {
+    .wordmark {
+      transform: translateY(20%);
+    }
+  }
+
+  /* Reduced motion: drop the sticky reveal — flow as a normal footer.
+     (Particles are disabled separately in the script.) */
+  @media (prefers-reduced-motion: reduce) {
+    .closing {
+      position: static;
+      z-index: auto;
+    }
+  }
+</style>
+
+<script>
+  function initLandingFooterCanvas() {
+    const canvas = document.querySelector<HTMLCanvasElement>("[data-particles]");
+    const root = canvas?.closest<HTMLElement>("[data-closing]");
+    if (!canvas || !root) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const controller = new AbortController();
+    const { signal } = controller;
+
+    const GOLD = "225,189,104";
+
+    // Particle density scales with viewport (rem breakpoints mirror the CSS:
+    // 40rem/62.5rem/90rem). resize() reads this, so crossing a breakpoint
+    // re-seeds the field at the new count for free.
+    function getCount() {
+      if (window.matchMedia("(min-width: 90rem)").matches) return 100;
+      if (window.matchMedia("(min-width: 62.5rem)").matches) return 70;
+      if (window.matchMedia("(min-width: 40rem)").matches) return 45;
+      return 35;
+    }
+
+    let W = 0,
+      H = 0,
+      particles: { x: number; y: number; r: number; vx: number; vy: number; a: number }[] = [],
+      rafId: number | null = null,
+      active = false,
+      visible = false;
+
+    function rand(a: number, b: number) {
+      return a + Math.random() * (b - a);
+    }
+
+    function resize() {
+      W = canvas!.width = root!.offsetWidth;
+      H = canvas!.height = root!.offsetHeight;
+      particles = Array.from({ length: getCount() }, () => ({
+        x: rand(0, W),
+        y: rand(0, H),
+        r: rand(0.5, 2.2),
+        vx: rand(-0.09, 0.09),
+        vy: rand(-0.07, 0.07),
+        a: rand(0.1, 0.4),
+      }));
+    }
+
+    // The drift is throttled to ~30fps. Each particle moves a fraction of a
+    // pixel between native frames, so redrawing the whole canvas at a 144Hz
+    // display is wasted rasterisation — 30fps looks identical here and cuts the
+    // full-canvas repaints ~5x. Motion is time-based (referenced to one 144Hz
+    // frame, the cadence the field was tuned at) so the real drift speed holds
+    // steady on any refresh rate.
+    const FRAME_MS = 1000 / 30;
+    const BASE_MS = 1000 / 144;
+    let lastFrame = 0;
+
+    function draw(now: number) {
+      if (active) rafId = requestAnimationFrame(draw);
+      if (!lastFrame) lastFrame = now;
+      const elapsed = now - lastFrame;
+      if (elapsed < FRAME_MS) return;
+      lastFrame = now - (elapsed % FRAME_MS);
+      // Clamp the step so returning from a background tab can't teleport the
+      // field: cap it at four 144Hz frames' worth of drift.
+      const step = Math.min(elapsed / BASE_MS, 4);
+
+      ctx!.clearRect(0, 0, W, H);
+      for (const p of particles) {
+        ctx!.beginPath();
+        ctx!.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx!.fillStyle = `rgba(${GOLD},${p.a})`;
+        ctx!.fill();
+        p.x += p.vx * step;
+        p.y += p.vy * step;
+        if (p.x < 0) p.x = W;
+        else if (p.x > W) p.x = 0;
+        if (p.y < 0) p.y = H;
+        else if (p.y > H) p.y = 0;
+      }
+    }
+
+    function start() {
+      if (active) return;
+      active = true;
+      lastFrame = 0;
+      rafId = requestAnimationFrame(draw);
+    }
+
+    function stop() {
+      active = false;
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+      }
+    }
+
+    document.addEventListener(
+      "visibilitychange",
+      () => {
+        if (document.hidden) stop();
+        else if (visible) start();
+      },
+      { signal },
+    );
+
+    const sentinel = document.querySelector<HTMLElement>("[data-closing-sentinel]");
+    const observer = new IntersectionObserver(
+      ([e]) => {
+        visible = e.isIntersecting;
+        visible ? start() : stop();
+      },
+      { threshold: 0 },
+    );
+    observer.observe(sentinel ?? root);
+
+    let resizeTimer: ReturnType<typeof setTimeout>;
+    window.addEventListener(
+      "resize",
+      () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(resize, 150);
+      },
+      { signal },
+    );
+
+    resize();
+
+    // Tear down before the page is swapped away, then re-run on the next
+    // astro:page-load so the canvas keeps animating after client-side nav.
+    document.addEventListener(
+      "astro:before-swap",
+      () => {
+        stop();
+        observer.disconnect();
+        clearTimeout(resizeTimer);
+        controller.abort();
+      },
+      { once: true },
+    );
+  }
+
+  document.addEventListener("astro:page-load", initLandingFooterCanvas);
+</script>

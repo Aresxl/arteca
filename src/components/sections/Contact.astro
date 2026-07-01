@@ -1,10 +1,5 @@
 ---
 // Data
-const sectionTitle = "Contact Us";
-const sectionSubtitle = "Get in touch";
-const sectionText =
-  "Email or call me about your Melbourne restaurant. I'll reply within 24 hours (same day for calls).";
-const sectionTitleId = "contact-title";
 
 // Images
 import PhoneIcon from "@/assets/icons/phone.svg";
@@ -13,319 +8,562 @@ import HomeIcon from "@/assets/icons/home.svg";
 import SuccessIcon from "@/assets/icons/checkmark.svg";
 import ErrorIcon from "@/assets/icons/cross.svg";
 
-// Helper
-import { actions } from "astro:actions";
-
 // Components
-import SectionHeader from "../ui/SectionHeader.astro";
 import LinkOrButton from "../ui/LinkOrButton.astro";
+import ItalicTitle from "../ui/ItalicTitle.astro";
 ---
 
 <section class="contact | grid-main">
-  <SectionHeader
-    title={sectionTitle}
-    subtitle={sectionSubtitle}
-    supportingText={sectionText}
-    titleTag="h2"
-    titleId={sectionTitleId}
-    class="contact__header"
-  />
-  <ul class="contact__details-list">
-    <li class="contact__detail">
-      <div class="icon__wrapper">
-        <PhoneIcon class="contact__icon" width="30" height="30" aria-hidden="true" />
-      </div>
-      <div class="contact__content">
-        <span class="contact__content-title">Phone</span>
-        <a href="tel:0430-811-413">+61 430 811 413</a>
-      </div>
-    </li>
-    <li class="contact__detail">
-      <div class="icon__wrapper">
-        <EmailIcon class="contact__icon" width="30" height="30" aria-hidden="true" />
-      </div>
-      <div class="contact__content">
-        <span class="contact__content-title">Email</span>
-        <a href="mailto:vyteca@gmail.com">Click to email</a>
-      </div>
-    </li>
-    <li class="contact__detail">
-      <div class="icon__wrapper">
-        <HomeIcon class="contact__icon" width="30" height="30" aria-hidden="true" />
-      </div>
-      <div class="contact__content">
-        <span class="contact__content-title">Location</span>
-        <span>Melbourne</span>
-      </div>
-    </li>
-  </ul>
-  <div class="form__wrapper">
-    <form class="form" method="post" action={actions.form} novalidate>
-      <div class="form__control">
-        <label for="name">
-          <span class=""> Name</span>
-          <span class="asterix" aria-hidden="true">*</span>
-        </label>
-        <div class="input__wrapper">
-          <input
-            type="text"
-            id="name"
-            name="name"
-            placeholder="Bob"
-            aria-describedby="error-name"
-            data-input
-            required
-          />
-          <div class="icon__wrapper">
-            <SuccessIcon class="icon icon--success" width="24" height="24" aria-hidden="true" />
-            <ErrorIcon class="icon icon--error" width="24" height="24" aria-hidden="true" />
-          </div>
-        </div>
-        <span class="error-message" data-error-for="name" aria-live="polite" id="error-name"></span>
-      </div>
+  <div class="contact__inner">
+    <div class="contact__info fade-in">
+      <header class="contact__intro">
+        <p class="eyebrow eyebrow--gold">Contact Vyteca</p>
+        <h2 class="section-subtitle section-subtitle--light">
+          Let's fill your <ItalicTitle variant="on-dark">tables.</ItalicTitle>
+        </h2>
+        <p class="contact__lead">
+          Tell me about your Melbourne venue and what you're after.
+          <strong> I reply within 24 hours,</strong> same day for calls.
+        </p>
+      </header>
 
-      <div class="form__control">
-        <label for="restaurant-name">
-          <span>Restaurant name</span>
-          <span class="asterix" aria-hidden="true">*</span>
-        </label>
-        <div class="input__wrapper">
-          <input
-            type="text"
-            id="restaurant-name"
-            name="restaurant-name"
-            placeholder="Bob's Burger Joint"
-            aria-describedby="error-restaurant-name"
-            data-input
-            required
-          />
-          <div class="icon__wrapper">
-            <SuccessIcon class="icon icon--success" width="24" height="24" aria-hidden="true" />
-            <ErrorIcon class="icon icon--error" width="24" height="24" aria-hidden="true" />
+      <ul class="contact__details-list">
+        <li class="contact__details-item">
+          <a class="contact__detail" href="tel:+61430811413">
+            <span class="icon__wrapper">
+              <PhoneIcon class="contact__icon" width="20" height="20" aria-hidden="true" />
+            </span>
+            <span class="contact__content">
+              <span class="contact__content-title">Phone</span>
+              <span class="contact__content-value">+61 430 811 413</span>
+            </span>
+          </a>
+        </li>
+        <li class="contact__details-item">
+          <a class="contact__detail" href="mailto:vyteca@gmail.com">
+            <span class="icon__wrapper">
+              <EmailIcon class="contact__icon" width="20" height="20" aria-hidden="true" />
+            </span>
+            <span class="contact__content">
+              <span class="contact__content-title">Email</span>
+              <span class="contact__content-value">Click to email</span>
+            </span>
+          </a>
+        </li>
+        <li class="contact__details-item">
+          <div class="contact__detail">
+            <span class="icon__wrapper">
+              <HomeIcon class="contact__icon" width="20" height="20" aria-hidden="true" />
+            </span>
+            <span class="contact__content">
+              <span class="contact__content-title">Location</span>
+              <span class="contact__content-value">Melbourne</span>
+            </span>
           </div>
-        </div>
-        <span
-          class="error-message"
-          data-error-for="restaurant-name"
-          aria-live="polite"
-          id="error-restaurant-name"></span>
-      </div>
+        </li>
+      </ul>
 
-      <div class="form__control">
-        <label for="email">
-          <span>Email</span>
-          <span class="asterix" aria-hidden="true">*</span>
-        </label>
-        <div class="input__wrapper">
-          <input
-            type="email"
-            id="email"
-            name="email"
-            placeholder="example@gmail.com"
-            aria-describedby="error-email"
-            data-input
-            required
-          />
-          <div class="icon__wrapper">
-            <SuccessIcon class="icon icon--success" width="24" height="24" aria-hidden="true" />
-            <ErrorIcon class="icon icon--error" width="24" height="24" aria-hidden="true" />
-          </div>
-        </div>
-        <span class="error-message" data-error-for="email" aria-live="polite" id="error-email"
-        ></span>
-      </div>
+      <p class="contact__availability">
+        <span class="contact__availability-dot" aria-hidden="true"></span>
+        Taking on new venues this quarter
+      </p>
+    </div>
 
-      <div class="form__control">
-        <label for="phone">Phone #</label>
-        <div class="input__wrapper">
-          <input type="text" id="phone" name="phone" placeholder="0430 811 413" />
-          <div class="icon__wrapper">
-            <SuccessIcon class="icon icon--success" width="24" height="24" aria-hidden="true" />
-            <ErrorIcon class="icon icon--error" width="24" height="24" aria-hidden="true" />
-          </div>
-        </div>
-      </div>
+    <div class="form__wrapper fade-in">
+      <noscript>
+        <p class="form__noscript">
+          JavaScript needs to be on to send this form. You can also reach us directly using the
+          phone or email details on this page.
+        </p>
+      </noscript>
+      <form class="form" method="post" novalidate>
+        <span class="contact__corner contact__corner--tl" aria-hidden="true"></span>
+        <span class="contact__corner contact__corner--tr" aria-hidden="true"></span>
+        <span class="contact__corner contact__corner--bl" aria-hidden="true"></span>
+        <span class="contact__corner contact__corner--br" aria-hidden="true"></span>
 
-      <fieldset>
-        <legend>
-          <span>Contact Preference</span>
-          <span class="asterix" aria-hidden="true">*</span>
-        </legend>
-        <div class="radio__wrapper">
-          <label for="email-preference">
+        <div class="form__control form__control--pair">
+          <label for="name">
+            <span>Name</span>
+            <span class="asterix" aria-hidden="true">*</span>
+          </label>
+          <div class="input__wrapper">
             <input
-              type="radio"
-              id="email-preference"
-              name="contact"
-              value="contact-email"
-              checked
+              type="text"
+              id="name"
+              name="name"
+              placeholder="Bob"
+              autocomplete="name"
+              aria-describedby="error-name"
+              data-input
               required
             />
-            <span class="checkbox"></span>
-            <span>Email</span>
-          </label>
-
-          <label for="phone-preference">
-            <input type="radio" id="phone-preference" name="contact" value="contact-phone" />
-            <span class="checkbox"></span>
-            <span>Phone call</span>
-          </label>
-
-          <label for="no-preference">
-            <input type="radio" id="no-preference" name="contact" value="contact-none" />
-
-            <span class="checkbox"></span>
-            <span>No preference</span>
-          </label>
-        </div>
-        <span class="error-message" data-error-for="contact" aria-live="polite" id="error-contact"
-        ></span>
-      </fieldset>
-
-      <div class="form__control">
-        <label for="message" class="message-label">
-          <span>Message</span>
-          <span class="asterix" aria-hidden="true">*</span>
-          <div class="icon__wrapper">
-            <SuccessIcon class="icon icon--success" width="24" height="24" aria-hidden="true" />
-            <ErrorIcon class="icon icon--error" width="24" height="24" aria-hidden="true" />
+            <div class="icon__wrapper">
+              <SuccessIcon class="icon icon--success" width="24" height="24" aria-hidden="true" />
+              <ErrorIcon class="icon icon--error" width="24" height="24" aria-hidden="true" />
+            </div>
           </div>
-        </label>
-        <div class="input__wrapper">
-          <textarea
-            class="form-input"
-            name="message"
-            id="message"
-            rows="3"
-            aria-describedby="error-message-input"
-            placeholder=""
-            data-input
-            required></textarea>
+          <span class="error-message" data-error-for="name" aria-live="polite" id="error-name"
+          ></span>
         </div>
-        <span
-          class="error-message"
-          data-error-for="message"
-          aria-live="polite"
-          id="error-message-input"></span>
-      </div>
-      <div class="fax__wrapper" aria-hidden="true">
-        <label for="fax">Leave this field empty if you're a human</label>
-        <input type="text" name="fax" id="fax" value="" tabindex="-1" autocomplete="off" />
-      </div>
 
-      <LinkOrButton as="button" text="Connect" type="submit" variant="card" />
-    </form>
+        <div class="form__control form__control--pair">
+          <label for="venue-name">
+            <span>Venue name</span>
+            <span class="asterix" aria-hidden="true">*</span>
+          </label>
+          <div class="input__wrapper">
+            <input
+              type="text"
+              id="venue-name"
+              name="venue-name"
+              placeholder="Bob's Burger Joint"
+              autocomplete="organization"
+              aria-describedby="error-venue-name"
+              data-input
+              required
+            />
+            <div class="icon__wrapper">
+              <SuccessIcon class="icon icon--success" width="24" height="24" aria-hidden="true" />
+              <ErrorIcon class="icon icon--error" width="24" height="24" aria-hidden="true" />
+            </div>
+          </div>
+          <span
+            class="error-message"
+            data-error-for="venue-name"
+            aria-live="polite"
+            id="error-venue-name"></span>
+        </div>
 
-    <div id="success-modal" class="modal hidden">
-      <div class="modal-content">
-        <h2 class="">Submission Complete 🚀</h2>
-        <p id="modal-message" class="">
-          Thanks for contacting us, Bob! Your inquiry for Bobs Burger has been sent. We'll get back
-          to you soon. Check your inbox (and spam folder) if needed.`
+        <div class="form__control">
+          <label for="email">
+            <span>Email</span>
+            <span class="asterix" aria-hidden="true">*</span>
+          </label>
+          <div class="input__wrapper">
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="example@gmail.com"
+              autocomplete="email"
+              aria-describedby="error-email"
+              data-input
+              required
+            />
+            <div class="icon__wrapper">
+              <SuccessIcon class="icon icon--success" width="24" height="24" aria-hidden="true" />
+              <ErrorIcon class="icon icon--error" width="24" height="24" aria-hidden="true" />
+            </div>
+          </div>
+          <span class="error-message" data-error-for="email" aria-live="polite" id="error-email"
+          ></span>
+        </div>
+
+        <div class="form__control">
+          <label for="phone">
+            <span>Phone</span>
+            <span class="optional">(optional)</span>
+          </label>
+          <div class="input__wrapper">
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              placeholder="0430 811 413"
+              inputmode="tel"
+              autocomplete="tel"
+              aria-describedby="error-phone"
+              data-input
+            />
+            <div class="icon__wrapper">
+              <SuccessIcon class="icon icon--success" width="24" height="24" aria-hidden="true" />
+              <ErrorIcon class="icon icon--error" width="24" height="24" aria-hidden="true" />
+            </div>
+          </div>
+          <span class="error-message" data-error-for="phone" aria-live="polite" id="error-phone"
+          ></span>
+        </div>
+
+        <fieldset>
+          <legend>
+            <span>Contact preference</span>
+            <span class="asterix" aria-hidden="true">*</span>
+          </legend>
+          <div class="radio__wrapper">
+            <label for="email-preference">
+              <input
+                type="radio"
+                id="email-preference"
+                name="contact"
+                value="contact-email"
+                aria-describedby="error-contact"
+                checked
+                required
+              />
+              <span class="checkbox"></span>
+              <span>Email</span>
+            </label>
+
+            <label for="phone-preference">
+              <input
+                type="radio"
+                id="phone-preference"
+                name="contact"
+                value="contact-phone"
+                aria-describedby="error-contact"
+              />
+              <span class="checkbox"></span>
+              <span>Phone call</span>
+            </label>
+
+            <label for="no-preference">
+              <input
+                type="radio"
+                id="no-preference"
+                name="contact"
+                value="contact-none"
+                aria-describedby="error-contact"
+              />
+              <span class="checkbox"></span>
+              <span>No preference</span>
+            </label>
+          </div>
+          <span class="error-message" data-error-for="contact" aria-live="polite" id="error-contact"
+          ></span>
+        </fieldset>
+
+        <div class="form__control">
+          <label for="message" class="message-label">
+            <span>Message</span>
+            <span class="asterix" aria-hidden="true">*</span>
+            <div class="icon__wrapper">
+              <SuccessIcon class="icon icon--success" width="24" height="24" aria-hidden="true" />
+              <ErrorIcon class="icon icon--error" width="24" height="24" aria-hidden="true" />
+            </div>
+          </label>
+          <div class="input__wrapper">
+            <textarea
+              class="form-input"
+              name="message"
+              id="message"
+              rows="4"
+              aria-describedby="error-message-input"
+              placeholder="A few lines about your venue and what you're after."
+              data-input
+              required></textarea>
+          </div>
+          <span class="char-count" data-char-count aria-hidden="true"></span>
+          <span
+            class="error-message"
+            data-error-for="message"
+            aria-live="polite"
+            id="error-message-input"></span>
+        </div>
+
+        <div class="fax__wrapper" aria-hidden="true">
+          <label for="fax">Leave this field empty if you're a human</label>
+          <input type="text" name="fax" id="fax" value="" tabindex="-1" autocomplete="off" />
+        </div>
+
+        <div class="contact__submit">
+          <LinkOrButton as="button" text="Send message" type="submit" variant="primary" />
+        </div>
+        <p class="contact__fineprint">
+          No obligation. I'll only use your details to reply to this enquiry.
         </p>
-        <LinkOrButton
-          as="button"
-          text="Got it"
-          variant="card"
-          id="close-modal"
-          class="close-modal"
-        />
-      </div>
+        <p class="form__status" role="alert" data-form-status hidden></p>
+      </form>
+
+      <dialog class="modal" data-success-modal aria-labelledby="modal-title">
+        <div class="modal-content">
+          <h2 class="modal-title" id="modal-title">Submission Complete 🚀</h2>
+          <p data-modal-message></p>
+          <LinkOrButton
+            as="button"
+            text="Got it"
+            variant="primary"
+            type="button"
+            data-close-modal
+          />
+        </div>
+      </dialog>
     </div>
   </div>
-
-  <div class="modal__overlay"></div>
 </section>
 
 <style>
+  /* ───────────────────────────────────────────────
+     Section-scoped helpers. The default --clr-border-default
+     (hsl 26 16% 8%) is near-invisible on the dark background,
+     so the column rules and field outlines get a brighter,
+     gold-tied border token — same fix as TripleGuarantee.
+  ─────────────────────────────────────────────── */
   .contact {
+    --c-gold: var(--clr-primary-gold);
+    --c-border: hsl(30, 6%, 24%);
+    --c-border-hover: var(--clr-body-muted);
+    --c-gold-tint: color-mix(in srgb, var(--clr-primary-gold) 8%, transparent);
+    --c-gold-hover: color-mix(in srgb, var(--clr-primary-gold) 4%, transparent);
+    --c-gold-ring: color-mix(in srgb, var(--clr-primary-gold) 20%, transparent);
+    --c-gold-inset: color-mix(in srgb, var(--clr-primary-gold) 10%, transparent);
+
+    /* functional state colours — warm axis, tuned to the editorial palette */
+    --c-ok: oklch(66% 0.115 152);
+    --c-ok-bg: oklch(66% 0.115 152 / 0.08);
+    --c-err: oklch(60% 0.145 30);
+    --c-err-bg: oklch(60% 0.145 30 / 0.08);
+
     position: relative;
-    margin-block-end: var(--section-space);
+    background-color: var(--clr-bg-primary-dark);
+    /* margin-block: var(--spacing-2xl) var(--section-space); */
+    padding-block: var(--section-space);
+  }
+
+  .contact__inner {
+    display: grid;
+    gap: var(--spacing-2xl);
+  }
+
+  .contact__intro {
+    text-align: center;
+  }
+
+  /* ── left: info column ── */
+
+  .contact__lead {
+    margin-top: var(--spacing-md);
+    font-size: var(--fs-400);
+    line-height: 1.7;
+    color: var(--clr-body-muted-light);
+  }
+
+  .contact__lead strong {
+    color: var(--clr-body-text);
+    font-weight: var(--fw-700);
   }
 
   .contact__details-list {
-    display: grid;
-    gap: var(--spacing-md);
-    margin-block: var(--spacing-xl);
+    display: flex;
+    flex-direction: column;
+    margin-top: var(--spacing-xl);
+    border: 1px solid var(--c-border);
   }
 
   .contact__detail {
+    position: relative;
     display: flex;
     align-items: center;
     gap: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-bottom: 1px solid var(--c-border);
+    color: inherit;
+    transition: background-color 0.4s var(--ease);
+  }
+
+  .contact__details-item:last-child .contact__detail {
+    border-bottom: none;
+  }
+
+  /* gold bar sweeps down on hover — the homepage card hover (see OurOfferCard) */
+  .contact__detail::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--c-gold);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.55s var(--ease);
+  }
+
+  .contact__detail .icon__wrapper {
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    flex-shrink: 0;
+    border: 1px solid var(--c-border);
+    border-radius: 3px;
+    color: var(--c-gold);
+    transition:
+      border-color 0.4s var(--ease),
+      background-color 0.4s var(--ease),
+      transform 0.4s var(--ease);
   }
 
   .contact__content {
     display: grid;
-    gap: var(--spacing-xxs);
-
-    a {
-      color: var(--clr-body-text);
-      transition: 500ms ease;
-      transition-property: color, filter;
-    }
-
-    a:hover {
-      color: var(--cyber-cyan-500);
-      filter: drop-shadow(0 0 8px var(--cyber-cyan-500));
-    }
+    gap: 2px;
   }
 
   .contact__content-title {
+    font-size: var(--fs-300);
     font-weight: var(--fw-700);
-    font-family: var(--ff-heading);
+    letter-spacing: 0.16em;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    color: var(--clr-body-muted-light);
   }
 
-  .contact__icon {
-    color: var(--cyber-cyan-500);
-    filter: drop-shadow(0 0 8px var(--cyber-cyan-500));
+  .contact__content-value {
+    font-weight: var(--fw-400);
+    color: var(--clr-body-text);
+    transition: color 0.3s var(--ease);
   }
 
+  /* hover — every row reacts (decorative, like the homepage cards) */
+  .contact__detail:hover {
+    background-color: var(--c-gold-hover);
+  }
+
+  .contact__detail:hover::before {
+    transform: scaleY(1);
+  }
+
+  .contact__detail:hover .icon__wrapper {
+    border-color: var(--c-gold);
+    background-color: var(--c-gold-tint);
+    transform: translateY(-2px);
+  }
+
+  .contact__detail:hover .contact__content-value {
+    color: var(--c-gold);
+  }
+
+  /* focus ring only on the genuinely interactive rows */
+  a.contact__detail:focus-visible {
+    outline: 2px solid var(--c-gold);
+    outline-offset: 4px;
+  }
+
+  .contact__availability {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xs);
+    margin-top: var(--spacing-lg);
+    font-size: var(--fs-300);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--clr-body-muted-light);
+  }
+
+  .contact__availability-dot {
+    position: relative;
+    flex-shrink: 0;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--c-gold);
+  }
+
+  /* compositor-only pulse (transform + opacity), never box-shadow */
+  .contact__availability-dot::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: var(--c-gold);
+    animation: contactPulse 2.6s ease-in-out infinite;
+  }
+
+  @keyframes contactPulse {
+    0% {
+      transform: scale(1);
+      opacity: 0.55;
+    }
+    70%,
+    100% {
+      transform: scale(2.8);
+      opacity: 0;
+    }
+  }
+
+  /* ── right: form panel ── */
   .form__wrapper {
     position: relative;
   }
 
-  form {
+  .form {
     position: relative;
     display: grid;
+    /* top-align cells so an error message under one field doesn't stretch
+       its row-mate (the name/venue pair) */
+    align-items: start;
     gap: var(--spacing-sm);
-    background-color: var(--clr-bg-secondary);
-    padding: var(--spacing-lg) var(--spacing-sm);
-
-    clip-path: polygon(
-      0 0,
-      calc(100% - 20px) 0,
-      100% 20px,
-      100% 100%,
-      20px 100%,
-      0 calc(100% - 20px)
-    );
+    padding: var(--spacing-lg) var(--spacing-md);
+    background-color: var(--clr-bg-card);
+    border: 1px solid var(--c-border);
+    border-radius: 3px;
   }
 
-  form::before,
-  form::after {
-    content: "";
+  /* corner brackets */
+  .contact__corner {
     position: absolute;
-    width: 30px;
-    height: 30px;
-    border: 2px solid var(--cyber-cyan-500);
+    z-index: 2;
+    width: 14px;
+    height: 14px;
+    opacity: 0.55;
     pointer-events: none;
   }
 
-  form::before {
-    top: -1px;
-    left: -1px;
-    border-right: none;
-    border-bottom: none;
+  .contact__corner::before,
+  .contact__corner::after {
+    content: "";
+    position: absolute;
+    background: var(--c-gold);
   }
 
-  form::after {
+  .contact__corner::before {
+    width: 1px;
+    height: 100%;
+  }
+
+  .contact__corner::after {
+    width: 100%;
+    height: 1px;
+  }
+
+  .contact__corner--tl {
+    top: -1px;
+    left: -1px;
+  }
+  .contact__corner--tl::before,
+  .contact__corner--tl::after {
+    top: 0;
+    left: 0;
+  }
+
+  .contact__corner--tr {
+    top: -1px;
     right: -1px;
+  }
+  .contact__corner--tr::before,
+  .contact__corner--tr::after {
+    top: 0;
+    right: 0;
+  }
+
+  .contact__corner--bl {
     bottom: -1px;
-    border-top: none;
-    border-left: none;
+    left: -1px;
+  }
+  .contact__corner--bl::before,
+  .contact__corner--bl::after {
+    bottom: 0;
+    left: 0;
+  }
+
+  .contact__corner--br {
+    bottom: -1px;
+    right: -1px;
+  }
+  .contact__corner--br::before,
+  .contact__corner--br::after {
+    bottom: 0;
+    right: 0;
   }
 
   .form__control {
@@ -339,48 +577,82 @@ import LinkOrButton from "../ui/LinkOrButton.astro";
 
   input,
   textarea {
-    --input-primary-clr: var(--cyber-cyan-500);
+    --input-primary-clr: var(--clr-primary-gold);
 
     width: 100%;
     padding: var(--spacing-xs) var(--spacing-sm);
-    border: 1px solid var(--clr-border-default);
-    border-left: 3px solid var(--input-primary-clr);
-    background-color: var(--clr-bg-tertiary);
+    border: 1px solid var(--c-border);
+    border-radius: 3px;
+    background-color: var(--clr-bg-primary-dark);
     color: var(--clr-body-text);
     outline: none;
+    transition:
+      border-color 0.3s var(--ease),
+      box-shadow 0.3s var(--ease),
+      background-color 0.3s var(--ease);
+  }
+
+  /* room for the state icon sitting inside the input wrapper */
+  .input__wrapper input {
+    padding-inline-end: 2.75rem;
+  }
+
+  .form__control textarea {
+    resize: block;
+    min-height: 8rem;
+    line-height: 1.6;
   }
 
   .form__control input::placeholder,
   .form__control textarea::placeholder {
-    color: var(--cyber-chrome-500);
+    color: var(--clr-body-muted);
     font-size: var(--fs-350);
+  }
+
+  /* hover + focus (active) states */
+  input:hover,
+  textarea:hover {
+    border-color: var(--c-border-hover);
   }
 
   input:focus-visible,
   textarea:focus-visible,
-  label:has(input[type="radio"]:focus-visible) {
+  .radio__wrapper label:has(input[type="radio"]:focus-visible) {
     border-color: var(--input-primary-clr);
     box-shadow:
-      0 0 0 3px color-mix(in srgb, var(--input-primary-clr) 20%, transparent),
-      inset 0 0 15px color-mix(in srgb, var(--input-primary-clr) 10%, transparent);
+      0 0 0 3px var(--c-gold-ring),
+      inset 0 0 15px var(--c-gold-inset);
   }
 
   .form__control label,
   legend {
-    font-family: var(--ff-heading);
     font-size: var(--fs-350);
+    font-weight: var(--fw-700);
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    color: var(--clr-body-muted-light);
   }
 
+  .asterix {
+    color: var(--c-gold);
+  }
+
+  .optional {
+    margin-left: var(--spacing-xxs);
+    font-weight: var(--fw-400);
+    text-transform: none;
+    letter-spacing: normal;
+    color: var(--clr-body-muted);
+  }
+
+  /* ── preference radio group ── */
   fieldset {
-    padding: 0px;
-    border: 0px;
+    padding: 0;
+    border: 0;
+    margin: 0;
   }
 
   .radio__wrapper {
-    --input-primary-clr: var(--cyber-cyan-500);
-
     display: grid;
     gap: var(--spacing-xs);
     margin-block-start: var(--spacing-xs);
@@ -398,109 +670,157 @@ import LinkOrButton from "../ui/LinkOrButton.astro";
 
   .radio__wrapper label {
     display: flex;
+    align-items: center;
     gap: var(--spacing-sm);
     padding: var(--spacing-xs) var(--spacing-sm);
-    border: 1px solid var(--clr-border-default);
-    border-left: 3px solid var(--cyber-cyan-500);
-    background-color: var(--clr-bg-tertiary);
-    color: var(--clr-body-text);
-    outline: none;
-
+    border: 1px solid var(--c-border);
+    border-radius: 3px;
+    background-color: var(--clr-bg-primary-dark);
+    color: var(--clr-body-muted-light);
     cursor: pointer;
+    transition:
+      border-color 0.3s var(--ease),
+      background-color 0.3s var(--ease),
+      color 0.3s var(--ease);
+  }
+
+  .radio__wrapper label:hover {
+    border-color: var(--c-border-hover);
+  }
+
+  /* selected (active) preference */
+  .radio__wrapper label:has(input[type="radio"]:checked) {
+    border-color: var(--c-gold);
+    background-color: var(--c-gold-tint);
+    color: var(--clr-body-text);
   }
 
   .checkbox {
     position: relative;
     display: grid;
     place-items: center;
-    width: 20px;
-    height: 20px;
-    border: 2px solid var(--cyber-cyan-500);
-    background: var(--clr-bg-tertiary);
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    border: 1.5px solid var(--clr-body-muted);
+    border-radius: 2px;
+    transition: border-color 0.3s var(--ease);
   }
 
   .checkbox::before {
     content: "";
-    position: absolute;
     width: 10px;
     height: 10px;
+    border-radius: 1px;
+    background: var(--c-gold);
     transform: scale(0);
-    background: var(--cyber-cyan-500);
+    transition: transform 0.25s var(--ease);
+  }
 
-    transition: transform 150ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  input:checked ~ .checkbox {
+    border-color: var(--c-gold);
   }
 
   input:checked ~ .checkbox::before {
     transform: scale(1);
   }
 
-  input:checked ~ .checkbox {
-    box-shadow: 0 0 10px var(--cyber-cyan-500);
+  /* ── submit + fineprint ── */
+  .contact__submit {
+    display: grid;
+    margin-top: var(--spacing-xs);
   }
 
-  .form__control textarea {
-    resize: block;
+  .contact__fineprint {
+    font-size: var(--fs-300);
+    text-align: center;
+    color: var(--clr-body-muted);
   }
 
-  .message-label {
-    position: relative;
+  /* form-level status — populated by JS on a failed send */
+  .form__status {
+    font-size: var(--fs-350);
+    text-align: center;
+    color: var(--c-err);
   }
 
-  .form .icon__wrapper {
-    position: absolute;
-    top: 50%;
-    right: 12px;
-    transform: translateY(-50%);
+  /* no-JS fallback notice (sits above the form) */
+  .form__noscript {
+    margin-bottom: var(--spacing-sm);
+    padding: var(--spacing-sm);
+    border: 1px solid var(--c-border);
+    border-radius: 3px;
+    font-size: var(--fs-350);
+    color: var(--clr-body-muted-light);
   }
 
+  /* ═══════════════════════════════════════════════
+     Success + error states.
+  ═══════════════════════════════════════════════ */
   .icon {
-    --icon-clr: var(--cyber-cyan-500);
-
     display: none;
-    color: var(--icon-clr);
-    filter: drop-shadow(0 0 8px var(--icon-clr));
   }
 
   .icon--success {
-    --icon-clr: var(--cyber-green-500);
+    color: var(--c-ok);
   }
   .icon--error {
-    --icon-clr: var(--cyber-magenta-500);
+    color: var(--c-err);
   }
 
-  .error-input {
-    --input-primary-clr: var(--cyber-magenta-500);
-
-    border-color: var(--input-primary-clr);
-    box-shadow:
-      0 0 0 3px color-mix(in srgb, var(--input-primary-clr) 20%, transparent),
-      inset 0 0 15px color-mix(in srgb, var(--input-primary-clr) 10%, transparent);
+  /* scoped under .form__control so the state border wins over the
+     base input:hover / :focus-visible rules above */
+  .form__control .error-input {
+    border-color: var(--c-err);
+    background-color: var(--c-err-bg);
   }
 
-  .success-input {
-    --input-primary-clr: var(--cyber-green-500);
-
-    color: var(--input-primary-clr);
+  .form__control .error-input:focus-visible {
+    border-color: var(--c-err);
     box-shadow:
-      0 0 0 3px color-mix(in srgb, var(--input-primary-clr) 20%, transparent),
-      inset 0 0 15px color-mix(in srgb, var(--input-primary-clr) 10%, transparent);
+      0 0 0 3px color-mix(in srgb, var(--c-err) 22%, transparent),
+      inset 0 0 15px color-mix(in srgb, var(--c-err) 8%, transparent);
+  }
+
+  .form__control .success-input {
+    border-color: var(--c-ok);
+    background-color: var(--c-ok-bg);
+  }
+
+  .form__control .success-input:focus-visible {
+    border-color: var(--c-ok);
+    box-shadow:
+      0 0 0 3px color-mix(in srgb, var(--c-ok) 22%, transparent),
+      inset 0 0 15px color-mix(in srgb, var(--c-ok) 8%, transparent);
   }
 
   .error-message {
-    --input-primary-clr: var(--cyber-magenta-500);
-
-    color: var(--input-primary-clr);
-    filter: drop-shadow(0 0 8px hsl(from var(--input-primary-clr) h s l / 0.7));
+    margin-block-start: var(--spacing-xxs);
     font-size: var(--fs-350);
+    color: var(--c-err);
   }
 
   .success-message {
-    --input-primary-clr: var(--cyber-green-500);
-
-    margin-block-start: var(--spacing-xs);
+    margin-block-start: var(--spacing-xxs);
     font-size: var(--fs-350);
-    color: var(--input-primary-clr);
-    filter: drop-shadow(0 0 8px hsl(from var(--input-primary-clr) h s l / 0.7));
+    color: var(--c-ok);
+  }
+
+  /* live message counter — muted until the minimum is cleared, then green */
+  .char-count {
+    justify-self: end;
+    font-size: var(--fs-300);
+    color: var(--clr-body-muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .char-count--ok {
+    color: var(--c-ok);
+  }
+
+  /* error state for the radio group (no .form__control wrapper to colour) */
+  fieldset.has-error legend {
+    color: var(--c-err);
   }
 
   .form__control.has-success .icon--success {
@@ -510,98 +830,128 @@ import LinkOrButton from "../ui/LinkOrButton.astro";
     display: block;
   }
 
-  .fax__wrapper {
+  .form .icon__wrapper {
     position: absolute;
-    left: -999px;
-    overflow: hidden;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
   }
 
-  .modal {
+  .message-label {
+    position: relative;
+  }
+
+  /* honeypot — kept in the DOM so bots still fill it, but removed from
+     view, the accessibility tree (aria-hidden) and the tab order. */
+  .fax__wrapper {
     position: absolute;
-    bottom: 50%;
-    transform: translateY(50%);
-    z-index: 900;
-    padding: var(--spacing-md);
-    margin-inline: 10px;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  /* ── success modal (native <dialog>, top layer) ── */
+  .modal {
+    margin: auto; /* centre in the top layer */
+    width: min(30rem, calc(100% - 2 * var(--page-padding)));
+    padding: var(--spacing-xl);
+    border: 1px solid var(--c-border);
+    border-radius: 3px;
+    background-color: var(--clr-bg-secondary);
+    color: var(--clr-body-text);
     text-align: center;
-    background-color: var(--clr-bg-tertiary);
+  }
+
+  .modal::backdrop {
+    background: hsl(0 0% 0% / 0.6);
+    backdrop-filter: blur(12px);
   }
 
   .modal-content {
     display: grid;
-    gap: var(--spacing-sm);
+    gap: var(--spacing-md);
   }
 
-  .modal__overlay {
-    position: fixed;
-    inset: 0;
-    background: hsl(0 0% 0% / 0.5);
-    opacity: 0;
-    visibility: hidden;
-    transition:
-      opacity 0.3s ease,
-      visibility 0s linear 0.3s;
-    z-index: 100;
-    backdrop-filter: blur(12px);
-    pointer-events: none;
+  .modal-title {
+    font-size: var(--fs-600);
+    font-weight: var(--fw-700);
+    color: var(--clr-body-text);
   }
+  /* ═══════════════════ end success/error block ═══════════════════ */
 
-  body.modal--visible .modal__overlay {
-    opacity: 1;
-    visibility: visible;
-    transition: opacity 0.3s ease;
+  /* ── responsive ── */
+  @media (min-width: 30rem) {
+    .contact__intro {
+      text-align: left;
+    }
+
+    .contact__availability {
+      justify-content: start;
+    }
   }
 
   @media (min-width: 40rem) {
-    .contact__details-list {
-      grid-template-columns: repeat(3, 1fr);
-      justify-items: center;
-      gap: var(--spacing-lg);
-    }
-    .contact__content {
-      gap: 0px;
+    .form {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--spacing-md);
+      padding: var(--spacing-xl);
     }
 
-    .modal {
-      margin-inline: 80px;
-      padding: var(--spacing-lg);
+    /* fields span the full panel by default… */
+    .form > .form__control,
+    .form > fieldset,
+    .form > .fax__wrapper,
+    .form > .contact__submit,
+    .form > .contact__fineprint,
+    .form > .form__status {
+      grid-column: 1 / -1;
     }
-  }
 
-  @media (min-width: 48rem) {
-    .contact__header {
-      p {
-        max-width: 80ch;
-        margin-inline: auto;
-      }
+    /* …name + venue sit side by side */
+    .form > .form__control--pair {
+      grid-column: auto;
+    }
+
+    .contact__lead {
+      max-width: 53ch;
     }
   }
 
   @media (min-width: 62.5rem) {
-    .contact__header {
-      grid-column: 2 / 12;
-      text-align: left;
+    .contact__inner {
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: var(--spacing-3xl);
+      align-items: start;
     }
 
-    .contact__details-list {
-      grid-column: 2 / 12;
-      grid-template-columns: 1fr;
-      justify-items: start;
-      margin-block: var(--spacing-xl) 0px;
+    .contact__info {
+      position: sticky;
+      top: 6rem;
+    }
+  }
+
+  /* ── reduced motion ── */
+  @media (prefers-reduced-motion: reduce) {
+    .contact__detail,
+    .contact__detail::before,
+    .contact__detail .icon__wrapper,
+    .contact__content-value,
+    .checkbox,
+    .checkbox::before,
+    input,
+    textarea,
+    .radio__wrapper label {
+      transition: none;
     }
 
-    .form__wrapper {
-      grid-column: 14 / -2;
-      grid-row: 1 / 4;
-    }
-
-    .modal {
-      transform: translateX(-300px) translateY(50%);
-      margin-inline: 0px;
-    }
-
-    .modal-content {
-      gap: var(--spacing-md);
+    .contact__availability-dot::after {
+      animation: none;
     }
   }
 </style>
@@ -615,237 +965,316 @@ import LinkOrButton from "../ui/LinkOrButton.astro";
     }
   }
 
-  const form = document?.querySelector<HTMLFormElement>(`.form`);
-  const liveFields = document.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>(
-    `[data-input]`,
-  );
+  function initContact() {
+    const form = document?.querySelector<HTMLFormElement>(`.form`);
+    // Bail on routes without this form. The astro:page-load listener is global,
+    // so this runs on every navigation, including pages with no contact form.
+    if (!form) return;
 
-  let formStarted = false;
-  form?.addEventListener("focusin", (e) => {
-    if (formStarted) return;
-    if (!(e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement)) return;
-    formStarted = true;
-    window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push({ event: "form_start" });
-  });
-
-  function setFieldError(fieldName: string, message: string | null) {
-    const inputEl = document.querySelector<HTMLInputElement>(`[name="${fieldName}"]`);
-    inputEl?.classList.add(`error-input`);
-    const control = inputEl?.closest(`.form__control`);
-    const errorMessageEl = document.querySelector<HTMLSpanElement>(
-      `[data-error-for="${fieldName}"]`,
+    // Re-queried each navigation: <body> is fully replaced on swap, so any node
+    // cached at module load would point at a detached element.
+    const liveFields = document.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>(
+      `[data-input]`,
     );
-    inputEl?.classList.add(`error-input`);
-    control?.classList.add(`has-error`);
 
-    if (!errorMessageEl) return;
-    errorMessageEl.textContent = message ?? "";
-  }
+    const controller = new AbortController();
+    const { signal } = controller;
 
-  function setFieldSuccess(fieldName: string) {
-    resetField(fieldName);
+    // Shared minimum for the message field — keep validation + counter in sync
+    const MESSAGE_MIN = 50;
+    const messageField = document.querySelector<HTMLTextAreaElement>(`#message`);
+    const charCountEl = document.querySelector<HTMLElement>(`[data-char-count]`);
 
-    const inputEl = document.querySelector(`[name="${fieldName}"]`);
-    const control = inputEl?.closest(`.form__control`);
+    function updateCharCount() {
+      if (!messageField || !charCountEl) return;
+      const len = messageField.value.trim().length;
+      charCountEl.textContent = `${len} / ${MESSAGE_MIN}`;
+      charCountEl.classList.toggle(`char-count--ok`, len >= MESSAGE_MIN);
+    }
 
-    inputEl?.classList.add(`success-input`);
-    control?.classList.add(`has-success`);
-  }
+    messageField?.addEventListener(`input`, updateCharCount, { signal });
+    updateCharCount();
 
-  function resetField(fieldName: string) {
-    const inputEl = document.querySelector(`[name="${fieldName}"]`);
-    const control = inputEl?.closest(`.form__control`);
-    const errorMessageEl = document.querySelector(`[data-error-for="${fieldName}"]`);
+    let formStarted = false;
+    form?.addEventListener(
+      "focusin",
+      (e) => {
+        if (formStarted) return;
+        if (!(e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement))
+          return;
+        formStarted = true;
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({ event: "form_start" });
+      },
+      { signal },
+    );
 
-    control?.classList.remove(`has-error`, `has-success`);
-    inputEl?.classList.remove(`error-input`, `success-input`);
-    if (errorMessageEl) errorMessageEl.textContent = "";
-  }
+    function setFieldError(fieldName: string, message: string | null) {
+      const inputEl = document.querySelector<HTMLInputElement>(`[name="${fieldName}"]`);
+      const control = inputEl?.closest(`.form__control, fieldset`);
+      const errorMessageEl = document.querySelector<HTMLSpanElement>(
+        `[data-error-for="${fieldName}"]`,
+      );
+      inputEl?.classList.add(`error-input`);
+      inputEl?.setAttribute(`aria-invalid`, `true`);
+      control?.classList.add(`has-error`);
 
-  function resetForm() {
-    const controlEls = document.querySelectorAll(`.form__control`);
-    const inputEls = document.querySelectorAll(`[data-input]`);
-    const errorMessageEls = document.querySelectorAll(`[data-error-for]`);
+      if (!errorMessageEl) return;
+      errorMessageEl.textContent = message ?? "";
+    }
 
-    // Clear classes
-    controlEls.forEach((el) => {
-      el.classList.remove(`has-error`, `has-success`);
-    });
-    inputEls.forEach((el) => {
-      (el as HTMLInputElement | HTMLTextAreaElement).value = "";
-      el.classList.remove(`error-input`, `success-input`);
-    });
-    errorMessageEls.forEach((el) => {
-      el.textContent = "";
-    });
-  }
+    function setFieldSuccess(fieldName: string) {
+      resetField(fieldName);
 
-  form?.addEventListener(`submit`, async (e) => {
-    e.preventDefault();
+      const inputEl = document.querySelector(`[name="${fieldName}"]`);
+      const control = inputEl?.closest(`.form__control`);
 
-    // Validate all fields first
-    let isFormValid = true;
-    liveFields.forEach((field) => {
-      validateAndUpdateField(field, true); // Force show errors if invalid
-      const control = field.closest(".form__control");
-      if (control?.classList.contains("has-error")) {
-        isFormValid = false;
+      inputEl?.classList.add(`success-input`);
+      control?.classList.add(`has-success`);
+    }
+
+    function resetField(fieldName: string) {
+      const inputEl = document.querySelector(`[name="${fieldName}"]`);
+      const control = inputEl?.closest(`.form__control, fieldset`);
+      const errorMessageEl = document.querySelector(`[data-error-for="${fieldName}"]`);
+
+      control?.classList.remove(`has-error`, `has-success`);
+      inputEl?.classList.remove(`error-input`, `success-input`);
+      inputEl?.removeAttribute(`aria-invalid`);
+      if (errorMessageEl) errorMessageEl.textContent = "";
+    }
+
+    function resetForm() {
+      const controlEls = document.querySelectorAll(`.form__control, fieldset`);
+      const inputEls = document.querySelectorAll(`[data-input]`);
+      const errorMessageEls = document.querySelectorAll(`[data-error-for]`);
+
+      // Clear classes
+      controlEls.forEach((el) => {
+        el.classList.remove(`has-error`, `has-success`);
+      });
+      inputEls.forEach((el) => {
+        (el as HTMLInputElement | HTMLTextAreaElement).value = "";
+        el.classList.remove(`error-input`, `success-input`);
+      });
+      errorMessageEls.forEach((el) => {
+        el.textContent = "";
+      });
+
+      updateCharCount();
+    }
+
+    // Submission UI handles, resolved once
+    const submitBtn = form?.querySelector<HTMLButtonElement>(`button[type="submit"]`);
+    const submitDefaultText = submitBtn?.textContent?.trim() || "Send message";
+    const formStatusEl = document.querySelector<HTMLElement>(`[data-form-status]`);
+    const modalEl = document.querySelector<HTMLDialogElement>(`[data-success-modal]`);
+    const modalMessageEl = document.querySelector<HTMLElement>(`[data-modal-message]`);
+    const modalCloseBtnEl = document.querySelector<HTMLButtonElement>(`[data-close-modal]`);
+
+    function setSubmitting(isSubmitting: boolean) {
+      if (!submitBtn) return;
+      submitBtn.disabled = isSubmitting;
+      submitBtn.textContent = isSubmitting ? "Sending…" : submitDefaultText;
+    }
+
+    function showFormStatus(message: string) {
+      if (!formStatusEl) return;
+      formStatusEl.textContent = message;
+      formStatusEl.hidden = false;
+    }
+
+    function clearFormStatus() {
+      if (!formStatusEl) return;
+      formStatusEl.textContent = "";
+      formStatusEl.hidden = true;
+    }
+
+    function openSuccessModal(name: string, venueName: string) {
+      if (modalMessageEl) {
+        modalMessageEl.textContent = `Thanks for reaching out, ${name}! Your enquiry for ${venueName} is on its way. I'll get back to you within 24 hours. Check your inbox (and spam folder) just in case.`;
       }
-    });
-
-    if (!isFormValid) {
-      const firstError = document.querySelector(".has-error");
-      if (firstError) firstError.scrollIntoView({ behavior: "smooth" });
-      return; // Block submit + modal if invalid
+      modalEl?.showModal();
     }
 
-    const formData = new FormData(form);
-    const rawData = Object.fromEntries(formData);
+    // Close via the button, the Esc key (native <dialog>), or a click on the backdrop
+    modalCloseBtnEl?.addEventListener(`click`, () => modalEl?.close(), { signal });
+    modalEl?.addEventListener(
+      `click`,
+      (e) => {
+        if (e.target === modalEl) modalEl?.close();
+      },
+      { signal },
+    );
 
-    const data = rawData as {
-      name: string;
-      "restaurant-name": string;
-      phone?: string;
-      email: string;
-      contact: "contact-email" | "contact-phone" | "contact-none";
-      message: string;
-      fax?: string;
-    };
+    form?.addEventListener(
+      `submit`,
+      async (e) => {
+        e.preventDefault();
+        clearFormStatus();
 
-    resetForm();
-
-    // Optimistic: Show success modal immediately
-    const name = data.name;
-    const restaurantName = data["restaurant-name"];
-    const modalMessage = document.getElementById("modal-message");
-    const modalEl = document.querySelector(`.modal`);
-    const modalCloseBtnEl = document.querySelector(`#close-modal`);
-    const bodyEl = document.querySelector(`body`);
-
-    if (modalMessage) {
-      modalMessage.textContent = `Thanks for contacting us, ${name}! Your inquiry for ${restaurantName} has been sent. We'll get back to you soon. Check your inbox (and spam folder) if needed.`;
-    }
-    if (modalEl) {
-      modalEl.classList.remove(`hidden`);
-      bodyEl?.classList.add(`modal--visible`);
-    }
-
-    // Optimistic: Set success icons on all non-empty
-    for (const [key, value] of formData.entries()) {
-      if (key === `fax`) continue;
-      if (value.toString().trim() !== "") {
-        setFieldSuccess(key);
-      }
-    }
-
-    actions
-      .form(data)
-      .then(({ error }) => {
-        if (error) {
-          if (modalMessage) {
-            modalMessage.textContent = `Oops—something went wrong. Please check the form and try again. (Error: ${error.message || "Unknown"})`;
+        // Validate everything up front; block the send if anything is invalid
+        let isFormValid = true;
+        liveFields.forEach((field) => {
+          validateAndUpdateField(field, true);
+          const control = field.closest(".form__control");
+          if (control?.classList.contains("has-error")) {
+            isFormValid = false;
           }
-          resetForm();
+        });
 
-          if (isInputError(error)) {
-            const erroredFields = new Set(Object.keys(error.fields));
-
-            // Apply errors first
-            for (const [fieldName, message] of Object.entries(error.fields)) {
-              const firstMessage = message[0];
-              setFieldError(fieldName, firstMessage);
-            }
-
-            for (const [key, value] of formData.entries()) {
-              if (key === `fax`) continue;
-              if (value.toString().trim() !== "" && !erroredFields.has(key)) {
-                setFieldSuccess(key);
-              }
-            }
-          }
+        // Contact preference (radio group — not a [data-input] field)
+        if (form?.querySelector(`input[name="contact"]:checked`)) {
+          resetField("contact");
         } else {
+          setFieldError("contact", "Please select how you'd like us to contact you");
+          isFormValid = false;
+        }
+
+        if (!isFormValid) {
+          const firstError = document.querySelector(".has-error");
+          if (firstError) firstError.scrollIntoView({ behavior: "smooth" });
+          return;
+        }
+
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData) as {
+          name: string;
+          "venue-name": string;
+          phone?: string;
+          email: string;
+          contact: "contact-email" | "contact-phone" | "contact-none";
+          message: string;
+          fax?: string;
+        };
+
+        setSubmitting(true);
+
+        try {
+          const { error } = await actions.form(data);
+
+          if (error) {
+            if (isInputError(error)) {
+              for (const [fieldName, message] of Object.entries(error.fields)) {
+                setFieldError(fieldName, message[0]);
+              }
+              const firstError = document.querySelector(".has-error");
+              if (firstError) firstError.scrollIntoView({ behavior: "smooth" });
+              showFormStatus("Please fix the highlighted fields and try again.");
+            } else if (error.code === "TOO_MANY_REQUESTS") {
+              showFormStatus(error.message);
+            } else {
+              showFormStatus(
+                "Sorry, I couldn't send your message. Please try again, or email me directly at vyteca@gmail.com.",
+              );
+            }
+            return; // keep the user's input so they don't have to retype
+          }
+
+          // Success — record it, confirm it, then clear the form
           window.dataLayer = window.dataLayer || [];
           window.dataLayer.push({ event: "form_submission" });
+          openSuccessModal(data.name, data["venue-name"]);
+          resetForm();
+        } catch (err) {
+          console.error("Action error:", err);
+          showFormStatus("Sorry, something went wrong on our end. Please try again in a moment.");
+        } finally {
+          setSubmitting(false);
         }
-      })
-      .catch((err) => {
-        console.error("Action error:", err);
-        if (modalMessage) {
-          modalMessage.textContent = "Oops—server connection issue. Please try again.";
-        }
-      });
+      },
+      { signal },
+    );
 
-    if (modalCloseBtnEl) {
-      modalCloseBtnEl.addEventListener(`click`, () => {
-        modalEl?.classList.add(`hidden`);
-        bodyEl?.classList.remove(`modal--visible`);
-        resetForm();
-      });
-    }
-  });
-
-  liveFields.forEach((field) => {
-    field.addEventListener(`input`, () => {
-      validateAndUpdateField(field);
+    liveFields.forEach((field) => {
+      field.addEventListener(
+        `input`,
+        () => {
+          validateAndUpdateField(field);
+        },
+        { signal },
+      );
+      field.addEventListener(
+        `blur`,
+        () => {
+          validateAndUpdateField(field, true);
+        },
+        { signal },
+      );
     });
-    field.addEventListener(`blur`, () => {
-      validateAndUpdateField(field, true);
-    });
-  });
 
-  function validateAndUpdateField(
-    field: HTMLInputElement | HTMLTextAreaElement,
-    showErrorOnFail = false,
-  ) {
-    const name = field.name;
-    const value = field.value.trim();
-    let isValid = false;
-    let errorMsg = "";
+    function validateAndUpdateField(
+      field: HTMLInputElement | HTMLTextAreaElement,
+      showErrorOnFail = false,
+    ) {
+      const name = field.name;
+      const value = field.value.trim();
+      let isValid = false;
+      let errorMsg = "";
 
-    resetField(name);
+      resetField(name);
 
-    switch (name) {
-      case `name`:
-        isValid = value.length >= 2;
-        errorMsg = `Please enter your name`;
-        break;
+      // Optional + empty → stay neutral (no success tick, no error)
+      if (!field.required && value === "") {
+        return;
+      }
 
-      case `restaurant-name`:
-        isValid = value.length >= 4;
-        errorMsg = `Please enter your restaurants name`;
-        break;
+      switch (name) {
+        case `name`:
+          isValid = value.length >= 2;
+          errorMsg = `Please enter your name`;
+          break;
 
-      case `email`:
-        isValid = value.length > 0 && /\S+@\S+\.\S+/.test(value);
-        errorMsg = !value ? "Email can't be empty" : "Please enter a valid email";
-        break;
+        case `venue-name`:
+          isValid = value.length >= 2;
+          errorMsg = `Please enter your venue's name`;
+          break;
 
-      case "phone":
-        if (!value) {
-          isValid = true;
-        } else {
-          const digits = value.replace(/[^0-9+]/g, "");
-          isValid = digits.length >= 9;
-          errorMsg = "Please enter a valid phone number";
+        case `email`:
+          isValid = value.length > 0 && /\S+@\S+\.\S+/.test(value);
+          errorMsg = !value ? "Email can't be empty" : "Please enter a valid email";
+          break;
+
+        case "phone":
+          if (!value) {
+            isValid = true;
+          } else {
+            const digits = value.replace(/[^0-9+]/g, "");
+            isValid = digits.length >= 9;
+            errorMsg = "Please enter a valid phone number";
+          }
+          break;
+
+        case "message":
+          isValid = value.length >= MESSAGE_MIN;
+          errorMsg = !value
+            ? "Message can't be empty"
+            : `Must be ${MESSAGE_MIN} characters or more`;
+          break;
+
+        default:
+          isValid = value.length > 0;
+      }
+
+      if (isValid) {
+        setFieldSuccess(name);
+      } else {
+        if (showErrorOnFail) {
+          setFieldError(name, errorMsg);
         }
-        break;
-
-      case "message":
-        isValid = value.length >= 50;
-        errorMsg = !value ? "Message can't be empty" : "Must be 50 characters or more";
-        break;
-
-      default:
-        isValid = value.length > 0;
-    }
-
-    if (isValid) {
-      setFieldSuccess(name);
-    } else {
-      if (showErrorOnFail) {
-        setFieldError(name, errorMsg);
       }
     }
+
+    // Drop the form's listeners before the next swap; the fresh form swapped in
+    // gets its own bindings on the following astro:page-load.
+    document.addEventListener(
+      "astro:before-swap",
+      () => {
+        controller.abort();
+      },
+      { once: true },
+    );
   }
+
+  document.addEventListener("astro:page-load", initContact);
 </script>

@@ -1,0 +1,146 @@
+---
+// Images
+import ArrowDown from "@/assets/icons/arrow-down.svg";
+
+// Components
+import LinkOrButton from "../ui/LinkOrButton.astro";
+import RollLink from "../ui/RollLink.astro";
+---
+
+<header class="site__header | grid-main">
+  <div class="site__header-inner">
+    <RollLink href="/" text="Vyteca" class="home-link site-logo" aria-label="Vyteca home" />
+
+    <LinkOrButton
+      as="a"
+      href="#your-venue"
+      variant="primary"
+      text="Book your call"
+      data-track="cta"
+    >
+      <ArrowDown />
+    </LinkOrButton>
+  </div>
+</header>
+
+<style>
+  .site__header {
+    position: sticky;
+    z-index: 900;
+    top: 0;
+    padding-block: var(--spacing-xs);
+
+    /* Transparent at the top so the bar blends into the hero. */
+    background-color: transparent;
+    border-bottom: 1px solid transparent;
+
+    /* Blur snaps on with .is-scrolled rather than transitioning, so the
+       backdrop isn't re-sampled every frame — same treatment as the site header. */
+    transition:
+      background-color 0.4s var(--ease),
+      border-color 0.4s var(--ease),
+      box-shadow 0.4s var(--ease);
+  }
+
+  /* Once scrolled the bar "pops" with a solid dark tint, hairline border and
+     faint shadow — identical treatment to the site header. */
+  .site__header.is-scrolled {
+    background-color: hsl(from var(--clr-neutral-900) h s l / 0.85);
+    backdrop-filter: blur(20px) saturate(1.4);
+    -webkit-backdrop-filter: blur(20px) saturate(1.4);
+    border-bottom-color: hsl(0 0% 100% / 0.06);
+    box-shadow: 0 8px 32px hsl(0 0% 0% / 0.18);
+  }
+
+  .site__header-inner {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+  }
+
+  /* Wordmark hard left; the CTA is pushed to the right. */
+  .home-link {
+    margin-right: auto;
+
+    /* Keep the wordmark gold through the roll. RollLink's own colour rule is
+       unlayered, so it outranks .site-logo's gold (in @layer typography) and
+       would otherwise fall back to inherited currentColor — drive the colour
+       through the roll's own tokens instead. */
+    --roll-link-color: var(--clr-primary-gold);
+    --roll-link-color-hover: var(--clr-primary-gold);
+    --roll-link-color-current: var(--clr-primary-gold);
+    --roll-link-duration: 0.45s;
+    --roll-link-stagger: 18ms;
+  }
+
+  .btn {
+    min-height: auto;
+  }
+
+  @media (min-width: 48rem) {
+    .site__header {
+      padding-block: var(--spacing-sm);
+    }
+
+    .site__header-inner .btn {
+      min-height: auto;
+      font-size: var(--fs-350);
+    }
+  }
+
+  @media (min-width: 62.5rem) {
+    .site__header-inner {
+      gap: var(--spacing-lg);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .site__header {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  function initLandingHeader() {
+    const header = document.querySelector<HTMLElement>(`.site__header`);
+    // Bail on routes without this header. The astro:page-load listener is
+    // global, so this runs on every navigation.
+    if (!header) return;
+
+    const controller = new AbortController();
+    const { signal } = controller;
+
+    // Toggle the "popped" header state once the user scrolls away from the top.
+    let headerTicking = false;
+    function syncHeaderState() {
+      header?.classList.toggle(`is-scrolled`, window.scrollY > 24);
+      headerTicking = false;
+    }
+
+    window.addEventListener(
+      `scroll`,
+      () => {
+        if (!headerTicking) {
+          requestAnimationFrame(syncHeaderState);
+          headerTicking = true;
+        }
+      },
+      { passive: true, signal },
+    );
+
+    syncHeaderState();
+
+    // Remove the scroll listener before the next swap; the fresh header swapped
+    // in gets its own binding on the following astro:page-load.
+    document.addEventListener(
+      "astro:before-swap",
+      () => {
+        controller.abort();
+      },
+      { once: true },
+    );
+  }
+
+  document.addEventListener("astro:page-load", initLandingHeader);
+</script>

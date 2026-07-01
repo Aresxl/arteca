@@ -1,0 +1,666 @@
+---
+import ItalicTitle from "../ui/ItalicTitle.astro";
+
+const panels = [
+  {
+    num: "01",
+    kicker: "The room",
+    titleLead: "A template can't capture a ",
+    titleAccent: "vibe.",
+    body: "Hospitality lives on atmosphere, and your website is the first table a guest sits at. Templates are built to fit everyone, which means they capture no one. Hand-coding lets your site carry the real character of your venue: your colours, your tone, your room, instead of a layout fifty other places are also using.",
+    statValue: "94%",
+    statCaption:
+      "of first impressions are design-driven. A template makes yours generic by default.",
+    statKeyword: "design-driven",
+  },
+  {
+    num: "02",
+    kicker: "The craft",
+    titleLead: "Nothing bolted on. Nothing to ",
+    titleAccent: "break.",
+    body: "Builder sites stack plugins and themes on top of each other, and every update is a chance for something to fall over, usually at the worst time. A hand-coded site has none of that. No plugins to conflict, no themes to update, no dead booking form the night before a fully booked weekend. It just keeps working.",
+    statValue: "0",
+    statCaption: "plugins or themes stacked on top, waiting to break or fall out of date.",
+    statKeyword: "break or fall out of date",
+  },
+  {
+    num: "03",
+    kicker: "The diner",
+    titleLead: "Built for how diners actually ",
+    titleAccent: "search.",
+    body: "Most people decide where to eat from their phone, on the move, with three other tabs open. If your site doesn't load fast, show the menu immediately, and make booking effortless on mobile, they're already gone. Every layout decision is made with that person in mind.",
+    statValue: "53%",
+    statCaption: "of mobile visitors leave if a page takes longer than 3 seconds.",
+    statKeyword: "3 seconds",
+  },
+];
+
+const [firstPanel] = panels;
+const total = String(panels.length).padStart(2, "0");
+
+// Split a caption around its keyword so the stacked (mobile + tablet) layout can
+// bold the key phrase. The plain statCaption still feeds the data attribute the
+// script swaps into the desktop pinned column, so that column stays text-only.
+const captionParts = ({ statCaption, statKeyword }) => {
+  const at = statKeyword ? statCaption.indexOf(statKeyword) : -1;
+  if (at === -1) return { before: statCaption, key: "", after: "" };
+  return {
+    before: statCaption.slice(0, at),
+    key: statKeyword,
+    after: statCaption.slice(at + statKeyword.length),
+  };
+};
+---
+
+<section class="approach | grid-main" aria-labelledby="approach-title">
+  <header class="approach__head | fade-in">
+    <h2 class="approach__eyebrow | eyebrow eyebrow--gold" id="approach-title">Why hand-coded</h2>
+    <p class="section-subtitle section-subtitle--light">
+      The build is the <ItalicTitle variant="on-dark">difference.</ItalicTitle>
+    </p>
+    <p class="approach__lead">
+      Your real alternatives are Wix, Squarespace, and WordPress. Cheap, fast to launch, and
+      everywhere. Here's why a hand-coded Vyteca build wins where it actually counts: bookings.
+    </p>
+  </header>
+
+  <div class="approach__manifesto">
+    <div class="approach__pinned">
+      <span class="approach__divider" aria-hidden="true"></span>
+
+      <div class="approach__index" aria-hidden="true">
+        {
+          panels.map((panel, i) => (
+            <span class:list={["approach__index-num", { "is-on": i === 0 }]}>{panel.num}</span>
+          ))
+        }
+      </div>
+
+      <div class="approach__stat">
+        <p class="approach__stat-value">{firstPanel.statValue}</p>
+        <p class="approach__stat-caption">{firstPanel.statCaption}</p>
+      </div>
+    </div>
+
+    <ol class="approach__panels">
+      {
+        panels.map((panel, i) => {
+          const caption = captionParts(panel);
+          return (
+            <li
+              class:list={["approach__panel", { "is-active": i === 0 }]}
+              data-stat-value={panel.statValue}
+              data-stat-caption={panel.statCaption}
+            >
+              <div class="approach__panel-head approach__reveal">
+                <p class="approach__panel-kicker">
+                  <span class="approach__panel-kicker-prefix">{`${panel.num} · `}</span>
+                  {panel.kicker}
+                </p>
+                <span class="approach__panel-count" aria-hidden="true">
+                  {panel.num} / {total}
+                </span>
+              </div>
+              <h3 class="approach__panel-title approach__reveal">
+                {panel.titleLead}
+                <ItalicTitle variant="on-dark">{panel.titleAccent}</ItalicTitle>
+              </h3>
+              <div class="approach__panel-stat approach__reveal">
+                <p class="approach__panel-stat-value">{panel.statValue}</p>
+                <p class="approach__panel-stat-caption">
+                  {caption.before}
+                  {caption.key ? <strong>{caption.key}</strong> : null}
+                  {caption.after}
+                </p>
+              </div>
+              <p class="approach__panel-body approach__reveal">{panel.body}</p>
+            </li>
+          );
+        })
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .approach {
+    /* Section-scoped helpers, tied back to the global gold token. The global
+       dark border is near-black; this sits a touch lighter so it reads on the
+       dark field, the same approach the guarantee ledger takes. */
+    --approach-gap: clamp(3rem, 6vw, 4rem);
+    --approach-hairline: color-mix(in srgb, var(--clr-primary-gold) 18%, transparent);
+    /* Stacked-layout (mobile + tablet) card: a warm-gray hairline over a barely
+       lifted fill, mirroring the guarantee ledger so the two dark sections share
+       one card language. */
+    --approach-box-line: hsl(30, 6%, 24%);
+    --approach-box-fill: color-mix(in srgb, var(--clr-primary-gold) 5%, var(--clr-bg-secondary));
+
+    padding-block: var(--section-space);
+    background-color: var(--clr-bg-primary-dark);
+    color: var(--clr-body-text);
+  }
+
+  /* ── Header ─────────────────────────────────────────────── */
+  .approach__head {
+    max-width: 45rem;
+    margin-block-end: var(--spacing-lg);
+  }
+
+  .approach__lead {
+    margin-block-start: var(--spacing-sm);
+    max-width: 60ch;
+    font-size: var(--fs-400);
+    line-height: 1.75;
+    color: var(--clr-body-muted-light);
+  }
+
+  /* ── Pinned stat column ─────────────────────────────────── */
+  /* Hidden below desktop — small screens fold the stat into each panel
+     instead, so the pinned/morphing column only exists where the two-column
+     layout does. */
+  .approach__pinned {
+    display: none;
+    padding-block-end: var(--spacing-xl);
+  }
+
+  /* Hairline column divider — desktop only, where the two columns exist. */
+  .approach__divider {
+    display: none;
+  }
+
+  .approach__index {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-block-end: var(--spacing-lg);
+  }
+
+  .approach__index-num {
+    font-size: var(--fs-300);
+    font-weight: var(--fw-700);
+    letter-spacing: 0.14em;
+    color: var(--clr-body-muted);
+    transition: color 0.4s var(--ease);
+  }
+
+  .approach__index-num.is-on {
+    color: var(--clr-primary-gold);
+  }
+
+  .approach__stat-value {
+    font-size: clamp(5rem, 26vw, 9.375rem);
+    font-weight: var(--fw-700);
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    color: var(--clr-primary-gold);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .approach__stat-caption {
+    margin-block-start: var(--spacing-md);
+    max-width: 35ch;
+    font-size: var(--fs-400);
+    line-height: 1.6;
+    color: var(--clr-body-muted-light);
+  }
+
+  /* The figure and caption fade down and back as the active panel changes. */
+  .approach__stat-value,
+  .approach__stat-caption {
+    transition:
+      opacity 0.28s var(--ease),
+      transform 0.28s var(--ease);
+  }
+
+  .approach__stat.is-swapping .approach__stat-value,
+  .approach__stat.is-swapping .approach__stat-caption {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  /* ── Panels ─────────────────────────────────────────────── */
+  /* No overflow clip here: the kicker row's full-bleed hairlines are pseudo-
+     elements that reach past this box to the viewport edges, so the panel must
+     not clip them. They stop exactly at the edges (offset by --page-padding), so
+     they never spawn a horizontal scrollbar. Desktop restores overflow: hidden. */
+  .approach__panels {
+    display: grid;
+    gap: var(--spacing-lg);
+  }
+
+  /* Kicker row (mobile + tablet): a full-bleed band with the section name on the
+     left and its position in the set on the right. The two hairlines run edge to
+     edge of the viewport, so they're pseudo-elements offset past the content
+     column by --page-padding (the gutter width below 1000px) rather than borders
+     on this box. On desktop the wrapper drops to display: contents and the lines
+     are removed, so the kicker falls back into the panel's flex column as before. */
+  .approach__panel-head {
+    position: relative;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    margin-block-end: var(--spacing-md);
+    padding-block: var(--spacing-md);
+  }
+
+  .approach__panel-head::before,
+  .approach__panel-head::after {
+    content: "";
+    position: absolute;
+    left: calc(-1 * var(--page-padding));
+    right: calc(-1 * var(--page-padding));
+    height: 1px;
+    background-color: var(--approach-box-line);
+  }
+
+  .approach__panel-head::before {
+    top: 0;
+  }
+
+  .approach__panel-head::after {
+    bottom: 0;
+  }
+
+  .approach__panel-kicker {
+    margin-block-end: 0;
+    font-size: var(--fs-350);
+    font-weight: var(--fw-700);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--clr-primary-gold);
+  }
+
+  /* The "01 · " lead is desktop-only; the stacked layout shows the count on the
+     right of the row instead, so hide the lead here. */
+  .approach__panel-kicker-prefix {
+    display: none;
+  }
+
+  .approach__panel-count {
+    flex-shrink: 0;
+    font-size: var(--fs-350);
+    font-weight: var(--fw-700);
+    letter-spacing: 0.14em;
+    font-variant-numeric: tabular-nums;
+    color: color-mix(in srgb, var(--clr-primary-gold) 60%, transparent);
+  }
+
+  .approach__panel-title {
+    margin-block-end: var(--spacing-sm);
+    font-size: clamp(1.625rem, 3vw, 2.5rem);
+    font-weight: var(--fw-700);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    color: var(--clr-body-text);
+  }
+
+  .approach__panel-title em {
+    font-style: italic;
+    font-weight: var(--fw-400);
+    color: var(--clr-body-muted-light);
+  }
+
+  .approach__panel-body {
+    position: relative;
+    /* max-width: 30rem; */
+    font-size: var(--fs-400);
+    line-height: 1.78;
+    color: var(--clr-body-muted-light);
+  }
+
+  /* ── Per-panel stat card (mobile + tablet) ──────────────────
+     Below desktop there's no pinned column, so each panel carries its own
+     figure inside a bordered card, reusing the guarantee ledger's card language.
+     A near-even two-column split (figure | caption) with a full-height divider
+     down the centre. Hidden on desktop, where the pinned column owns the figure. */
+  .approach__panel-stat {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    justify-items: center;
+    column-gap: var(--spacing-lg);
+    margin-block: var(--spacing-md) var(--spacing-lg);
+    padding: var(--spacing-xs);
+    border: 1px solid var(--approach-box-line);
+    background-color: var(--clr-bg-card);
+  }
+
+  /* Full-height divider down the centre of the card. Absolutely positioned so it
+     spans the box top to bottom and sits in the middle of the single column gap,
+     rather than taking a grid track of its own (which doubled the gap). */
+  .approach__panel-stat::before {
+    content: "";
+    position: absolute;
+    inset-block: 0;
+    left: 50%;
+    width: 1px;
+    transform: translateX(-50%);
+    background-color: var(--approach-box-line);
+  }
+
+  .approach__panel-stat-value {
+    font-size: clamp(3.5rem, 16vw, 5.5rem);
+    font-weight: var(--fw-700);
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    color: var(--clr-primary-gold);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .approach__panel-stat-caption {
+    min-width: 0;
+    max-width: 34ch;
+    font-size: var(--fs-375);
+    line-height: 1.6;
+    color: var(--clr-body-text);
+  }
+
+  .approach__panel-stat-caption strong {
+    font-weight: var(--fw-700);
+    color: var(--clr-neutral-0);
+  }
+
+  @media (min-width: 40rem) {
+    .approach__panel-stat {
+      padding: var(--spacing-md);
+    }
+
+    .approach__panels {
+      gap: var(--spacing-xl);
+    }
+  }
+
+  /* ── Two columns, pinned figure, scroll-activated panels (desktop) ── */
+  @media (min-width: 62.5rem) {
+    .approach__manifesto {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: var(--approach-gap);
+    }
+
+    /* Push the panels off the centre divider so it has matched breathing room
+       on both sides — the grid gap gives it half, this padding gives it the
+       other half. Horizontal only, so the shared centre line is untouched. */
+    .approach__panels {
+      /* padding-inline-start: calc(var(--approach-gap) / 2); */
+      padding-inline-start: calc(var(--approach-gap));
+    }
+
+    .approach__pinned {
+      position: sticky;
+      top: 0;
+      align-self: start;
+      height: 100vh;
+      height: 100svh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-block-end: 0;
+    }
+
+    .approach__divider {
+      display: block;
+      position: absolute;
+      top: 0;
+      right: calc(var(--approach-gap) / -2);
+      width: 1px;
+      height: 100%;
+      pointer-events: none;
+      background: linear-gradient(
+        to bottom,
+        transparent,
+        var(--approach-hairline) 14%,
+        var(--approach-hairline) 86%,
+        transparent
+      );
+    }
+
+    .approach__stat-value {
+      font-size: clamp(6rem, 15vw, 13.125rem);
+    }
+
+    .approach__panel {
+      min-height: 100vh;
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-block: var(--spacing-2xl);
+      overflow: hidden;
+      opacity: 0.12;
+      transition: opacity 0.55s var(--ease);
+    }
+
+    .approach__panel.is-active {
+      opacity: 1;
+    }
+
+    /* The pinned column owns the figure on desktop — drop the per-panel stat
+       card, which belongs to the stacked layout. */
+    .approach__panel-stat {
+      display: none;
+    }
+
+    /* Unwrap the kicker row back into the panel's flex column: the wrapper
+       vanishes, its full-bleed lines are removed, the right-hand count drops out,
+       and the "01 · " lead plus the kicker's bottom margin return — so the
+       desktop kicker reads exactly as it did before this layout existed. */
+    .approach__panel-head {
+      display: contents;
+    }
+
+    .approach__panel-head::before,
+    .approach__panel-head::after {
+      content: none;
+    }
+
+    .approach__panel-count {
+      display: none;
+    }
+
+    .approach__panel-kicker-prefix {
+      display: inline;
+    }
+
+    .approach__panel-kicker {
+      margin-block-end: var(--spacing-sm);
+    }
+
+    /* Let the title use the full column again instead of the stacked-card cap. */
+    .approach__panel-title {
+      max-width: none;
+    }
+  }
+
+  @media (min-width: 90rem) {
+    .approach__panels {
+      padding-inline-start: calc(var(--approach-gap) * 2);
+    }
+  }
+
+  /* ── Staggered reveal (mobile + tablet) ─────────────────────
+     Each row (kicker band, title, stat card, body) starts hidden and reveals the
+     first time it crosses the trigger line — the section script adds .is-revealed
+     per element, so every row animates in as it's scrolled to, not whole panels
+     at once. This mirrors the header's global `.fade-in` exactly — same keyframe,
+     700ms, easing, scale + opacity — so the whole section shares one motion.
+     Scoped below 1000px (desktop drives panel opacity through its own scroll
+     morph) and to no-preference motion, so reduced-motion visitors stay put. */
+  @media (max-width: 62.4375rem) and (prefers-reduced-motion: no-preference) {
+    .approach__reveal {
+      scale: 0.985;
+      opacity: 0;
+    }
+
+    .approach__reveal.is-revealed {
+      animation: fade-in 700ms cubic-bezier(0.66, 0, 0.34, 1) forwards;
+    }
+  }
+
+  /* ── Reduced motion: no swap, no fade, every panel legible ──
+     Placed last so it overrides the desktop panel opacity when both match. */
+  @media (prefers-reduced-motion: reduce) {
+    .approach__index-num,
+    .approach__stat-value,
+    .approach__stat-caption,
+    .approach__panel {
+      transition: none;
+    }
+
+    .approach__panel {
+      opacity: 1;
+    }
+
+    .approach__stat.is-swapping .approach__stat-value,
+    .approach__stat.is-swapping .approach__stat-caption {
+      opacity: 1;
+      transform: none;
+    }
+  }
+</style>
+
+<script>
+  function initWhyHandCoded() {
+    const manifesto = document.querySelector<HTMLElement>(".approach__manifesto");
+    // Bail on routes without this section. The astro:page-load listener is
+    // global, so this runs on every navigation.
+    if (!manifesto) return;
+
+    const panels = [...manifesto.querySelectorAll<HTMLElement>(".approach__panel")];
+    const numerals = [...manifesto.querySelectorAll<HTMLElement>(".approach__index-num")];
+    const statGroup = manifesto.querySelector<HTMLElement>(".approach__stat");
+    const valueEl = manifesto.querySelector<HTMLElement>(".approach__stat-value");
+    const captionEl = manifesto.querySelector<HTMLElement>(".approach__stat-caption");
+    const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const controller = new AbortController();
+    const { signal } = controller;
+
+    // Hoisted so teardown can disconnect whatever start()/startReveal() create.
+    let observer: IntersectionObserver | null = null;
+    let revealObserver: IntersectionObserver | null = null;
+
+    if (panels.length && statGroup && valueEl && captionEl) {
+      let current = 0;
+      let swapTimer = 0;
+
+      const render = (i: number) => {
+        panels.forEach((panel, k) => panel.classList.toggle("is-active", k === i));
+        numerals.forEach((num, k) => num.classList.toggle("is-on", k === i));
+      };
+
+      const setActive = (i: number) => {
+        if (i === current) return;
+        current = i;
+        render(i);
+
+        const { statValue = "", statCaption = "" } = panels[i].dataset;
+        if (reduceMotion) {
+          valueEl.textContent = statValue;
+          captionEl.textContent = statCaption;
+          return;
+        }
+
+        // Fade the old figure out, swap text at the trough, fade the new one in.
+        statGroup.classList.add("is-swapping");
+        clearTimeout(swapTimer);
+        swapTimer = window.setTimeout(() => {
+          valueEl.textContent = statValue;
+          captionEl.textContent = statCaption;
+          statGroup.classList.remove("is-swapping");
+        }, 280);
+      };
+
+      // Only the desktop layout has the pinned, morphing column. Below 1000px
+      // each panel shows its own static stat, so running the observer there
+      // would just churn against a hidden element. Gate it to desktop, and
+      // start once if the viewport is later resized up into that range.
+      const desktop = matchMedia("(min-width: 62.5rem)");
+
+      const start = () => {
+        if (observer || !desktop.matches) return;
+
+        // Collapse the observer root to a single line at the viewport's vertical
+        // centre. Each panel is at least one viewport tall, so exactly one crosses
+        // that line at a time — that panel is the active one.
+        const active = new Set<number>();
+        observer = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              const i = panels.indexOf(entry.target as HTMLElement);
+              if (i === -1) continue;
+              if (entry.isIntersecting) active.add(i);
+              else active.delete(i);
+            }
+            // Between panels nothing crosses the line — hold the last state.
+            if (active.size === 0) return;
+            setActive(Math.max(...active));
+          },
+          { rootMargin: "-50% 0px -50% 0px", threshold: 0 },
+        );
+
+        panels.forEach((panel) => observer!.observe(panel));
+      };
+
+      start();
+      desktop.addEventListener("change", start, { signal });
+    }
+
+    // Staggered reveal (mobile + tablet): each row (kicker band, title, stat
+    // card, body) reveals the first time it crosses the trigger line, so every
+    // row animates in as it's scrolled to rather than whole panels at once. The
+    // animation lives in CSS and mirrors the header's `.fade-in`; the trigger
+    // here mirrors scrollReveal's fade observer (same phone/tablet split) so the
+    // rows trip on the same line the header does. Desktop owns panel opacity
+    // through its own morph, so this is gated below 1000px; the hidden start
+    // state is CSS-gated to no-preference motion, so reduced-motion visitors
+    // see them in place.
+    if (!reduceMotion) {
+      const mobile = matchMedia("(max-width: 62.4375rem)");
+      const revealTargets = [...manifesto.querySelectorAll<HTMLElement>(".approach__reveal")];
+
+      const startReveal = () => {
+        if (revealObserver || !mobile.matches || !revealTargets.length) return;
+
+        // Match scrollReveal's fade observer: phones fire off the top edge,
+        // wider screens want a fraction of the row in view first.
+        const isPhone = window.innerWidth < 600;
+        revealObserver = new IntersectionObserver(
+          (entries, obs) => {
+            for (const entry of entries) {
+              if (!entry.isIntersecting) continue;
+              entry.target.classList.add("is-revealed");
+              obs.unobserve(entry.target);
+            }
+          },
+          {
+            threshold: isPhone ? 0 : 0.2,
+            rootMargin: isPhone ? "0px 0px -12% 0px" : "0px 0px -10% 0px",
+          },
+        );
+
+        revealTargets.forEach((el) => revealObserver!.observe(el));
+      };
+
+      startReveal();
+      mobile.addEventListener("change", startReveal, { signal });
+    }
+
+    // Tear down before the page is swapped away: drop both observers and remove
+    // the matchMedia listeners via the controller.
+    document.addEventListener(
+      "astro:before-swap",
+      () => {
+        observer?.disconnect();
+        revealObserver?.disconnect();
+        controller.abort();
+      },
+      { once: true },
+    );
+  }
+
+  document.addEventListener("astro:page-load", initWhyHandCoded);
+</script>

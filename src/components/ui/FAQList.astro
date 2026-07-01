@@ -1,0 +1,315 @@
+---
+// Shared accordion primitive. Renders a single-open disclosure list from an
+// array of Q&A pairs. Owns the item markup, styling, and toggle behaviour so
+// both FAQSection (simple) and FAQTabbed (inner page) stay DRY.
+//
+// `idPrefix` keeps panel ids unique when several lists share a page — e.g. the
+// tabbed FAQ renders one list per category.
+interface Props {
+  items: { question: string; answer: string }[];
+  idPrefix: string;
+  class?: string;
+}
+
+const { items, idPrefix, class: className } = Astro.props;
+---
+
+<div class:list={["faq__list", className]}>
+  {
+    items.map((faq, i) => (
+      <div class="faq__item">
+        <h3 class="faq__heading">
+          <button
+            type="button"
+            class="faq__trigger"
+            aria-expanded="false"
+            aria-controls={`${idPrefix}-panel-${i}`}
+          >
+            <span class="faq__question">{faq.question}</span>
+            <span class="faq__icon" aria-hidden="true" />
+          </button>
+        </h3>
+        <div class="faq__panel" id={`${idPrefix}-panel-${i}`}>
+          <div class="faq__answer">
+            <p class="faq__answer-inner" set:html={faq.answer} />
+          </div>
+        </div>
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  .faq__item {
+    position: relative;
+    border-block-end: 1px solid var(--border-light);
+  }
+
+  .faq__item:first-child {
+    border-block-start: 1px solid var(--border-light);
+  }
+
+  /* Gold thread that runs down the side of the open item. */
+  .faq__item::before {
+    content: "";
+    position: absolute;
+    inset-inline-start: 0;
+    inset-block: 17px;
+    width: 2px;
+    background-color: var(--clr-primary-gold);
+    transform: scaleY(0);
+    transform-origin: center;
+    transition: transform 0.45s var(--ease);
+  }
+
+  .faq__item:has(.faq__trigger[aria-expanded="true"])::before {
+    transform: scaleY(1);
+  }
+
+  .faq__heading {
+    margin: 0;
+    font: inherit;
+    text-wrap: unset;
+  }
+
+  .faq__trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    width: 100%;
+    padding-block: var(--spacing-md);
+    background: none;
+    border: none;
+    text-align: start;
+    cursor: pointer;
+  }
+
+  .faq__trigger:focus-visible {
+    outline: 2px solid var(--clr-primary-gold);
+    outline-offset: 4px;
+  }
+
+  /* The shift-right on open is a transform, not a width change, so the question's
+     wrapping width is fixed in both states and the text never reflows or jumps a
+     line mid-animation. The reserved gutter (margin) is the space the translate
+     slides it back across while closed.
+
+     translate3d (not translateX) pins the element to its own composited layer in
+     BOTH resting states. Without that, the browser composited the text only for
+     the duration of the animation and tore the layer down on settle — re-painting
+     the glyphs snapped to the pixel grid, ~1px off where the composited frame had
+     them. That teardown was the stutter. A layer that's always present has nothing
+     to tear down, and the motion stays on the GPU. */
+  .faq__question {
+    margin-inline-start: 20px;
+    font-size: var(--fs-400);
+    font-weight: var(--fw-700);
+    line-height: 1.4;
+    color: var(--clr-body-text-dark);
+    transform: translate3d(-20px, 0, 0);
+    transition: transform 0.45s var(--ease);
+  }
+
+  .faq__item:has(.faq__trigger[aria-expanded="true"]) .faq__question {
+    transform: translate3d(0, 0, 0);
+  }
+
+  /* Plus mark built from two bars; rotates into a cross when open. */
+  .faq__icon {
+    position: relative;
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    color: var(--clr-body-muted-light);
+    transition:
+      color 0.3s var(--ease),
+      transform 0.4s var(--ease);
+  }
+
+  .faq__icon::before,
+  .faq__icon::after {
+    content: "";
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline-start: 50%;
+    background-color: currentColor;
+  }
+
+  .faq__icon::before {
+    width: 13px;
+    height: 1.5px;
+    transform: translate(-50%, -50%);
+  }
+
+  .faq__icon::after {
+    width: 1.5px;
+    height: 13px;
+    transform: translate(-50%, -50%);
+  }
+
+  .faq__trigger:hover .faq__icon {
+    color: var(--clr-primary-gold);
+  }
+
+  .faq__trigger[aria-expanded="true"] .faq__icon {
+    color: var(--clr-primary-gold);
+    transform: rotate(135deg);
+  }
+
+  /* Pure-CSS height animation: the row grows from 0fr to 1fr. */
+  .faq__panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.45s var(--ease);
+  }
+
+  .faq__item:has(.faq__trigger[aria-expanded="true"]) .faq__panel {
+    grid-template-rows: 1fr;
+  }
+
+  .faq__answer {
+    min-height: 0;
+    overflow: hidden;
+    /* A clipped panel stays in the DOM, so hide it to pull any focusable
+       content (e.g. an inline CTA link) out of the tab order until it opens.
+       The delay holds visibility through the close animation. */
+    visibility: hidden;
+    transition: visibility 0s linear 0.45s;
+  }
+
+  .faq__item:has(.faq__trigger[aria-expanded="true"]) .faq__answer {
+    visibility: visible;
+    transition-delay: 0s;
+  }
+
+  .faq__answer-inner {
+    padding-block: 0 var(--spacing-md);
+    /* Match the question's indent so the answer lines up with it. */
+    padding-inline: 20px 40px;
+    font-size: var(--fs-400);
+    line-height: 1.78;
+    color: var(--clr-body-muted);
+
+    /* Soft fade + tiny rise as the panel clips open, so the text resolves in
+       rather than popping. Kept a hair shorter than the 0.45s clip so the lift
+       settles just before the reveal finishes. translate3d keeps a stable
+       composited layer across both states so the glyphs don't re-snap when the
+       rise settles (same fix as .faq__question). */
+    opacity: 0;
+    transform: translate3d(0, 6px, 0);
+    transition:
+      opacity 0.35s var(--ease),
+      transform 0.35s var(--ease);
+  }
+
+  .faq__item:has(.faq__trigger[aria-expanded="true"]) .faq__answer-inner {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+
+  .faq__answer-inner :global(strong) {
+    color: var(--clr-body-text-dark);
+    font-weight: var(--fw-700);
+  }
+
+  /* Inline CTA inside an answer: bold dark text (keeps contrast) with a gold
+     underline and a nudging arrow, so it reads as an action, not body copy. */
+  .faq__answer-inner :global(.faq__answer-cta) {
+    font-weight: var(--fw-700);
+    color: var(--clr-body-text-dark);
+    text-decoration: underline;
+    text-decoration-color: var(--clr-primary-gold);
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 3px;
+    transition: text-underline-offset 0.3s var(--ease);
+  }
+
+  .faq__answer-inner :global(.faq__answer-cta)::after {
+    content: "\2192\FE0E";
+    display: inline-block;
+    margin-inline-start: 0.3em;
+    color: var(--clr-primary-gold);
+    transition: transform 0.3s var(--ease);
+  }
+
+  .faq__answer-inner :global(.faq__answer-cta):hover,
+  .faq__answer-inner :global(.faq__answer-cta):focus-visible {
+    text-underline-offset: 4px;
+  }
+
+  .faq__answer-inner :global(.faq__answer-cta):hover::after,
+  .faq__answer-inner :global(.faq__answer-cta):focus-visible::after {
+    transform: translateX(3px);
+  }
+
+  .faq__answer-inner :global(.faq__answer-cta):focus-visible {
+    outline: 2px solid var(--clr-primary-gold);
+    outline-offset: 3px;
+  }
+
+  @media (min-width: 48rem) {
+    .faq__answer-inner {
+      font-size: var(--fs-400);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .faq__item,
+    .faq__item::before,
+    .faq__question,
+    .faq__panel,
+    .faq__answer,
+    .faq__answer-inner,
+    .faq__icon,
+    .faq__answer-inner :global(.faq__answer-cta),
+    .faq__answer-inner :global(.faq__answer-cta)::after {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  function initFAQList() {
+    // Single-open accordion, scoped per list. Querying within each `.faq__list`
+    // keeps multiple lists on one page (the tabbed FAQ's category panels)
+    // independent — opening an item in one never collapses another.
+    const lists = document.querySelectorAll<HTMLElement>(".faq__list");
+    // Bail on routes without this component. The astro:page-load listener is
+    // global, so this runs on every navigation, including pages with no list.
+    if (!lists.length) return;
+
+    const controller = new AbortController();
+    const { signal } = controller;
+
+    lists.forEach((list) => {
+      const triggers = list.querySelectorAll<HTMLButtonElement>(".faq__trigger");
+
+      triggers.forEach((trigger) => {
+        trigger.addEventListener(
+          "click",
+          () => {
+            const willOpen = trigger.getAttribute("aria-expanded") !== "true";
+
+            // aria-expanded is the single source of truth — the CSS reacts to it.
+            triggers.forEach((other) => other.setAttribute("aria-expanded", "false"));
+            if (willOpen) trigger.setAttribute("aria-expanded", "true");
+          },
+          { signal },
+        );
+      });
+    });
+
+    // Drop the click listeners before the next swap; the fresh list swapped in
+    // gets its own bindings on the following astro:page-load.
+    document.addEventListener(
+      "astro:before-swap",
+      () => {
+        controller.abort();
+      },
+      { once: true },
+    );
+  }
+
+  document.addEventListener("astro:page-load", initFAQList);
+</script>

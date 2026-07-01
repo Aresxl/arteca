@@ -1,5 +1,6 @@
 {
   "[astro]": {
     "editor.defaultFormatter": "astro-build.astro-vscode"
-  }
+  },
+  "liveServer.settings.port": 5501
 }

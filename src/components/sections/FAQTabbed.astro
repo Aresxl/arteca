@@ -1,0 +1,602 @@
+---
+// Dedicated FAQ-page section: a sticky intro aside + a category tablist that
+// swaps the visible question set. The intro's live readout (count + category)
+// follows the active tab. Built on the shared FAQList accordion atom — one
+// list per category. For the simple, single-list FAQ used elsewhere, see
+// FAQSection.astro.
+import ItalicTitle from "../ui/ItalicTitle.astro";
+import FAQList from "../ui/FAQList.astro";
+import categories from "@/data/faq-page.json";
+
+const DEFAULT_INDEX = 0; // Pricing
+const defaultCat = categories[DEFAULT_INDEX];
+const pad2 = (n: number) => String(n).padStart(2, "0");
+
+// Condensed tab labels for narrow viewports (<40rem), where the full names wrap
+// the tablist onto a ragged second row. Keyed by category id; falls back to the
+// full name if a category isn't listed. CSS swaps which variant is visible.
+const SHORT_LABELS: Record<string, string> = {
+  pricing: "Pricing",
+  process: "Process",
+  "the-build": "Build",
+};
+---
+
+<section class="faqx | grid-main" aria-labelledby="faqx-title">
+  <div class="faqx__grid">
+    <div class="faqx__aside">
+      <h2 class="eyebrow eyebrow--dark faqx__eyebrow" id="faqx-title">FAQ</h2>
+      <p class="section-subtitle section-subtitle--dark">
+        Common <ItalicTitle>questions</ItalicTitle>
+      </p>
+      <p class="faqx__note">
+        Everything worth knowing about what I do, what I charge, how the process runs, and what
+        happens after launch. Still stuck? <a href="/contact">Get in touch</a>.
+      </p>
+
+      <div class="faqx__meta" aria-hidden="true">
+        <span class="faqx__meta-num" data-faq-meta-num>{pad2(defaultCat.items.length)}</span>
+        <span class="faqx__meta-label">
+          <b class="faqx__meta-cat" data-faq-meta-cat>{defaultCat.category}</b>
+          questions in view
+        </span>
+      </div>
+    </div>
+
+    <div class="faqx__main">
+      <div class="faqx__tabs" role="tablist" aria-label="FAQ categories">
+        {
+          categories.map((cat, i) => (
+            <button
+              type="button"
+              class:list={["faqx__tab", i === DEFAULT_INDEX && "is-active"]}
+              role="tab"
+              id={`faqx-tab-${cat.id}`}
+              aria-controls={`faqx-panel-${cat.id}`}
+              aria-selected={i === DEFAULT_INDEX ? "true" : "false"}
+              tabindex={i === DEFAULT_INDEX ? 0 : -1}
+              data-faq-tab={i}
+              data-faq-name={cat.category}
+            >
+              <span class="faqx__tab-dot" aria-hidden="true" />
+              <span class="faqx__tab-label faqx__tab-label--full">{cat.category}</span>
+              <span class="faqx__tab-label faqx__tab-label--short">
+                {SHORT_LABELS[cat.id] ?? cat.category}
+              </span>
+            </button>
+          ))
+        }
+        <span class="faqx__indicator" aria-hidden="true"></span>
+      </div>
+
+      <div class="faqx__panels">
+        {
+          categories.map((cat, i) => (
+            <div
+              class:list={["faqx__panel", i === DEFAULT_INDEX && "is-active"]}
+              id={`faqx-panel-${cat.id}`}
+              role="tabpanel"
+              aria-labelledby={`faqx-tab-${cat.id}`}
+              data-faq-panel={i}
+              hidden={i !== DEFAULT_INDEX}
+            >
+              <FAQList items={cat.items} idPrefix={`faqx-${cat.id}`} />
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .faqx {
+    padding-block: var(--section-space);
+    background-color: var(--clr-bg-primary-light);
+    color: var(--clr-body-text-dark);
+  }
+
+  .faqx__grid {
+    display: grid;
+    gap: var(--spacing-xl);
+  }
+
+  .section-subtitle {
+    font-size: clamp(2.5rem, 1.975rem + 2.2399999999999998vw, 3.375rem);
+  }
+
+  .faqx__note {
+    max-width: 65ch;
+    margin-block-start: var(--spacing-md);
+    font-size: var(--fs-400);
+    line-height: 1.72;
+    color: var(--clr-body-muted);
+    text-wrap: pretty;
+  }
+
+  .faqx__note a {
+    position: relative;
+    color: var(--clr-body-text-dark);
+    font-weight: var(--fw-700);
+    white-space: nowrap;
+  }
+
+  .faqx__note a::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    bottom: -1px;
+    height: 1px;
+    background-color: var(--clr-primary-gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s var(--ease);
+  }
+
+  .faqx__note a:hover::after,
+  .faqx__note a:focus-visible::after {
+    transform: scaleX(1);
+  }
+
+  /* Live readout — hidden on the stacked mobile layout. */
+  .faqx__meta {
+    display: none;
+    margin-block-start: var(--spacing-lg);
+    padding-block-start: 18px;
+    border-block-start: 1px solid var(--border-light);
+    align-items: baseline;
+    gap: 10px;
+  }
+
+  .faqx__meta-num {
+    font-size: var(--fs-700);
+    font-weight: var(--fw-700);
+    color: var(--clr-primary-gold);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .faqx__meta-label {
+    font-size: var(--fs-300);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--clr-body-muted-light);
+    font-weight: var(--fw-700);
+  }
+
+  .faqx__meta-cat {
+    display: block;
+    margin-block-end: 2px;
+    color: var(--clr-body-text-dark);
+    font-weight: var(--fw-700);
+    letter-spacing: 0.04em;
+    font-size: var(--fs-300);
+  }
+
+  /* ── Tablist ───────────────────────────────────────────── */
+  .faqx__main {
+    min-width: 0;
+  }
+
+  .faqx__tabs {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(1.25rem, 3vw, 1.875rem);
+    border-block-end: 1px solid var(--border-light);
+    margin-block-end: 4px;
+  }
+
+  .faqx__tab {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 0 16px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.6875rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: var(--fw-700);
+    color: var(--clr-body-muted-light);
+    transition: color 0.3s var(--ease);
+  }
+
+  .faqx__tab:hover,
+  .faqx__tab.is-active {
+    color: var(--clr-body-text-dark);
+  }
+
+  .faqx__tab:focus-visible {
+    outline: 2px solid var(--clr-primary-gold);
+    outline-offset: 4px;
+  }
+
+  /* Full names show by default; the condensed variant only takes over on narrow
+     viewports (see the max-width block below), so the tablist stays on one row. */
+  .faqx__tab-label--short {
+    display: none;
+  }
+
+  @media (max-width: 39.99rem) {
+    .faqx__tabs {
+      /* justify-content: space-between; */
+      gap: var(--spacing-md);
+    }
+
+    .faqx__tab {
+      letter-spacing: 0.08em;
+    }
+
+    .faqx__tab-label--full {
+      display: none;
+    }
+
+    .faqx__tab-label--short {
+      display: inline;
+    }
+  }
+
+  .faqx__tab-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--border-light);
+    transition:
+      background 0.35s var(--ease),
+      transform 0.35s var(--ease);
+  }
+
+  .faqx__tab:hover .faqx__tab-dot {
+    background: var(--clr-body-muted-light);
+  }
+
+  .faqx__tab.is-active .faqx__tab-dot {
+    background: var(--clr-primary-gold);
+    transform: scale(1.15);
+  }
+
+  /* Compositor-only slide: a 1px bar translated + scaled to the active tab. */
+  .faqx__indicator {
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 1px;
+    height: 2px;
+    background-color: var(--clr-primary-gold);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.5s var(--ease);
+  }
+
+  /* ── Panels ────────────────────────────────────────────── */
+  .faqx__panels {
+    position: relative;
+    /* Height is driven in JS during a tab swap so a longer/shorter question set
+       grows or shrinks the section smoothly instead of snapping. Released back to
+       auto when idle, so opening an accordion item inside still resizes naturally. */
+    transition: height 0.45s var(--ease);
+  }
+
+  /* Clip only while the height is animating, so growing content can't bleed over
+     the section below — without permanently clipping item focus outlines. */
+  .faqx__panels.is-resizing {
+    overflow: hidden;
+  }
+
+  .faqx__panel :global(.faq__list) {
+    transition:
+      opacity 0.22s var(--ease),
+      transform 0.22s var(--ease);
+  }
+
+  .faqx__panel.is-exiting :global(.faq__list) {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  /* Items rise in, staggered, each time a panel becomes active. */
+  @keyframes faqx-rise {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  .faqx__panel.is-active :global(.faq__item) {
+    animation: faqx-rise 0.55s var(--ease) backwards;
+  }
+
+  .faqx__panel.is-active :global(.faq__item):nth-child(1) {
+    animation-delay: 0.02s;
+  }
+  .faqx__panel.is-active :global(.faq__item):nth-child(2) {
+    animation-delay: 0.07s;
+  }
+  .faqx__panel.is-active :global(.faq__item):nth-child(3) {
+    animation-delay: 0.12s;
+  }
+  .faqx__panel.is-active :global(.faq__item):nth-child(4) {
+    animation-delay: 0.17s;
+  }
+  .faqx__panel.is-active :global(.faq__item):nth-child(5) {
+    animation-delay: 0.22s;
+  }
+  .faqx__panel.is-active :global(.faq__item):nth-child(6) {
+    animation-delay: 0.27s;
+  }
+  .faqx__panel.is-active :global(.faq__item):nth-child(7) {
+    animation-delay: 0.32s;
+  }
+  .faqx__panel.is-active :global(.faq__item):nth-child(8) {
+    animation-delay: 0.37s;
+  }
+  .faqx__panel.is-active :global(.faq__item):nth-child(9) {
+    animation-delay: 0.42s;
+  }
+  .faqx__panel.is-active :global(.faq__item):nth-child(10) {
+    animation-delay: 0.47s;
+  }
+
+  @media (min-width: 25rem) {
+    .faqx__tab {
+      font-size: var(--fs-350);
+    }
+  }
+
+  @media (min-width: 48rem) {
+    .faqx__grid {
+      max-width: 650px;
+      margin-inline: auto;
+    }
+  }
+
+  /* ── Two-column split + sticky aside on desktop ────────── */
+  @media (min-width: 62.5rem) {
+    .faqx__grid {
+      max-width: unset;
+      margin-inline: unset;
+      grid-template-columns: 0.82fr 1.18fr;
+      gap: clamp(2.5rem, 5vw, 5.25rem);
+      align-items: start;
+    }
+
+    .faqx__aside {
+      position: sticky;
+      top: 7rem;
+    }
+
+    .faqx__meta {
+      display: flex;
+      align-items: center;
+    }
+
+    .faqx__tab {
+      font-size: 0.6875rem;
+    }
+
+    .section-subtitle {
+      font-size: clamp(2.5rem, 1.0795454545454546rem + 2.272727272727273vw, 3.125rem);
+    }
+  }
+
+  @media (min-width: 65.625rem) {
+    .faqx__tab {
+      font-size: var(--fs-350);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .faqx__indicator,
+    .faqx__tab-dot,
+    .faqx__note a::after,
+    .faqx__panels,
+    .faqx__panel :global(.faq__list) {
+      transition: none;
+    }
+
+    .faqx__panel.is-active :global(.faq__item) {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  function initFAQTabbed() {
+    // Bail on routes without this section. The astro:page-load listener is
+    // global, so this runs on every navigation, including pages without a tablist.
+    const tablist = document.querySelector<HTMLElement>(".faqx__tabs");
+    if (!tablist) return;
+
+    // <body> is fully replaced on swap, so re-read everything each navigation.
+    const root = tablist.closest<HTMLElement>(".faqx")!;
+    const controller = new AbortController();
+    const { signal } = controller;
+
+    const tabs = [...root.querySelectorAll<HTMLButtonElement>("[data-faq-tab]")];
+    const panels = [...root.querySelectorAll<HTMLElement>("[data-faq-panel]")];
+    const panelsWrap = root.querySelector<HTMLElement>(".faqx__panels")!;
+    const indicator = root.querySelector<HTMLElement>(".faqx__indicator")!;
+    const metaNum = root.querySelector<HTMLElement>("[data-faq-meta-num]")!;
+    const metaCat = root.querySelector<HTMLElement>("[data-faq-meta-cat]")!;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    let current = Math.max(
+      0,
+      tabs.findIndex((t) => t.getAttribute("aria-selected") === "true"),
+    );
+
+    const pad2 = (n: number) => String(n).padStart(2, "0");
+
+    const moveIndicator = (tab: HTMLElement) => {
+      indicator.style.transform = `translateX(${tab.offsetLeft}px) scaleX(${tab.offsetWidth})`;
+    };
+
+    const updateMeta = (tab: HTMLElement, panel: HTMLElement) => {
+      metaNum.textContent = pad2(panel.querySelectorAll(".faq__item").length);
+      metaCat.textContent = tab.dataset.faqName ?? "";
+    };
+
+    // Grow/shrink the panel container between two heights so swapping a longer or
+    // shorter question set eases the section open the same way a single FAQ answer
+    // expands. Released back to `auto` once settled, so an accordion item opening
+    // inside still resizes the panel naturally.
+    let heightCleanup: ((e: TransitionEvent) => void) | null = null;
+
+    const releaseHeight = () => {
+      panelsWrap.style.height = "";
+      panelsWrap.classList.remove("is-resizing");
+    };
+
+    const animateHeight = (from: number, to: number) => {
+      if (heightCleanup) {
+        panelsWrap.removeEventListener("transitionend", heightCleanup);
+        heightCleanup = null;
+      }
+      if (from === to) {
+        releaseHeight();
+        return;
+      }
+
+      panelsWrap.classList.add("is-resizing");
+      panelsWrap.style.height = `${from}px`;
+      void panelsWrap.offsetHeight; // commit the start height before transitioning
+      panelsWrap.style.height = `${to}px`;
+
+      const onEnd = (e: TransitionEvent) => {
+        if (e.propertyName !== "height" || e.target !== panelsWrap) return;
+        panelsWrap.removeEventListener("transitionend", onEnd);
+        heightCleanup = null;
+        releaseHeight();
+      };
+      heightCleanup = onEnd;
+      panelsWrap.addEventListener("transitionend", onEnd, { signal });
+    };
+
+    // A swap fades the old panel out before revealing the new one. If the user
+    // jumps tabs again mid-fade, flush the pending swap first so two panels can
+    // never be left visible at once.
+    let exitTimer: number | null = null;
+    let pendingSwap: (() => void) | null = null;
+
+    const flushPending = () => {
+      if (exitTimer !== null) {
+        clearTimeout(exitTimer);
+        exitTimer = null;
+      }
+      if (pendingSwap) {
+        const run = pendingSwap;
+        pendingSwap = null;
+        run();
+      }
+    };
+
+    const activate = (i: number, focus = false) => {
+      if (i === current) {
+        moveIndicator(tabs[i]);
+        return;
+      }
+
+      flushPending(); // settle any in-flight swap so `current` is accurate
+      if (i === current) {
+        moveIndicator(tabs[i]);
+        return;
+      }
+
+      const oldTab = tabs[current];
+      const newTab = tabs[i];
+      const oldPanel = panels[current];
+      const newPanel = panels[i];
+
+      // Collapse any open accordion item in the outgoing panel.
+      oldPanel
+        .querySelectorAll<HTMLButtonElement>('.faq__trigger[aria-expanded="true"]')
+        .forEach((t) => t.setAttribute("aria-expanded", "false"));
+
+      oldTab.classList.remove("is-active");
+      oldTab.setAttribute("aria-selected", "false");
+      oldTab.tabIndex = -1;
+      newTab.classList.add("is-active");
+      newTab.setAttribute("aria-selected", "true");
+      newTab.tabIndex = 0;
+      if (focus) newTab.focus();
+
+      moveIndicator(newTab);
+      updateMeta(newTab, newPanel);
+
+      const swap = () => {
+        const startH = panelsWrap.offsetHeight;
+        oldPanel.classList.remove("is-active", "is-exiting");
+        oldPanel.hidden = true;
+        newPanel.hidden = false;
+        newPanel.classList.add("is-active");
+        void newPanel.offsetWidth; // restart the staggered item entrance
+        current = i;
+        if (!reduceMotion.matches) animateHeight(startH, newPanel.offsetHeight);
+      };
+
+      if (reduceMotion.matches) {
+        swap();
+      } else {
+        oldPanel.classList.add("is-exiting");
+        pendingSwap = swap;
+        exitTimer = window.setTimeout(() => {
+          exitTimer = null;
+          flushPending();
+        }, 200);
+      }
+    };
+
+    tabs.forEach((tab, i) => tab.addEventListener("click", () => activate(i), { signal }));
+
+    // Roving-tabindex keyboard support (WAI-ARIA tabs pattern).
+    tablist.addEventListener(
+      "keydown",
+      (e) => {
+        const last = tabs.length - 1;
+        let target: number | null = null;
+
+        if (e.key === "ArrowRight" || e.key === "ArrowDown")
+          target = current >= last ? 0 : current + 1;
+        else if (e.key === "ArrowLeft" || e.key === "ArrowUp")
+          target = current <= 0 ? last : current - 1;
+        else if (e.key === "Home") target = 0;
+        else if (e.key === "End") target = last;
+
+        if (target === null) return;
+        e.preventDefault();
+        activate(target, true);
+      },
+      { signal },
+    );
+
+    // Place the indicator once layout (and fonts, which shift tab widths) settle.
+    const place = () => moveIndicator(tabs[current]);
+    if (document.fonts?.ready) document.fonts.ready.then(place);
+    // page-load already means the DOM is ready, so place immediately instead of
+    // waiting on window "load" (which won't re-fire on client-side navigation).
+    place();
+    window.addEventListener("resize", place, { signal });
+
+    // Tear down before the next swap: clear any in-flight swap timer, then drop
+    // every binding (per-tab click, keydown, resize, and the panels transitionend)
+    // via the controller. Without this they'd leak across navigations.
+    document.addEventListener(
+      "astro:before-swap",
+      () => {
+        if (exitTimer !== null) clearTimeout(exitTimer);
+        controller.abort();
+      },
+      { once: true },
+    );
+  }
+
+  document.addEventListener("astro:page-load", initFAQTabbed);
+</script>

@@ -1,150 +1,493 @@
 ---
 // Images
-import CircuitBGLeft from "@/assets/images/desktop/circuit-grid-left.png";
-import CircuitBGRight from "@/assets/images/desktop/circuit-grid-right.png";
+import ArrowIcon from "@/assets/icons/arrow-up-right.svg";
 
 // Components
-import Heading from "../ui/Heading.astro";
-import Picture from "astro/components/Picture.astro";
+import LinkOrButton from "../ui/LinkOrButton.astro";
 
 interface Props {
   title: string;
-  subtitle: string;
+  subtitle: string | string[];
+  eyebrow: string;
 }
 
-const { title, subtitle } = Astro.props;
+const { title, subtitle, eyebrow } = Astro.props;
+
+// Normalise to an array so single-string subtitles still work.
+// Each segment renders as text; dot dividers sit *between* segments.
+const subtitleParts = Array.isArray(subtitle) ? subtitle : [subtitle];
 ---
 
 <section class="hero | grid-main">
-  <header>
-    <div class="hero-title">{title}</div>
-    <Heading tag="h1" text={subtitle} class="hero__subtitle" />
+  <header class="hero__header">
+    <div class="eyebrow__wrapper">
+      <span class="eyebrow eyebrow--gold">{eyebrow}</span>
+    </div>
+    <div class="hero__header-content">
+      <h1 class="hero-title--inner">{title}</h1>
+      <p class="hero__subtitle">
+        {
+          subtitleParts.map((part, index) => (
+            <>
+              {index > 0 && <span class="hero__subtitle-divider" aria-hidden="true" />}
+              <span>{part}</span>
+            </>
+          ))
+        }
+      </p>
+      <div class="btn__wrapper">
+        <LinkOrButton
+          as="a"
+          href="/free-designs"
+          text="Get your 3 free designs"
+          variant="primary"
+          data-track="cta"
+        >
+          <ArrowIcon />
+        </LinkOrButton>
+      </div>
+    </div>
   </header>
 
-  <div class="dot-bg"></div>
+  <canvas class="hero-canvas" id="hero-canvas" aria-hidden="true"></canvas>
+  <svg
+    class="hero-flair"
+    aria-hidden="true"
+    focusable="false"
+    viewBox="0 0 560 560"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <defs>
+      <radialGradient id="hero-flair-glow" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="var(--clr-primary-gold)" stop-opacity="0.16"></stop>
+        <stop offset="50%" stop-color="var(--clr-primary-gold)" stop-opacity="0.05"></stop>
+        <stop offset="100%" stop-color="var(--clr-primary-gold)" stop-opacity="0"></stop>
+      </radialGradient>
+    </defs>
 
-  <Picture
-    src={CircuitBGLeft}
-    height={CircuitBGLeft.height}
-    width={CircuitBGLeft.width}
-    formats={["avif", "webp"]}
-    fallbackFormat="jpg"
-    alt=""
-    layout="constrained"
-    widths={[320, 480, 640, 800, 1020, 1280, 1400, 1800]}
-    priority={true}
-    class="cyber__grid-img"
-    pictureAttributes={{ class: "cyber-grid left" }}
-  />
-  <Picture
-    src={CircuitBGRight}
-    height={CircuitBGRight.height}
-    width={CircuitBGRight.width}
-    formats={["avif", "webp"]}
-    fallbackFormat="jpg"
-    alt=""
-    layout="constrained"
-    widths={[320, 480, 640, 800, 1020, 1280, 1400, 1800]}
-    priority={true}
-    class="cyber__grid-img"
-    pictureAttributes={{ class: "cyber-grid right" }}
-  />
+    <circle class="hero-flair__glow" cx="280" cy="280" r="220" fill="url(#hero-flair-glow)"
+    ></circle>
+
+    <circle class="hero-flair__ring hero-flair__ring--lg" cx="280" cy="280" r="279"></circle>
+    <circle class="hero-flair__ring hero-flair__ring--md" cx="280" cy="280" r="209"></circle>
+    <circle class="hero-flair__ring hero-flair__ring--sm" cx="280" cy="280" r="149"></circle>
+    <circle class="hero-flair__ring hero-flair__ring--xs" cx="280" cy="280" r="89"></circle>
+
+    <g class="hero-flair__orbit hero-flair__orbit--1">
+      <circle class="hero-flair__dot" cx="280" cy="1" r="1.5"></circle>
+    </g>
+    <g class="hero-flair__orbit hero-flair__orbit--2">
+      <circle class="hero-flair__dot hero-flair__dot--lg" cx="280" cy="71" r="2"></circle>
+    </g>
+    <g class="hero-flair__orbit hero-flair__orbit--3">
+      <circle class="hero-flair__dot hero-flair__dot--sm" cx="280" cy="131" r="1"></circle>
+    </g>
+  </svg>
+
+  <div class="hero-arc hero-arc--1" aria-hidden="true"></div>
+  <div class="hero-arc hero-arc--2" aria-hidden="true"></div>
+  <div class="hero-arc hero-arc--3" aria-hidden="true"></div>
+
+  <span class="corner tl" aria-hidden="true"></span>
+  <span class="corner tr" aria-hidden="true"></span>
+  <span class="corner bl" aria-hidden="true"></span>
+  <span class="corner br" aria-hidden="true"></span>
+
+  <div class="hero__scroll-wrapper">
+    <span class="hero__scroll-line"></span>
+    <span class="hero__scroll-text">Scroll</span>
+  </div>
 </section>
 
+<div class="hero-overlap-sentinel" aria-hidden="true"></div>
+
 <style>
+  /* The hero pins to the top and sits a layer below its in-flow siblings
+     (z-index: -1, still above main's own background). The next opaque section
+     then scrolls up and overlaps it. No scroll listeners, no per-frame work —
+     the browser composites the pinned layer for free. */
   .hero {
-    position: relative;
+    position: sticky;
+    top: 0;
     overflow: hidden;
-    margin-block-end: var(--section-space);
-    padding-block: var(--spacing-3xl) var(--spacing-2xl);
+    z-index: -1;
+    min-height: 90dvh;
+    /* padding-block: var(--spacing-3xl) var(--spacing-2xl); */
     text-align: center;
   }
 
+  .hero-overlap-sentinel {
+    height: 1px;
+  }
+
+  .hero__header {
+    align-self: center;
+    justify-self: center;
+  }
+
   .hero__subtitle {
+    --padding-inline: 1.5rem;
+
+    position: relative;
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xs);
     margin-block-start: var(--spacing-lg);
   }
 
-  .dot-bg {
-    grid-column: 1 / -1;
+  .hero__subtitle::before {
+    content: "";
     position: absolute;
-    inset: 0;
-    z-index: 200;
-    pointer-events: none;
-    background-image: url(/images/dot-bg.png);
-    background-repeat: repeat;
+    top: -20px;
+    left: var(--padding-inline);
+    right: var(--padding-inline);
+
+    height: 1px;
+    background-color: hsl(from var(--clr-body-muted) h s l / 0.4);
+  }
+
+  .hero__subtitle-divider {
+    flex-shrink: 0;
+    inline-size: 0.25rem;
+    block-size: 0.25rem;
+    border-radius: 50%;
+    background-color: currentColor;
     opacity: 0.5;
   }
 
-  .cyber-grid {
-    pointer-events: none;
-    grid-column: 1;
-    position: absolute;
-    z-index: 500;
-    filter: blur(3.5px);
-    height: 100%;
-    width: 150px;
+  .eyebrow__wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-block-end: var(--spacing-md);
   }
-  .cyber-grid.left {
+
+  .eyebrow__dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--clr-primary-gold);
+  }
+
+  .btn__wrapper {
+    margin-block-start: var(--spacing-lg);
+  }
+
+  /* ── Inner-hero load reveal ────────────────────────────────────
+     A quieter cousin of the homepage hero: eyebrow / headline /
+     subtitle / CTA fade + rise in sequence. No per-word mask — the
+     headline is a dynamic prop, so it reveals as a single block. */
+  .eyebrow__wrapper,
+  .hero-title--inner,
+  .hero__subtitle,
+  .btn__wrapper {
+    animation: hero-rise 0.9s var(--ease) both;
+  }
+
+  .eyebrow__wrapper {
+    animation-delay: 0.1s;
+  }
+  .hero-title--inner {
+    animation-delay: 0.2s;
+  }
+  .hero__subtitle {
+    animation-delay: 0.35s;
+  }
+  .btn__wrapper {
+    animation-delay: 0.5s;
+  }
+
+  /* During a page-transition navigation the shutter JS tags <html> so the
+     entrance holds at its first frame beneath the sealed curtain, then plays
+     as the curtain opens. JS-only and motion-only — a no-JS or reduced-motion
+     visit animates on load (the reduced-motion block below clears these). */
+  @media (prefers-reduced-motion: no-preference) {
+    :global(html.hold-entrance) .eyebrow__wrapper,
+    :global(html.hold-entrance) .hero-title--inner,
+    :global(html.hold-entrance) .hero__subtitle,
+    :global(html.hold-entrance) .btn__wrapper,
+    :global(html.hold-entrance) .hero__scroll-wrapper {
+      animation-play-state: paused;
+    }
+  }
+
+  @keyframes hero-rise {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes hero-rise-scroll {
+    from {
+      opacity: 0;
+      transform: translateX(-50%) translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  }
+
+  .hero__scroll-wrapper {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    animation: hero-rise-scroll 0.9s var(--ease) 0.65s both;
+  }
+
+  .hero__scroll-line {
+    width: 1px;
+    height: 40px;
+    background: var(--clr-neutral-750);
+    animation: scrollPulse 2s ease-in-out 1.5s infinite;
+    transform-origin: top;
+  }
+
+  .hero__scroll-text {
+    color: var(--clr-body-muted-light);
+    font-size: var(--fs-200);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+
+  .hero-canvas {
+    grid-column: 1 / -1;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .hero-flair {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    width: min(560px, 90vmin);
+    height: min(560px, 90vmin);
+    pointer-events: none;
+    contain: layout style paint;    z-index: 1;
+  }
+
+  .hero-flair__ring {
+    fill: none;
+    stroke: var(--clr-primary-gold);
+    stroke-width: 1;
+  }
+  .hero-flair__ring--lg {
+    stroke-opacity: 0.07;
+  }
+  .hero-flair__ring--md {
+    stroke-opacity: 0.09;
+  }
+  .hero-flair__ring--sm {
+    stroke-opacity: 0.1;
+  }
+  .hero-flair__ring--xs {
+    stroke-opacity: 0.12;
+  }
+
+  .hero-flair__orbit {
+    transform-origin: 280px 280px;
+  }
+
+  .hero-flair__orbit--1 {
+    animation: flair-spin 22s linear infinite;
+  }
+  .hero-flair__orbit--2 {
+    animation: flair-spin 14s linear infinite reverse;
+  }
+  .hero-flair__orbit--3 {
+    animation: flair-spin 9s linear infinite;
+  }
+
+  .hero-flair__dot {
+    fill: var(--clr-primary-gold);
+    fill-opacity: 0.7;
+  }
+  .hero-flair__dot--lg {
+    fill-opacity: 0.9;
+  }
+  .hero-flair__dot--sm {
+    fill-opacity: 0.5;
+  }
+
+  .hero-flair__glow {
+    animation: glow-pulse 4s ease-in-out infinite;
+  }
+
+  @keyframes flair-spin {
+    to {
+      rotate: 1turn;
+    }
+  }
+
+  @keyframes glow-pulse {
+    0%,
+    100% {
+      opacity: 0.5;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+
+  /* ── Hero Arc (conic-gradient DOM elements) ─────────────────── */
+  .hero-arc {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border-radius: 50%;
+    pointer-events: none;
+    translate: -50% -50%;    z-index: 1;
+  }
+
+  .hero-arc::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+  }
+
+  .hero-arc--1 {
+    width: min(560px, 90vmin);
+    height: min(560px, 90vmin);
+    animation: flair-spin 18s linear infinite;
+  }
+  .hero-arc--1::before {
+    background: conic-gradient(
+      from 0deg,
+      transparent 0%,
+      transparent 55%,
+      color-mix(in srgb, var(--clr-primary-gold) 15%, transparent) 72%,
+      color-mix(in srgb, var(--clr-primary-gold) 5%, transparent) 88%,
+      transparent 100%
+    );
+  }
+
+  .hero-arc--2 {
+    width: min(420px, 67.5vmin);
+    height: min(420px, 67.5vmin);
+    animation: flair-spin 32s linear infinite reverse;
+  }
+  .hero-arc--2::before {
+    background: conic-gradient(
+      from 180deg,
+      transparent 0%,
+      transparent 65%,
+      color-mix(in srgb, var(--clr-primary-gold) 8%, transparent) 80%,
+      transparent 100%
+    );
+  }
+
+  .hero-arc--3 {
+    width: min(300px, 48.21vmin);
+    height: min(300px, 48.21vmin);
+    animation: flair-spin 10s linear infinite;
+    opacity: 0.6;
+  }
+  .hero-arc--3::before {
+    background: conic-gradient(
+      from 0deg,
+      transparent 0%,
+      transparent 55%,
+      color-mix(in srgb, var(--clr-primary-gold) 15%, transparent) 72%,
+      color-mix(in srgb, var(--clr-primary-gold) 5%, transparent) 88%,
+      transparent 100%
+    );
+  }
+
+  .corner {
+    position: absolute;
+    z-index: 30;
+    display: block;
+    width: 20px;
+    height: 20px;
+    opacity: 0.28;
+  }
+
+  .corner::before,
+  .corner::after {
+    content: "";
+    position: absolute;
+    background: var(--clr-primary-gold);
+  }
+
+  .corner::before {
+    width: 1px;
+    height: 100%;
+  }
+  .corner::after {
+    width: 100%;
+    height: 1px;
+  }
+  .corner.tl {
+    top: 30px;
+    left: 10px;
+  }
+  .corner.tl::before {
+    top: 0;
     left: 0;
   }
-
-  .cyber-grid.right {
+  .corner.tl::after {
+    top: 0;
+    left: 0;
+  }
+  .corner.tr {
+    top: 30px;
+    right: 10px;
+  }
+  .corner.tr::before {
+    top: 0;
     right: 0;
   }
-
-  .cyber__grid-img {
-    height: 100%;
+  .corner.tr::after {
+    top: 0;
+    right: 0;
   }
-
-  .hero::before {
-    content: "";
-    pointer-events: none;
-    position: absolute;
-    z-index: -1;
-    inset: -40px;
-    background:
-      radial-gradient(
-        ellipse at 35% 40%,
-        color-mix(in srgb, var(--cyber-cyan-500) 8%, transparent) 0,
-        transparent 30%
-      ),
-      radial-gradient(
-        ellipse at 65% 60%,
-        color-mix(in srgb, var(--cyber-magenta-500) 0%, transparent) 0,
-        transparent 30%
-      ),
-      linear-gradient(
-        90deg,
-        transparent 0,
-        transparent calc(50% - 1px),
-        color-mix(in srgb, var(--cyber-cyan-500) 8%, transparent) 50%,
-        transparent calc(50% + 1px),
-        transparent 100%
-      ),
-      linear-gradient(
-        0deg,
-        transparent 0,
-        transparent calc(50% - 1px),
-        color-mix(in srgb, var(--cyber-cyan-500) 8%, transparent) 50%,
-        transparent calc(50% + 1px),
-        transparent 100%
-      );
-    background-size:
-      100% 100%,
-      100% 100%,
-      80px 80px,
-      80px 80px;
-    animation: hero-grid-pulse 8s ease-in-out infinite;
+  .corner.bl {
+    bottom: 30px;
+    left: 10px;
+  }
+  .corner.bl::before {
+    bottom: 0;
+    left: 0;
+  }
+  .corner.bl::after {
+    bottom: 0;
+    left: 0;
+  }
+  .corner.br {
+    bottom: 30px;
+    right: 10px;
+  }
+  .corner.br::before {
+    bottom: 0;
+    right: 0;
+  }
+  .corner.br::after {
+    bottom: 0;
+    right: 0;
   }
 
   @media (min-width: 40rem) {
     .hero {
       padding-block: var(--spacing-5xl) var(--spacing-2xl);
-    }
-
-    .cyber-grid {
-      width: 200px;
-      /* filter: blur(2px); */
     }
   }
 
@@ -158,16 +501,182 @@ const { title, subtitle } = Astro.props;
     .hero {
       padding-block: var(--spacing-7xl) var(--spacing-6xl);
     }
-
-    .cyber-grid {
-      width: 300px;
-      filter: blur(2px);
-    }
   }
 
-  @media (min-width: 90rem) {
-    .cyber-grid {
-      width: 350px;
+  @media (prefers-reduced-motion: reduce) {
+    /* Drop the scroll pinning but keep the hero positioned so its absolute
+       children stay anchored to it. */
+    .hero {
+      position: relative;
+    }
+
+    .hero-arc,
+    .hero-flair__orbit,
+    .hero-flair__glow,
+    .eyebrow__wrapper,
+    .hero-title--inner,
+    .hero__subtitle,
+    .btn__wrapper,
+    .hero__scroll-wrapper,
+    .hero__scroll-line {
+      animation: none;
     }
   }
 </style>
+
+<script>
+  function initInnerPageHero() {
+    const canvas = document.getElementById("hero-canvas") as HTMLCanvasElement | null;
+    // Bail on routes without this hero. The astro:page-load listener is global,
+    // so this runs on every navigation.
+    if (!canvas || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const controller = new AbortController();
+    const { signal } = controller;
+
+    const ctx = canvas.getContext("2d")!;
+    const GOLD = "225,189,104";
+
+    // Particle density scales with viewport (rem breakpoints mirror the CSS:
+    // 40rem/62.5rem/90rem). resize() reads this, so crossing a breakpoint
+    // re-seeds the field at the new count for free.
+    function getCount() {
+      if (window.matchMedia("(min-width: 90rem)").matches) return 100;
+      if (window.matchMedia("(min-width: 62.5rem)").matches) return 70;
+      if (window.matchMedia("(min-width: 40rem)").matches) return 45;
+      return 35;
+    }
+
+    let W = 0,
+      H = 0,
+      particles: { x: number; y: number; r: number; vx: number; vy: number; a: number }[] = [],
+      rafId: number | null = null,
+      observer: IntersectionObserver | null = null,
+      onscreen = true,
+      active = true;
+
+    function rand(a: number, b: number) {
+      return a + Math.random() * (b - a);
+    }
+
+    function resize() {
+      const hero = canvas!.closest("section") as HTMLElement;
+      W = canvas!.width = hero.offsetWidth;
+      H = canvas!.height = hero.offsetHeight;
+      particles = Array.from({ length: getCount() }, () => ({
+        x: rand(0, W),
+        y: rand(0, H),
+        r: rand(0.5, 2.2),
+        vx: rand(-0.09, 0.09),
+        vy: rand(-0.07, 0.07),
+        a: rand(0.1, 0.4),
+      }));
+    }
+
+    // The drift is throttled to ~30fps. Each particle moves a fraction of a
+    // pixel between native frames, so redrawing the whole canvas at a 144Hz
+    // display is wasted rasterisation — 30fps looks identical here and cuts the
+    // full-canvas repaints ~5x. Motion is time-based (referenced to one 144Hz
+    // frame, the cadence the field was tuned at) so the real drift speed holds
+    // steady on any refresh rate.
+    const FRAME_MS = 1000 / 30;
+    const BASE_MS = 1000 / 144;
+    let lastFrame = 0;
+
+    function draw(now: number) {
+      if (active) rafId = requestAnimationFrame(draw);
+      if (!lastFrame) lastFrame = now;
+      const elapsed = now - lastFrame;
+      if (elapsed < FRAME_MS) return;
+      lastFrame = now - (elapsed % FRAME_MS);
+      // Clamp the step so returning from a background tab can't teleport the
+      // field: cap it at four 144Hz frames' worth of drift.
+      const step = Math.min(elapsed / BASE_MS, 4);
+
+      ctx.clearRect(0, 0, W, H);
+      for (const p of particles) {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${GOLD},${p.a})`;
+        ctx.fill();
+        p.x += p.vx * step;
+        p.y += p.vy * step;
+        if (p.x < 0) p.x = W;
+        else if (p.x > W) p.x = 0;
+        if (p.y < 0) p.y = H;
+        else if (p.y > H) p.y = 0;
+      }
+    }
+
+    function stop() {
+      active = false;
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+      }
+    }
+
+    function start() {
+      if (active) return;
+      active = true;
+      lastFrame = 0;
+      rafId = requestAnimationFrame(draw);
+    }
+
+    document.addEventListener(
+      "visibilitychange",
+      () => {
+        if (document.hidden) stop();
+        else if (onscreen) start();
+      },
+      { signal },
+    );
+
+    // The hero pins (position: sticky), so its own box never leaves the
+    // viewport — observing the section would keep it "intersecting" forever.
+    // Instead watch the sentinel that flows right after it: once it scrolls
+    // above the top edge, the next section has fully covered the hero, so the
+    // canvas can pause. It restarts when the hero is scrolled back into view.
+    const sentinel = canvas.closest("section")!.nextElementSibling;
+    if (sentinel) {
+      observer = new IntersectionObserver(
+        ([e]) => {
+          onscreen = e.boundingClientRect.top > 0;
+          if (onscreen) start();
+          else stop();
+        },
+        { threshold: 0 },
+      );
+      observer.observe(sentinel);
+    }
+
+    let resizeTimer: ReturnType<typeof setTimeout>;
+    window.addEventListener(
+      "resize",
+      () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(resize, 150);
+      },
+      { signal },
+    );
+
+    resize();
+    rafId = requestAnimationFrame(draw);
+
+    // Tear down before the page is swapped away: stop the rAF loop, drop the
+    // observer, and remove the window/document listeners via the controller.
+    // Without this, navigating away would leak a running canvas loop per visit.
+    document.addEventListener(
+      "astro:before-swap",
+      () => {
+        stop();
+        observer?.disconnect();
+        clearTimeout(resizeTimer);
+        controller.abort();
+      },
+      { once: true },
+    );
+  }
+
+  document.addEventListener("astro:page-load", initInnerPageHero);
+</script>

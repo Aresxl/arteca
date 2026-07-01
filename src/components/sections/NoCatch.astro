@@ -1,0 +1,164 @@
+---
+// "No catch" — the reassurance section that defuses the obvious objection
+// (why free?) before the visitor reaches the brief form. Cream band, centered
+// statement, then a three-row editorial ledger: what it costs you, line by
+// line. Each row reveals in sequence as the section scrolls into view.
+import ItalicTitle from "../ui/ItalicTitle.astro";
+
+const lines = [
+  { lead: "A minute of", emphasis: "your time.", tag: "One short form" },
+  { lead: "Hours of", emphasis: "my craft.", tag: "Three concepts, hand-built" },
+  { lead: "Nothing of", emphasis: "your money.", tag: "Yours to keep, either way" },
+];
+---
+
+<section class="no-catch | grid-main" aria-labelledby="no-catch-title">
+  <header class="no-catch__head | fade-in">
+    <p class="eyebrow eyebrow--dark">No catch</p>
+    <h2 class="section-subtitle section-subtitle--dark" id="no-catch-title">
+      Real design work, <ItalicTitle variant="on-light">nothing owed.</ItalicTitle>
+    </h2>
+    <p class="no-catch__intro">
+      Most studios open with a quote. I'd rather open with the work: three real designs for your
+      venue, on me. Love them, and I hope you'll build with me. Don't, and you keep the ideas while
+      I'm out nothing but a few hours I was glad to spend. That's the whole arrangement.
+    </p>
+  </header>
+
+  <ul class="no-catch__ledger">
+    {
+      lines.map(({ lead, emphasis, tag }) => (
+        <li class="no-catch__row | fade-in">
+          <p class="no-catch__line">
+            {lead} <ItalicTitle variant="on-light">{emphasis}</ItalicTitle>
+          </p>
+          <span class="no-catch__tag">{tag}</span>
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<style>
+  .no-catch {
+    padding-block: var(--section-space);
+    background-color: var(--clr-bg-primary-light);
+    color: var(--clr-body-text-dark);
+  }
+
+  /* ── Header ──────────────────────────────────────────── */
+  .no-catch__head {
+    text-align: center;
+  }
+
+  .no-catch__intro {
+    margin-block-start: var(--spacing-md);
+    margin-inline: auto;
+    max-width: 52ch;
+    font-size: var(--fs-400);
+    color: var(--clr-body-muted);
+  }
+
+  /* ── Ledger ──────────────────────────────────────────── */
+  .no-catch__ledger {
+    margin-block-start: var(--spacing-2xl);
+  }
+
+  .no-catch__row {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    padding-block: var(--spacing-lg);
+  }
+
+  /* Hairline rules drawn as pseudo-elements so their width can be tuned
+     independently of the row box. Every row carries a top rule; the last
+     row also carries the closing rule beneath it. */
+  .no-catch__row::before,
+  .no-catch__row:last-child::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    height: 1px;
+    background-color: var(--border-light);
+  }
+
+  .no-catch__row::before {
+    inset-block-start: 0;
+  }
+
+  .no-catch__row:last-child::after {
+    inset-block-end: 0;
+  }
+
+  .no-catch__line {
+    min-width: 0;
+    /* font-size: clamp(1.875rem, 1.1rem + 3.6vw, 3.5rem); */
+    font-size: clamp(1.9375rem, 1.607394366197183rem + 1.4084507042253522vw, 2.875rem);
+    font-weight: var(--fw-700);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--clr-body-text-dark);
+  }
+
+  .no-catch__tag {
+    margin: 0;
+    flex-shrink: 0;
+    font-size: var(--fs-300);
+    font-weight: var(--fw-700);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--clr-body-muted);
+  }
+
+  /* ── Staggered reveal ────────────────────────────────────
+     Each row is observed on its own, so rows scrolling in one at
+     a time already cascade. These delays add the same cascade for
+     viewports tall enough to reveal all three at once. The higher
+     specificity overrides the delay folded into the global
+     `.fade-in.is-visible` animation shorthand. Motion-gated; under
+     reduced motion the global rule disables the animation entirely. */
+
+  /* ── Two-column rows from desktop up ─────────────────── */
+
+  @media (min-width: 40rem) {
+    .no-catch__row {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      gap: unset;
+    }
+
+    .no-catch__intro {
+      max-width: 65ch;
+    }
+  }
+
+  @media (min-width: 62.5rem) {
+    .no-catch__row {
+      flex-direction: row;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: var(--spacing-xl);
+      padding-block: var(--spacing-lg);
+    }
+
+    .no-catch__tag {
+      text-align: right;
+    }
+
+    .no-catch__ledger {
+      grid-column: 4 / 24;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .no-catch__ledger .no-catch__row.fade-in:nth-child(2) {
+      animation-delay: 90ms;
+    }
+    .no-catch__ledger .no-catch__row.fade-in:nth-child(3) {
+      animation-delay: 180ms;
+    }
+  }
+</style>

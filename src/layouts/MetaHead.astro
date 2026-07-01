@@ -1,7 +1,10 @@
 ---
-const { title, description, canonical } = Astro.props;
+import { ClientRouter } from "astro:transitions";
+
+const { title, description, noindex, ogImage } = Astro.props;
 
 const defaultCanonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImageUrl = new URL(ogImage ?? "/images/og-image.png", Astro.site).href;
 ---
 
 <head>
@@ -9,53 +12,49 @@ const defaultCanonical = new URL(Astro.url.pathname, Astro.site).href;
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link
     rel="preload"
-    href="/fonts/orbitron-v35-latin-900.woff2"
+    href="/fonts/bricolage-grotesque-v9-latin-700.woff2"
     as="font"
     type="font/woff2"
     crossorigin
   />
   <link
     rel="preload"
-    href="/fonts/orbitron-v35-latin-700.woff2"
-    as="font"
-    type="font/woff2"
-    crossorigin
-  />
-  <link
-    rel="preload"
-    href="/fonts/orbitron-v35-latin-regular.woff2"
-    as="font"
-    type="font/woff2"
-    crossorigin
-  />
-  <link
-    rel="preload"
-    href="/fonts/jetbrains-mono-v24-latin-regular.woff2"
+    href="/fonts/bricolage-grotesque-v9-latin-regular.woff2"
     as="font"
     type="font/woff2"
     crossorigin
   />
 
-  <link rel="canonical" href={defaultCanonical} />
-  <link rel="sitemap" href="/sitemap-index.xml" />
-  <link rel="icon" type="image/png" href="/images/favicon.png" />
+  {noindex && <meta name="robots" content="noindex, follow" />}
+  {!noindex && <link rel="canonical" href={defaultCanonical} />}
+  {!noindex && <link rel="sitemap" href="/sitemap-index.xml" />}
+  <link rel="icon" type="image/png" href="/images/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/images/favicon.svg" />
+  <link rel="shortcut icon" href="/images/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
+  <link rel="manifest" href="/images/site.webmanifest" />
   <meta name="description" content={description} />
-  <meta name="generator" content={Astro.generator} />
   <meta name="format-detection" content="telephone=no" />
 
-  <!-- Open Graph / Facebook, LinkedIn, etc. -->
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:type" content="website" />
+  <meta property="og:locale" content="en_AU" />
   <meta property="og:url" content={defaultCanonical} />
   <meta property="og:site_name" content="Vyteca" />
+  <meta property="og:image" content={ogImageUrl} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content={title} />
 
-  <!-- Twitter/X Cards -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
-  <meta name="twitter:site" content="@Ares_HD" />
+  <meta name="twitter:image" content={ogImageUrl} />
+  <meta name="twitter:image:alt" content={title} />
   <title>{title}</title>
+
+  <ClientRouter />
 
   <script is:inline>
     (function () {
@@ -89,30 +88,41 @@ const defaultCanonical = new URL(Astro.url.pathname, Astro.site).href;
       }
     })();
   </script>
-</head>
 
-<script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "Vyteca",
-    "url": "https://vyteca.com",
-    "logo": "https://vyteca.com/images/vyteca-logo.png",
-    "description": "Custom hand-coded websites for Melbourne restaurants. Lightning-fast loads, flawless mobile, local SEO foundations. More direct bookings and fuller tables. Built from scratch in 3–4 weeks.",
-    "founder": {
-      "@type": "Person",
-      "name": "Lachlan Williams"
-    },
-    "foundingDate": "2026-02-17",
-    "areaServed": {
-      "@type": "Place",
-      "name": "Melbourne, Victoria, Australia"
-    },
-    "serviceType": [
-      "Restaurant Website Design",
-      "Restaurant SEO",
-      "Restaurant Performance Optimization",
-      "Restaurant Conversion Optimization"
-    ]
-  }
-</script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "@id": "https://vyteca.com/#organization",
+      "name": "Vyteca",
+      "url": "https://vyteca.com",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://vyteca.com/images/web-app-manifest-512x512.png",
+        "width": 512,
+        "height": 512
+      },
+      "description": "Custom hand-coded websites for Melbourne hospitality businesses. Lightning-fast loads, flawless mobile, local SEO foundations. More direct bookings and fuller tables. Built from scratch and live in about a week.",
+      "founder": {
+        "@type": "Person",
+        "name": "Lachlan Williams"
+      },
+      "foundingDate": "2026-02-17",
+      "areaServed": {
+        "@type": "City",
+        "name": "Melbourne"
+      },
+      "knowsAbout": [
+        "Hospitality Website Design",
+        "Hospitality SEO",
+        "Website Performance Optimization",
+        "Conversion Rate Optimization"
+      ],
+      "sameAs": [
+        "https://www.instagram.com/vyteca_studio/",
+        "https://www.tiktok.com/@vyteca_studio",
+        "https://www.youtube.com/@Vyteca"
+      ]
+    }
+  </script>
+</head>

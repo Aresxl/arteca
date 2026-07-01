@@ -1,67 +1,49 @@
 ---
-import Heading from "../ui/Heading.astro";
 import LinkOrButton from "../ui/LinkOrButton.astro";
+import RollLink from "../ui/RollLink.astro";
 
 const { pathname } = Astro.url;
----
 
-<div class="mobile__nav-overlay"></div>
+// Single source of truth for the primary routes — drives the desktop bar and
+// the mobile panel so the two can never drift apart.
+const navLinks = [
+  { label: "About", href: "/about" },
+  { label: "Portfolio", href: "/portfolio" },
+  { label: "FAQs", href: "/faq" },
+  { label: "Contact", href: "/contact" },
+];
+
+const isCurrent = (href: string) => pathname === href;
+const pageCount = String(navLinks.length).padStart(2, "0");
+---
 
 <header class="site__header | grid-main">
   <div class="site__header-inner">
-    <nav class="nav nav--left" aria-label="Desktop navigation left">
+    <RollLink href="/" text="Vyteca" class="home-link site-logo" aria-label="Vyteca home" />
+
+    <nav class="nav" aria-label="Primary navigation">
       <ul>
-        <li>
-          <a
-            class="nav-link"
-            href="/projects"
-            aria-current={Astro.url.pathname === "/projects" ? "page" : undefined}>Projects</a
-          >
-        </li>
-        <li>
-          <a
-            class="nav-link"
-            href="/about"
-            aria-current={Astro.url.pathname === "/about" ? "page" : undefined}>About</a
-          >
-        </li>
-        <li>
-          <a
-            class="nav-link"
-            href="/services"
-            aria-current={Astro.url.pathname === "/services" ? "page" : undefined}>Services</a
-          >
-        </li>
+        {
+          navLinks.map((link) => (
+            <li>
+              <RollLink
+                text={link.label}
+                href={link.href}
+                aria-current={isCurrent(link.href) ? "page" : undefined}
+              />
+            </li>
+          ))
+        }
       </ul>
     </nav>
 
-    <div class="site__logo-wrapper">
-      <a href="/" class="home-link" aria-label="Arteca Home">
-        <span class="site-logo">Vyteca</span>
-      </a>
-    </div>
-
-    <div class="nav__right-wrapper">
-      <nav class="nav nav--right" aria-label="Desktop navigation right">
-        <ul>
-          <li>
-            <a
-              class="nav-link"
-              href="/reviews"
-              aria-current={Astro.url.pathname === "/reviews" ? "page" : undefined}>Reviews</a
-            >
-          </li>
-          <li>
-            <a
-              class="nav-link"
-              href="/contact"
-              aria-current={Astro.url.pathname === "/contact" ? "page" : undefined}>Contact</a
-            >
-          </li>
-        </ul>
-      </nav>
-      <LinkOrButton as="a" href="/contact" text="Get Started" variant="card" class="cta-btn" data-track="cta" />
-    </div>
+    <LinkOrButton
+      as="a"
+      href="/free-designs"
+      variant="primary"
+      text="Get 3 free designs"
+      data-track="cta"
+    />
 
     <button
       class="nav-toggle"
@@ -71,208 +53,491 @@ const { pathname } = Astro.url;
     >
       <svg
         class="hamburger-icon"
-        width="50"
-        height="50"
+        width="40"
+        height="40"
         viewBox="0 0 100 100"
         fill="currentColor"
         aria-hidden="true"
       >
         <g class="top-group">
-          <rect class="line line--top" x="15" y="25" rx="3" width="70" height="7"></rect>
+          <rect class="line line--top" x="18" y="27.5" rx="2.5" width="64" height="5"></rect>
         </g>
-        <rect class="line line--middle" x="15" y="45" rx="3" width="70" height="7"></rect>
+        <rect class="line line--middle" x="18" y="47.5" rx="2.5" width="64" height="5"></rect>
         <g class="bottom-group">
-          <rect class="line line--bottom" x="15" y="65" rx="3" width="70" height="7"></rect>
+          <rect class="line line--bottom" x="18" y="67.5" rx="2.5" width="64" height="5"></rect>
         </g>
       </svg>
     </button>
-
-    <nav id="mobile-primary-nav" class="mobile-nav" aria-label="Mobile primary navigation">
-      <ul>
-        <li><a class="nav-link" href="/projects">Projects</a></li>
-        <li><a class="nav-link" href="/about">About</a></li>
-        <li><a class="nav-link" href="/pricing">Pricing</a></li>
-        <li><a class="nav-link" href="/reviews">Reviews</a></li>
-        <li><a class="nav-link" href="/contact">Contact</a></li>
-      </ul>
-    </nav>
   </div>
 </header>
+
+<nav id="mobile-primary-nav" class="mobile-nav" aria-label="Mobile primary navigation">
+  <div class="mobile-nav__inner">
+    <p class="mobile-nav__meta">
+      <span class="mobile-nav__meta-label">Navigate</span>
+      <span class="mobile-nav__meta-count">
+        <span class="mobile-nav__meta-num">{pageCount}</span> Pages
+      </span>
+    </p>
+
+    <ul class="mobile-nav__list" role="list">
+      {
+        navLinks.map((link, i) => (
+          <li class="mobile-nav__item">
+            <a
+              class="mobile-nav__link"
+              href={link.href}
+              aria-current={isCurrent(link.href) ? "page" : undefined}
+            >
+              <span class="mobile-nav__index" aria-hidden="true">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <span class="mobile-nav__label">{link.label}</span>
+              <svg class="mobile-nav__arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path
+                  d="M7 17 17 7M9 7h8v8"
+                  stroke="currentColor"
+                  stroke-width="1.75"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="mobile-nav__foot">
+      <span class="mobile-nav__cta">
+        <LinkOrButton
+          as="a"
+          href="/free-designs"
+          variant="primary"
+          text="Get 3 free designs ↗"
+          data-track="cta"
+        />
+      </span>
+      <p class="mobile-nav__contact">
+        <a class="mobile-nav__contact-link" href="mailto:vyteca@gmail.com">vyteca@gmail.com</a>
+        <span class="mobile-nav__contact-sep" aria-hidden="true">·</span>
+        <span>Melbourne, AU</span>
+      </p>
+    </div>
+  </div>
+</nav>
 
 <style>
   .site__header {
     position: sticky;
     z-index: 900;
     top: 0;
-    padding-block: 10px;
+    padding-block: var(--spacing-xs);
 
-    /* background-color: hsl(from var(--clr-primary-blue-700) h s l / 0.35); */
-    /* background-color: hsl(from var(--cyber-void-700) h s l / 0.1); */
-    background-color: hsl(from var(--cyber-void-700) h s l / 0.5);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid hsla(0, 0%, 100%, 0.05);
-    box-shadow: 0 8px 32px hsla(0, 0%, 0%, 0.15);
-    /* box-shadow: 0 8px 10px hsla(from var(--cyber-cyan-500) h s l / 0.05); */
+    /* Transparent at the top so the bar blends into the hero. */
+    background-color: transparent;
+    border-bottom: 1px solid transparent;
 
-    /* box-shadow: 0 8px 32px var(--clr-cta-bg); */
+    /* Blur snaps on with .is-scrolled rather than transitioning, so the
+       backdrop isn't re-sampled every frame. The tint, border and shadow fade. */
+    transition:
+      background-color 0.4s var(--ease),
+      border-color 0.4s var(--ease),
+      box-shadow 0.4s var(--ease);
   }
+
+  /* Once scrolled the bar "pops" with a solid dark tint, hairline border
+     and faint shadow. The tint stays opaque enough to read consistently
+     over both dark and cream sections. */
+  .site__header.is-scrolled {
+    background-color: hsl(from var(--clr-neutral-900) h s l / 0.85);
+    backdrop-filter: blur(20px) saturate(1.4);
+    -webkit-backdrop-filter: blur(20px) saturate(1.4);
+    border-bottom-color: hsl(0 0% 100% / 0.06);
+    box-shadow: 0 8px 32px hsl(0 0% 0% / 0.18);
+  }
+
   .site__header-inner {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding-block: 10px;
+    gap: var(--spacing-md);
   }
 
+  /* Wordmark hard left; everything else is pushed to the right. */
+  .home-link {
+    margin-right: auto;
+
+    /* Keep the wordmark gold through the roll. RollLink's own colour rule is
+       unlayered, so it outranks .site-logo's gold (in @layer typography) and
+       would otherwise fall back to inherited currentColor — drive the colour
+       through the roll's own tokens instead. Timing nudged a touch snappier
+       than the nav so the shorter word still reads as a clean cascade. */
+    --roll-link-color: var(--clr-primary-gold);
+    --roll-link-color-hover: var(--clr-primary-gold);
+    --roll-link-color-current: var(--clr-primary-gold);
+    --roll-link-duration: 0.45s;
+    --roll-link-stagger: 18ms;
+  }
+
+  /* The bar's nav + CTA are desktop-only. Scoped to the bar so the matching
+     primary CTA inside the mobile panel (a sibling of the header) stays
+     visible on small screens. */
   .nav,
-  .btn {
+  .site__header-inner .btn {
     display: none;
   }
 
+  [aria-current="page"] {
+    color: var(--clr-primary-gold) !important;
+  }
+
+  /* ───────────── Mobile panel · full-screen editorial overlay ─────────────
+     Sits below the sticky bar (z 900) so the wordmark + toggle float on top
+     of it. */
   .mobile-nav {
-    position: absolute;
-    z-index: 200;
-    top: 100%;
-    left: 0;
-    right: 0;
+    /* Local mirrors of Membership's featured-card tokens, so the current row
+       wears the same treatment without reaching into that component's scope. */
+    --mn-warm: hsl(30, 13%, 9%);
+    --mn-border: hsl(30, 6%, 18%);
 
-    padding-block: 40px;
+    position: fixed;
+    inset: 0;
+    z-index: 800;
 
-    /* Old */
-    /* background-color: var(--clr-primary-blue-700); */
-    background-color: var(--cyber-void-700);
-    /* Test */
+    height: 100vh;
+    height: 100dvh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
 
-    /* background-color: hsl(from var(--cyber-void-700) h s l / 0.7); */
-    background-color: hsl(from var(--cyber-void-700) h s l / 0.5);
+    background: var(--clr-bg-primary-dark);
 
     opacity: 0;
     visibility: hidden;
-    border-bottom: 1px solid hsla(0, 0%, 100%, 0.05);
-    box-shadow: 0 8px 32px hsla(0, 0%, 0%, 0.5);
-    /* Think I want the box shadow to give off the same glow effect */
-
-    text-align: center;
-    transform: translateY(-25px);
-
-    transition: 250ms cubic-bezier(0.36, 0, 0.64, 1);
-    transition-property: transform, opacity, visibility;
-
-    ul {
-      display: grid;
-      gap: 30px;
-    }
-
-    .nav-link {
-      font-size: var(--fs-500);
-    }
+    /* Close: hold the surface opaque while the children stagger out beneath it
+       (reversed delays below), then dissolve the panel over the tail. Visibility
+       holds until the whole sequence finishes so nothing is clipped. The open
+       state below overrides all of this with a quick fade-in. */
+    transition:
+      opacity 200ms var(--ease) 380ms,
+      visibility 0s linear 580ms;
   }
 
-  .nav-link {
-    position: relative;
+  body.menu-open .mobile-nav {
+    opacity: 1;
+    visibility: visible;
+    transition:
+      opacity 180ms var(--ease),
+      visibility 0s linear 0s;
+  }
+
+  .mobile-nav__inner {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    /* Clear the floating bar at the top, then page gutters matching .grid-main. */
+    padding-block: calc(var(--spacing-2xl) + var(--spacing-md))
+      calc(var(--spacing-2xl) + env(safe-area-inset-bottom, 0px));
+    padding-inline: var(--page-padding);
+  }
+
+  /* Meta strip ─────────────────────────────────────────────── */
+  .mobile-nav__meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* Pull the strip out to the panel edges so its rule reads full-bleed, then
+       re-pad the content back to the page gutter. */
+    margin-inline: calc(var(--page-padding) * -1);
+    padding-block-end: var(--spacing-sm);
+    padding-inline: var(--page-padding);
+    border-block-end: 1px solid var(--mn-border);
+
+    font-size: var(--fs-300);
+    font-weight: var(--fw-700);
+    letter-spacing: 0.22em;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    color: var(--clr-body-muted-light);
+  }
+  .mobile-nav__meta-num {
+    color: var(--clr-primary-gold);
+  }
+
+  /* Link list ──────────────────────────────────────────────── */
+  .mobile-nav__list {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin-block-start: var(--spacing-lg);
+  }
+
+  /* Hairline rules turn the list into a structured index so it no longer reads
+     flat on pages with no current row. The rule itself bleeds past the page
+     gutter to the panel edges via a pseudo, so the content stays on inner's
+     page-padding (no inline padding re-added) while the lines run full-bleed.
+     Drawn above the link so each rule reads as one continuous line across the
+     current row's wash. */
+  .mobile-nav__item {
+    position: relative;
+  }
+  .mobile-nav__item::after,
+  .mobile-nav__list::after {
+    content: "";
+    position: absolute;
+    inset-inline: calc(var(--page-padding) * -1);
+    height: 1px;
+    background: var(--mn-border);
+    pointer-events: none;
+  }
+  /* Top rule on every row… */
+  .mobile-nav__item::after {
+    top: 0;
+  }
+  /* …and the closing rule under the last row. */
+  .mobile-nav__list::after {
+    bottom: 0;
+  }
+
+  /* Full-bleed warm wash for the current/pressed row, on a backdrop pseudo
+     behind the link content so the tint runs edge-to-edge while the numerals and
+     labels stay on inner's page gutter. */
+  .mobile-nav__item::before {
+    content: "";
+    position: absolute;
+    inset-block: 0;
+    inset-inline: calc(var(--page-padding) * -1);
+    transition: background 0.2s var(--ease);
+    pointer-events: none;
+  }
+  .mobile-nav__item:has(.mobile-nav__link[aria-current="page"])::before,
+  .mobile-nav__item:has(.mobile-nav__link:not([aria-current="page"]):active)::before {
+    background: var(--mn-warm);
+  }
+
+  .mobile-nav__link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding-block: var(--spacing-md);
     color: var(--clr-body-text);
   }
 
-  .nav-link::after {
+  /* Gold left bar — standing on the current page (Membership's featured idiom),
+     revealed on press/hover for the rest. Bled to the panel edge so it marks the
+     left of the full-bleed wash rather than floating inside it. */
+  .mobile-nav__link::before {
     content: "";
     position: absolute;
-    bottom: -6px;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    border-radius: 4px;
-    background-color: var(--clr-glow-teal);
-    opacity: 0;
+    left: calc(var(--page-padding) * -1);
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--clr-primary-gold);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.55s var(--ease);
+  }
 
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: 400ms ease-in-out;
-    transition-property: transform, opacity;
+  .mobile-nav__index {
+    font-size: var(--fs-600);
+    font-weight: var(--fw-700);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    /* Ghosted gold at rest so the numeral reads as a feature on every page, not
+       only the current row; the active + press states lift it to full gold. */
+    color: hsl(from var(--clr-primary-gold) h s l / 0.4);
+    font-variant-numeric: tabular-nums;
+    transition: color 0.3s var(--ease);
+  }
 
-    /* Experiment */
+  .mobile-nav__label {
+    font-size: var(--fs-700);
+    font-weight: var(--fw-700);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+
+  .mobile-nav__arrow {
+    width: 18px;
+    height: 18px;
+    margin-inline-start: auto;
+    color: var(--clr-body-muted-light);
+    opacity: 0.45;
+    transition:
+      color 0.3s var(--ease),
+      opacity 0.3s var(--ease);
+  }
+
+  /* Active row === membership__inc--featured: warm wash (on the backdrop above)
+     + standing gold bar + gold-lifted index/arrow. */
+  .mobile-nav__link[aria-current="page"]::before {
+    transform: scaleY(1);
+  }
+  .mobile-nav__link[aria-current="page"] .mobile-nav__index,
+  .mobile-nav__link[aria-current="page"] .mobile-nav__arrow {
+    color: var(--clr-primary-gold);
+    opacity: 1;
+  }
+
+  /* Hover is incidental (panel only shows < 48rem) but cheap and harmless. */
+  .mobile-nav__link:not([aria-current="page"]):hover::before {
+    transform: scaleY(1);
+  }
+  .mobile-nav__link:not([aria-current="page"]):hover .mobile-nav__arrow {
     opacity: 0.9;
-
-    box-shadow:
-      0 0 4px var(--clr-glow-teal),
-      0 0 12px var(--clr-glow-teal),
-      0 0 24px var(--clr-glow-teal);
-
-    transition:
-      transform 400ms ease-out,
-      opacity 400ms ease-out,
-      box-shadow 600ms ease-out;
   }
 
-  .nav-link:not([aria-current="page"]):hover {
-    text-shadow:
-      0 0 1px var(--clr-glow-teal),
-      0 0 25px var(--clr-glow-teal);
+  /* Touch has no hover, so a press borrows the active-row idiom: warm wash (on
+     the backdrop above), standing gold bar, and a gold-lifted index + arrow. */
+  .mobile-nav__link:not([aria-current="page"]):active::before {
+    transform: scaleY(1);
   }
-
-  .nav-link:not([aria-current="page"]):hover::after {
+  .mobile-nav__link:not([aria-current="page"]):active .mobile-nav__index,
+  .mobile-nav__link:not([aria-current="page"]):active .mobile-nav__arrow {
+    color: var(--clr-primary-gold);
     opacity: 1;
-    transform: scaleX(1);
   }
 
-  [aria-current="page"] {
-    color: var(--cyber-cyan-500) !important;
-    filter: drop-shadow(0 0 8px var(--cyber-cyan-500));
+  /* Footer · CTA + contact ─────────────────────────────────── */
+  .mobile-nav__foot {
+    margin-block-start: auto;
+    padding-block-start: var(--spacing-2xl);
   }
 
-  .nav-toggle[aria-expanded="true"] ~ .mobile-nav {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
+  /* Grid wrapper stretches the (blockified) .btn to the full column width. */
+  .mobile-nav__cta {
+    display: grid;
   }
 
-  .mobile__nav-overlay {
-    position: fixed;
-    inset: 0;
-    background: hsl(0 0% 0% / 0.1);
-    background: hsl(0 0% 0% / 0.5);
+  .mobile-nav__contact {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-block-start: var(--spacing-md);
+    font-size: var(--fs-300);
+    letter-spacing: 0.04em;
+    color: var(--clr-body-muted-light);
+    text-align: center;
+  }
+  .mobile-nav__contact-link {
+    color: inherit;
+    transition: color 0.3s var(--ease);
+  }
+  .mobile-nav__contact-link:hover,
+  .mobile-nav__contact-link:focus-visible {
+    color: var(--clr-primary-gold);
+  }
+  .mobile-nav__contact-sep {
+    color: var(--clr-primary-gold);
+  }
+
+  /* Staggered reveal ───────────────────────────────────────────
+     The panel itself only does a quick opacity fade; the signature motion is
+     each child fading + lifting in sequence once the menu opens. The closed
+     state carries no delay, so dismissal is a single clean fade. */
+  .mobile-nav__meta,
+  .mobile-nav__item,
+  .mobile-nav__cta,
+  .mobile-nav__contact {
     opacity: 0;
-    visibility: hidden;
+    transform: translateY(12px);
+    /* Duration here governs the close; the open lengthens it on .menu-open. */
     transition:
-      opacity 0.3s ease,
-      visibility 0s linear 0.3s;
-    z-index: 100;
-    backdrop-filter: blur(2px);
-    backdrop-filter: blur(12px);
+      opacity 0.34s var(--ease),
+      transform 0.34s var(--ease);
   }
 
-  body.menu-open .mobile__nav-overlay {
+  body.menu-open .mobile-nav__meta,
+  body.menu-open .mobile-nav__item,
+  body.menu-open .mobile-nav__cta,
+  body.menu-open .mobile-nav__contact {
     opacity: 1;
-    visibility: visible;
-    transition: opacity 0.3s ease;
+    transform: translateY(0);
+    /* Open runs a touch longer than the tightened close set on the base rule. */
+    transition-duration: 0.5s;
   }
 
-  /* Hamburger shit */
+  /* Hold a compositor layer across the open hold AND the staggered close, so the
+     text never re-rasterises (twitches) while it sits static at full opacity
+     during a stagger delay. .is-closing is set for the close's duration in JS,
+     then cleared once everything has faded out. Justified, scoped use. */
+  body.menu-open .mobile-nav__meta,
+  body.menu-open .mobile-nav__item,
+  body.menu-open .mobile-nav__cta,
+  body.menu-open .mobile-nav__contact,
+  body.is-closing .mobile-nav__meta,
+  body.is-closing .mobile-nav__item,
+  body.is-closing .mobile-nav__cta,
+  body.is-closing .mobile-nav__contact {
+    will-change: transform;
+  }
 
+  body.menu-open .mobile-nav__meta {
+    transition-delay: 60ms;
+  }
+  body.menu-open .mobile-nav__item:nth-child(1) {
+    transition-delay: 120ms;
+  }
+  body.menu-open .mobile-nav__item:nth-child(2) {
+    transition-delay: 175ms;
+  }
+  body.menu-open .mobile-nav__item:nth-child(3) {
+    transition-delay: 230ms;
+  }
+  body.menu-open .mobile-nav__item:nth-child(4) {
+    transition-delay: 285ms;
+  }
+  body.menu-open .mobile-nav__cta {
+    transition-delay: 345ms;
+  }
+  body.menu-open .mobile-nav__contact {
+    transition-delay: 400ms;
+  }
+
+  /* Reversed, tightened close. The closing transition's destination is the base
+     rule, so these delays run the exit bottom-up (contact first → meta last):
+     the open cascade backwards and a little quicker. Open overrides them via the
+     more specific body.menu-open rules above. */
+  .mobile-nav__contact {
+    transition-delay: 0ms;
+  }
+  .mobile-nav__cta {
+    transition-delay: 40ms;
+  }
+  .mobile-nav__item:nth-child(4) {
+    transition-delay: 80ms;
+  }
+  .mobile-nav__item:nth-child(3) {
+    transition-delay: 120ms;
+  }
+  .mobile-nav__item:nth-child(2) {
+    transition-delay: 160ms;
+  }
+  .mobile-nav__item:nth-child(1) {
+    transition-delay: 200ms;
+  }
+  .mobile-nav__meta {
+    transition-delay: 240ms;
+  }
+
+  /* ───────────── Hamburger ───────────── */
   .nav-toggle {
-    --nav-clr-primary: var(--cyber-cyan-500);
-    --nav-clr-secondary: var(--cyber-magenta-500);
-
+    display: inline-grid;
+    place-items: center;
+    /* 30px glyph + 8px padding → ~46px tap target. */
+    padding: var(--spacing-xs);
+    margin-inline-end: calc(var(--spacing-xs) * -1);
     background-color: transparent;
+    color: var(--clr-body-text);
     border: none;
-    /* border-radius: 10px; */
     cursor: pointer;
   }
-
   .hamburger-icon {
-    color: var(--nav-clr-primary);
-    filter: drop-shadow(0 0 10px var(--nav-clr-primary));
-
-    transition: 200ms ease-in-out;
-    transition-property: color, filter;
+    display: block;
   }
 
-  .nav-toggle[aria-expanded="true"] .hamburger-icon {
-    color: var(--nav-clr-secondary);
-    filter: drop-shadow(0 0 10px var(--nav-clr-secondary));
-  }
-
-  /* Animations */
   .top-group,
   .bottom-group,
   .line {
@@ -280,19 +545,18 @@ const { pathname } = Astro.url;
     transform-origin: center;
   }
 
-  /* Opening Hamburger */
+  /* Opening */
   .nav-toggle[aria-expanded="true"] .top-group,
   .nav-toggle[aria-expanded="true"] .bottom-group {
     transition: transform 200ms ease-in-out;
   }
-
   .nav-toggle[aria-expanded="true"] .line {
     transition:
       transform 250ms ease-in-out 250ms,
       opacity 0ms 250ms;
   }
 
-  /* Closing Hamburger */
+  /* Closing */
   .nav-toggle[aria-expanded="false"] .top-group,
   .nav-toggle[aria-expanded="false"] .bottom-group {
     transition: transform 200ms ease-in-out 200ms;
@@ -306,24 +570,23 @@ const { pathname } = Astro.url;
   .nav-toggle[aria-expanded="true"] .top-group {
     transform: translateY(20px);
   }
-
   .nav-toggle[aria-expanded="true"] .line--top {
     transform: rotate(45deg);
   }
-
   .nav-toggle[aria-expanded="true"] .line--middle {
     opacity: 0;
   }
   .nav-toggle[aria-expanded="true"] .bottom-group {
     transform: translateY(-20px);
   }
-
   .nav-toggle[aria-expanded="true"] .line--bottom {
     transform: rotate(-45deg);
   }
 
+  /* ───────────── Desktop ───────────── */
   @media (min-width: 48rem) {
-    .nav {
+    .nav,
+    .site__header-inner .btn {
       display: block;
     }
 
@@ -332,54 +595,209 @@ const { pathname } = Astro.url;
       gap: var(--spacing-md);
       align-items: center;
     }
-    .nav__right-wrapper {
-      display: flex;
-      gap: var(--spacing-md);
-      align-items: center;
+
+    /* Typography is set on the container so the RollLink characters inherit it,
+       and the roll's colours/timing are passed down as custom properties. */
+    .nav {
+      font-size: var(--fs-400);
+      letter-spacing: 0.05em;
+
+      --roll-link-color: var(--clr-body-muted-light);
+      --roll-link-color-hover: var(--clr-body-text);
+      --roll-link-color-current: var(--clr-primary-gold);
+      --roll-link-stagger: 15ms;
+      --roll-link-duration: 0.45s;
     }
 
-    .nav a {
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: var(--clr-body-text);
+    .site__header-inner .btn {
+      min-height: auto;
+      font-size: var(--fs-350);
     }
 
     .nav-toggle,
     .mobile-nav {
       display: none;
     }
+
+    .site__header {
+      padding-block: var(--spacing-sm);
+    }
   }
 
   @media (min-width: 62.5rem) {
-    .nav ul,
-    .nav__right-wrapper {
+    .site__header-inner {
       gap: var(--spacing-lg);
     }
 
-    .btn {
-      display: inline-flex;
+    .nav ul {
+      gap: var(--spacing-lg);
+    }
+  }
+
+  /* ───────────── Reduced motion ───────────── */
+  @media (prefers-reduced-motion: reduce) {
+    .site__header {
+      transition: none;
+    }
+
+    /* Drop the lift + stagger; the panel and its contents simply appear. */
+    .mobile-nav,
+    .mobile-nav__meta,
+    .mobile-nav__item,
+    .mobile-nav__cta,
+    .mobile-nav__contact,
+    .mobile-nav__item::before,
+    .mobile-nav__link,
+    .mobile-nav__link::before,
+    .mobile-nav__index,
+    .mobile-nav__arrow {
+      transition-duration: 0.01ms;
+      transition-delay: 0s !important;
+    }
+    .mobile-nav__meta,
+    .mobile-nav__item,
+    .mobile-nav__cta,
+    .mobile-nav__contact {
+      transform: none;
     }
   }
 </style>
 
 <script>
-  const navToggle = document.querySelector<HTMLElement>(`.nav-toggle`);
-  const overlay = document.querySelector<HTMLElement>(`.nav-overlay`);
-  const body = document.body;
+  function initHeader() {
+    const navToggle = document.querySelector<HTMLElement>(`.nav-toggle`);
+    const mobileNav = document.querySelector<HTMLElement>(`.mobile-nav`);
+    const header = document.querySelector<HTMLElement>(`.site__header`);
+    // Bail on routes without this header (e.g. the landing funnel). The
+    // astro:page-load listener is global, so this runs on every navigation.
+    if (!header) return;
 
-  function toggleMenu() {
-    const isOpen = body.classList.toggle(`menu-open`);
+    // Re-read each navigation: <body> is completely replaced on swap, so a
+    // value cached at module load would point at a detached element.
+    const body = document.body;
+    const controller = new AbortController();
+    const { signal } = controller;
 
-    navToggle!.setAttribute(`aria-expanded`, String(isOpen));
+    // Covers the full reversed close (meta leaves last at 240ms + 340ms, ending
+    // with the panel's tail dissolve) before the layer hint + scroll lock release.
+    const CLOSE_MS = 600;
+    let closingTimer = 0;
 
-    if (isOpen) {
-      body.dataset.scrollY = window.scrollY.toString();
-    } else {
-      const scrollY = Number(body.dataset.scrollY) || 0;
-      window.scrollTo(0, scrollY);
+    // Everything that can hold focus while the panel is open: the toggle (which
+    // doubles as the close button) plus the panel's own links/buttons, in DOM
+    // order. Read live so it always matches the current markup.
+    function getFocusTrapTargets() {
+      const targets: HTMLElement[] = navToggle ? [navToggle] : [];
+      if (mobileNav) {
+        targets.push(...mobileNav.querySelectorAll<HTMLElement>(`a[href], button:not([disabled])`));
+      }
+      return targets;
     }
+
+    function openMenu() {
+      window.clearTimeout(closingTimer);
+      body.classList.remove(`is-closing`);
+      body.classList.add(`menu-open`);
+      navToggle?.setAttribute(`aria-expanded`, `true`);
+      navToggle?.setAttribute(`aria-label`, `Close navigation`);
+    }
+
+    function closeMenu() {
+      if (!body.classList.contains(`menu-open`)) return;
+      body.classList.remove(`menu-open`);
+      // Keep the layer hint + scroll lock alive until the staggered exit finishes.
+      body.classList.add(`is-closing`);
+      window.clearTimeout(closingTimer);
+      closingTimer = window.setTimeout(() => body.classList.remove(`is-closing`), CLOSE_MS);
+      navToggle?.setAttribute(`aria-expanded`, `false`);
+      navToggle?.setAttribute(`aria-label`, `Open navigation`);
+    }
+
+    function toggleMenu() {
+      if (body.classList.contains(`menu-open`)) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
+    }
+
+    navToggle?.addEventListener(`click`, toggleMenu, { signal });
+
+    // Escape closes the panel and returns focus to the toggle.
+    document.addEventListener(
+      `keydown`,
+      (event) => {
+        if (event.key === `Escape` && body.classList.contains(`menu-open`)) {
+          closeMenu();
+          navToggle?.focus();
+        }
+      },
+      { signal },
+    );
+
+    // Trap Tab inside the open panel so keyboard users can't reach the page
+    // behind it. Wraps at both ends and pulls focus back in if it slips out.
+    document.addEventListener(
+      `keydown`,
+      (event) => {
+        if (event.key !== `Tab` || !body.classList.contains(`menu-open`)) return;
+        const targets = getFocusTrapTargets();
+        if (!targets.length) return;
+        const first = targets[0];
+        const last = targets[targets.length - 1];
+        const active = document.activeElement as HTMLElement | null;
+        const inside = !!active && targets.includes(active);
+        if (event.shiftKey && (!inside || active === first)) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && (!inside || active === last)) {
+          event.preventDefault();
+          first.focus();
+        }
+      },
+      { signal },
+    );
+
+    // Choosing any destination dismisses the panel (covers same-route taps too).
+    mobileNav?.addEventListener(
+      `click`,
+      (event) => {
+        if ((event.target as HTMLElement).closest(`a`)) closeMenu();
+      },
+      { signal },
+    );
+
+    // Toggle the "popped" header state once the user scrolls away from the top.
+    let headerTicking = false;
+    function syncHeaderState() {
+      header?.classList.toggle(`is-scrolled`, window.scrollY > 24);
+      headerTicking = false;
+    }
+
+    window.addEventListener(
+      `scroll`,
+      () => {
+        if (!headerTicking) {
+          requestAnimationFrame(syncHeaderState);
+          headerTicking = true;
+        }
+      },
+      { passive: true, signal },
+    );
+
+    syncHeaderState();
+
+    // Remove the window/document listeners before the next swap; the fresh
+    // header swapped in gets its own bindings on the following astro:page-load.
+    document.addEventListener(
+      "astro:before-swap",
+      () => {
+        window.clearTimeout(closingTimer);
+        controller.abort();
+      },
+      { once: true },
+    );
   }
 
-  navToggle?.addEventListener(`click`, toggleMenu);
-  overlay?.addEventListener(`click`, toggleMenu);
+  document.addEventListener("astro:page-load", initHeader);
 </script>

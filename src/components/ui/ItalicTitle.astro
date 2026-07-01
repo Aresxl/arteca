@@ -1,0 +1,53 @@
+---
+interface Props {
+  variant?: "on-light" | "on-dark";
+}
+
+const { variant = "on-light" } = Astro.props;
+---
+
+<span class:list={["italic-text", `italic-text--${variant}`]}>
+  <slot />
+</span>
+
+<style>
+  .italic-text {
+    position: relative;
+    display: inline-block;
+    font-weight: var(--fw-400);
+    font-style: italic;
+  }
+
+  .italic-text--on-dark {
+    color: var(--clr-body-muted-light);
+  }
+
+  .italic-text--on-light {
+    color: var(--clr-body-muted);
+  }
+
+  .italic-text::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background-color: var(--clr-primary-gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 1.4s var(--ease);
+  }
+
+  .italic-text.is-visible::after {
+    transform: scaleX(1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .italic-text::after {
+      transform: none;
+      transition: none;
+    }
+  }
+</style>

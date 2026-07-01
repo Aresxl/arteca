@@ -1,155 +1,496 @@
 ---
-// Helpers
+// Images
+import ArrowUp from "@/assets/icons/arrow-up-right.svg";
+
 import { Picture } from "astro:assets";
+import type { ImageMetadata } from "astro";
+import type { HTMLAttributes } from "astro/types";
 
-// Components
-import Heading from "./Heading.astro";
+interface Props extends Omit<HTMLAttributes<"article">, "title"> {
+  /** Project name — rendered as the card heading + link text. */
+  title: string;
+  /** Short category/location kicker shown above the title. */
+  eyebrow: string;
+  /** Processed desktop screenshot (resolve the JSON path to ImageMetadata in the parent). */
+  image: ImageMetadata;
+  /** Optional alt override; defaults to a description built from the title. */
+  alt?: string;
+  /** PageSpeed score, e.g. "100". */
+  pageSpeed: string;
+  /** Load time, e.g. "1.2s" — a trailing unit is styled smaller automatically. */
+  loadSpeed: string;
+  /** Project status, e.g. "concept" | "live" — drives the badge. */
+  type: string;
+  /** Stable key passed to the shared case-study modal as the panel to open. */
+  caseKey: string;
+  /** Display URL shown in the browser chrome, e.g. "dine.netlify.app". */
+  websiteUrl: string;
+  /** Optional 1-based position — renders the large background numeral when set. */
+  index?: number;
+  /** Load the screenshot eagerly (use for above-the-fold cards only). */
+  eager?: boolean;
+  /** Colour surface the card sits on. */
+  surface?: "light" | "dark";
+}
 
-const { title, imgSrc, text, websiteHref, ...rest } = Astro.props;
+const {
+  title,
+  eyebrow,
+  image,
+  alt,
+  pageSpeed,
+  loadSpeed,
+  type,
+  caseKey,
+  websiteUrl,
+  index,
+  eager = false,
+  surface = "light",
+  class: className,
+  ...rest
+} = Astro.props;
+
+const num = index != null ? String(index).padStart(2, "0") : null;
+const imageAlt = alt ?? `Desktop preview of the ${title} website`;
+const tagLabel = type.charAt(0).toUpperCase() + type.slice(1);
+const isLive = type.toLowerCase() === "live";
+
+// Split a trailing unit ("1.2s" → "1.2" + "s") so it can be styled smaller.
+const loadParts = loadSpeed.match(/^([\d.]+)(.*)$/);
+const loadValue = loadParts ? loadParts[1] : loadSpeed;
+const loadUnit = loadParts ? loadParts[2] : "";
 ---
 
-<li class="card__wrapper fade-in">
-  <div class="card">
-    <div class="picture__wrapper">
-      <Picture
-        src={imgSrc}
-        height={imgSrc.height}
-        width={imgSrc.width}
-        formats={["avif", "webp"]}
-        fallbackFormat="jpg"
-        alt=""
-        layout="constrained"
-        widths={[320, 480, 640, 800]}
-        sizes="40vw"
-        priority={false}
-        class="portfolio__picture"
-      />
+<article
+  class:list={["portfolio-card", { "portfolio-card--dark": surface === "dark" }, className]}
+  {...rest}
+>
+  <div class="portfolio-card__media">
+    <div class="portfolio-card__frame">
+      <div class="portfolio-card__bar" aria-hidden="true">
+        <span class="portfolio-card__dot"></span>
+        <span class="portfolio-card__dot"></span>
+        <span class="portfolio-card__dot"></span>
+        <span class="portfolio-card__url">{websiteUrl}</span>
+      </div>
+      <div class="portfolio-card__shot">
+        <Picture
+          src={image}
+          alt={imageAlt}
+          formats={["avif", "webp"]}
+          fallbackFormat="jpg"
+          width={1600}
+          height={1100}
+          fit="cover"
+          position="top"
+          widths={[400, 600, 800, 1200]}
+          sizes="(min-width: 62.5rem) 32vw, (min-width: 40rem) 46vw, 92vw"
+          priority={eager}
+        />
+      </div>
     </div>
-    <div class="card__content">
-      <Heading tag="h3" text={title} class="card__content-title" />
-      <span class="fake-link" aria-hidden="true">View Website</span>
-    </div>
-    <a
-      href={websiteHref}
-      class="card__overlay-link"
-      aria-label=`View ${title} website`
-      target="_blank"
-      rel="noopener noreferrer"></a>
+
+    <span class="portfolio-card__expand" aria-hidden="true">
+      View case
+      <ArrowUp width={12} height={12} />
+    </span>
   </div>
-</li>
+
+  <div class="portfolio-card__body">
+    <p class="portfolio-card__eyebrow">{eyebrow}</p>
+    <h3 class="portfolio-card__title">
+      <button
+        type="button"
+        class="portfolio-card__trigger"
+        data-case-key={caseKey}
+        aria-haspopup="dialog"
+      >
+        {title}<span class="sr-only"> — view case study</span>
+      </button>
+    </h3>
+
+    <dl class="portfolio-card__stats">
+      <div class="portfolio-card__stat">
+        <dt class="portfolio-card__stat-label">PageSpeed</dt>
+        <dd class="portfolio-card__stat-value">{pageSpeed}</dd>
+      </div>
+      <div class="portfolio-card__stat">
+        <dt class="portfolio-card__stat-label">Load</dt>
+        <dd class="portfolio-card__stat-value">
+          {loadValue}{loadUnit && <span class="portfolio-card__stat-unit">{loadUnit}</span>}
+        </dd>
+      </div>
+    </dl>
+
+    <span class="portfolio-card__cta" aria-hidden="true">
+      View case
+      <ArrowUp width={12} height={12} />
+    </span>
+  </div>
+</article>
+
 <style>
-  .card__wrapper {
-    --primary-card-clr: var(--cyber-cyan-500);
-
-    /* prettier-ignore */
-    filter: 
-    drop-shadow(0 0 2px hsl(from var(--primary-card-clr) h s l / 0.75))
-    drop-shadow(0 0 12px hsl(from var(--primary-card-clr) h s l / 0.15))
-    brightness(0.7);
-
-    transition: filter 400ms ease-in-out;
-  }
-
-  .card__wrapper:hover {
-    /* prettier-ignore */
-    filter: 
-    drop-shadow(0 0 2px hsl(from var(--primary-card-clr) h s l / 0.85))
-    drop-shadow(0 0 20px hsl(from var(--primary-card-clr) h s l / 0.15))
-    brightness(0.9);
-  }
-
-  .card__wrapper:nth-of-type(1) {
-    --primary-card-clr: var(--cyber-cyan-500);
-  }
-  .card__wrapper:nth-of-type(2) {
-    --primary-card-clr: var(--cyber-magenta-500);
-  }
-
-  .card {
-    --teaser-space: 3.2rem;
+  /* ── Surface tokens (light, default) ──────────────────────────────────── */
+  .portfolio-card {
+    --card-surface: var(--clr-neutral-0);
+    --card-frame: var(--clr-neutral-200);
+    --card-text: var(--clr-body-text-dark);
+    --card-muted: var(--clr-body-muted-light);
+    --card-border: var(--border-light);
+    --card-gold: var(--clr-primary-gold);
+    --card-shadow-rest: 0 2px 12px hsl(0 0% 0% / 0.06);
+    --card-shadow-hover: 0 14px 40px hsl(26 16% 8% / 0.14);
 
     position: relative;
-    overflow: hidden;
-    max-height: 350px;
-    border: 1px solid var(--clr-border-default);
-
-    clip-path: polygon(
-      0 0,
-      calc(100% - 20px) 0,
-      100% 20px,
-      100% 100%,
-      20px 100%,
-      0 calc(100% - 20px)
-    );
+    display: flex;
+    flex-direction: column;
+    background: var(--card-surface);
+    border: 1px solid var(--card-border);
+    border-radius: 4px;
+    box-shadow: var(--card-shadow-rest);
+    transition: transform 0.5s var(--ease);
   }
 
-  .portfolio__picture {
-    transform: translateY(0);
-    transition: transform 2s ease-in-out;
+  /* ── Surface tokens (dark) ────────────────────────────────────────────── */
+  .portfolio-card--dark {
+    --card-surface: var(--clr-bg-secondary);
+    --card-frame: var(--clr-bg-primary-dark);
+    --card-text: var(--clr-body-text);
+    --card-muted: var(--clr-body-muted-light);
+    --card-border: var(--border-dark);
+    --card-shadow-rest: none;
+    --card-shadow-hover: 0 18px 50px hsl(0 0% 0% / 0.5);
   }
 
-  .card__wrapper:hover .portfolio__picture {
-    transform: translateY(calc(-100% + 350px));
-  }
-
-  .card__content {
-    pointer-events: none;
+  /* Gold accent bar — sweeps down on hover/focus. */
+  .portfolio-card::before {
+    content: "";
     position: absolute;
-    bottom: 0;
-    width: 100%;
-    padding: var(--spacing-xs) var(--spacing-md);
-
-    background-color: hsl(from var(--clr-neutral-900) h s l / 0.95);
-    /* transform: translateY(calc(100% - var(--teaser-space))); */
-    transition: transform 400ms 1700ms
-      linear(
-        0,
-        0.253 15.1%,
-        0.418 23.4%,
-        0.608 31%,
-        0.999 44.7%,
-        0.837 52.4%,
-        0.798 55.8%,
-        0.786 59.1%,
-        0.795 62.1%,
-        0.824 65.3%,
-        0.999 77.4%,
-        0.969 81.2%,
-        0.96 84.7%,
-        0.995 95.4%,
-        1
-      );
-
-    .card__content-title {
-      margin-block-end: 5px;
-    }
+    inset: 0 auto 0 0;
+    z-index: 2;
+    width: 2px;
+    background: var(--card-gold);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.5s var(--ease);
+    pointer-events: none;
   }
 
-  .card__wrapper:hover .card__content {
-    transform: translateY(0);
-  }
-
-  .card__overlay-link {
+  /* Elevation shadow on its own layer — opacity is cheap to animate. */
+  .portfolio-card::after {
+    content: "";
     position: absolute;
     inset: 0;
-    z-index: 100;
-    pointer-events: auto;
-    cursor: pointer;
+    z-index: -1;
+    border-radius: inherit;
+    box-shadow: var(--card-shadow-hover);
+    opacity: 0;
+    transition: opacity 0.5s var(--ease);
+    pointer-events: none;
   }
 
-  .fake-link {
+  .portfolio-card:hover,
+  .portfolio-card:has(.portfolio-card__trigger:focus-visible) {
+    transform: translateY(-6px);
+  }
+
+  .portfolio-card:hover::before,
+  .portfolio-card:has(.portfolio-card__trigger:focus-visible)::before {
+    transform: scaleY(1);
+  }
+
+  .portfolio-card:hover::after,
+  .portfolio-card:has(.portfolio-card__trigger:focus-visible)::after {
+    opacity: 1;
+  }
+
+  /* ── Media ────────────────────────────────────────────────────────────── */
+  .portfolio-card__media {
     position: relative;
-    z-index: 200;
-    margin-block-start: 5px;
-    cursor: pointer;
-    text-decoration: underline;
-    text-underline-offset: 5px;
   }
 
-  @media (min-width: 62.5rem) {
-    .card__content {
-      padding: 15px 20px;
-      transform: translateY(calc(100% - var(--teaser-space)));
+  .portfolio-card__num {
+    position: absolute;
+    top: 12px;
+    left: 14px;
+    z-index: 2;
+    font-size: 2.5rem;
+    font-weight: var(--fw-700);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--card-gold);
+    opacity: 0.18;
+    pointer-events: none;
+  }
+
+  .portfolio-card__tag {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    z-index: 2;
+    padding: 4px 9px;
+    border: 1px solid hsl(0 0% 100% / 0.12);
+    border-radius: 2px;
+    font-size: var(--fs-200);
+    font-weight: var(--fw-700);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: hsl(30 10% 90%);
+    background: hsl(0 0% 6% / 0.78);
+  }
+
+  .portfolio-card__tag--live {
+    color: var(--card-gold);
+    border-color: hsl(42 47% 56% / 0.4);
+  }
+
+  /* ── Browser chrome ───────────────────────────────────────────────────── */
+  .portfolio-card__frame {
+    overflow: hidden;
+    border-radius: 3px 3px 0 0;
+  }
+
+  .portfolio-card__bar {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    height: 34px;
+    padding: 0 14px;
+    background: var(--card-frame);
+    border-bottom: 1px solid var(--card-border);
+  }
+
+  .portfolio-card__dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--card-muted);
+    opacity: 0.4;
+  }
+
+  .portfolio-card__url {
+    max-width: 60%;
+    margin-inline: auto;
+    padding: 3px 14px;
+    border: 1px solid var(--card-border);
+    border-radius: 2px;
+    font-size: var(--fs-200);
+    letter-spacing: 0.08em;
+    color: var(--card-muted);
+    background: var(--card-surface);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .portfolio-card__shot {
+    position: relative;
+    aspect-ratio: 16 / 11;
+    background: var(--card-frame);
+    overflow: hidden;
+  }
+
+  .portfolio-card__shot :global(picture) {
+    position: absolute;
+    inset: 0;
+  }
+
+  .portfolio-card__shot :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 0%;
+    transition: transform 0.6s var(--ease);
+  }
+
+  .portfolio-card:hover .portfolio-card__shot :global(img),
+  .portfolio-card:has(.portfolio-card__trigger:focus-visible) .portfolio-card__shot :global(img) {
+    transform: scale(1.03);
+  }
+
+  /* ── Hover affordance — "View case" pill over the screenshot ──────────── */
+  .portfolio-card__expand {
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    z-index: 4;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 12px;
+    border: 1px solid hsl(0 0% 100% / 0.14);
+    border-radius: 2px;
+    font-size: var(--fs-200);
+    font-weight: var(--fw-700);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: hsl(0 0% 100%);
+    background: hsl(0 0% 8% / 0.82);
+    opacity: 0;
+    transform: translateY(6px);
+    pointer-events: none;
+    transition:
+      opacity 0.35s var(--ease),
+      transform 0.35s var(--ease),
+      color 0.35s var(--ease),
+      background 0.35s var(--ease),
+      border-color 0.35s var(--ease);
+  }
+
+  .portfolio-card__expand-icon {
+    width: 12px;
+    height: 12px;
+  }
+
+  .portfolio-card:hover .portfolio-card__expand,
+  .portfolio-card:has(.portfolio-card__trigger:focus-visible) .portfolio-card__expand {
+    opacity: 1;
+    transform: translateY(0);
+    color: var(--clr-bg-primary-dark);
+    background: var(--card-gold);
+    border-color: var(--card-gold);
+  }
+
+  /* ── Body ─────────────────────────────────────────────────────────────── */
+  .portfolio-card__body {
+    padding: 22px 24px 24px;
+  }
+
+  .portfolio-card__eyebrow {
+    font-size: var(--fs-200);
+    font-weight: var(--fw-700);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--card-gold);
+  }
+
+  .portfolio-card__title {
+    margin-block-start: 8px;
+    font-size: var(--fs-600);
+    font-weight: var(--fw-700);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    color: var(--card-text);
+  }
+
+  .portfolio-card__trigger {
+    font: inherit;
+    color: inherit;
+    text-align: start;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  /* Stretch the trigger across the whole card for one big target. */
+  .portfolio-card__trigger::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+  }
+
+  .portfolio-card__trigger:focus-visible::after {
+    outline: 2px solid var(--card-gold);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* ── Stats ────────────────────────────────────────────────────────────── */
+  .portfolio-card__stats {
+    display: flex;
+    margin-block-start: 18px;
+    border: 1px solid var(--card-border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .portfolio-card__stat {
+    display: flex;
+    flex: 1;
+    flex-direction: column-reverse;
+    gap: 3px;
+    padding: 12px 14px;
+    border-right: 1px solid var(--card-border);
+  }
+
+  .portfolio-card__stat:last-child {
+    border-right: none;
+  }
+
+  .portfolio-card__stat-label {
+    font-size: var(--fs-200);
+    font-weight: var(--fw-700);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--card-muted);
+  }
+
+  .portfolio-card__stat-value {
+    font-size: var(--fs-450);
+    font-weight: var(--fw-700);
+    letter-spacing: -0.01em;
+    color: var(--card-text);
+  }
+
+  .portfolio-card__stat-unit {
+    font-size: var(--fs-300);
+    font-weight: var(--fw-700);
+    color: var(--card-muted);
+  }
+
+  /* ── Call to action ───────────────────────────────────────────────────── */
+  .portfolio-card__cta {
+    display: flex;
+    width: fit-content;
+    align-items: center;
+    gap: 6px;
+    margin-block-start: 18px;
+    font-size: var(--fs-300);
+    font-weight: var(--fw-700);
+    letter-spacing: 0.02em;
+    color: var(--card-muted);
+    transition: color 0.25s var(--ease);
+  }
+
+  .portfolio-card__cta-icon {
+    width: 13px;
+    height: 13px;
+    transition: transform 0.3s var(--ease);
+  }
+
+  .portfolio-card:hover .portfolio-card__cta,
+  .portfolio-card:has(.portfolio-card__trigger:focus-visible) .portfolio-card__cta {
+    color: var(--card-gold);
+  }
+
+  .portfolio-card:hover .portfolio-card__cta-icon,
+  .portfolio-card:has(.portfolio-card__trigger:focus-visible) .portfolio-card__cta-icon {
+    transform: translate(2px, -2px);
+  }
+
+  /* ── Reduced motion ───────────────────────────────────────────────────── */
+  @media (prefers-reduced-motion: reduce) {
+    .portfolio-card,
+    .portfolio-card::before,
+    .portfolio-card::after,
+    .portfolio-card__cta,
+    .portfolio-card__cta-icon,
+    .portfolio-card__expand,
+    .portfolio-card__shot :global(img) {
+      transition: none;
+    }
+
+    .portfolio-card:hover,
+    .portfolio-card:has(.portfolio-card__trigger:focus-visible) {
+      transform: none;
+    }
+
+    .portfolio-card:hover .portfolio-card__shot :global(img),
+    .portfolio-card:has(.portfolio-card__trigger:focus-visible) .portfolio-card__shot :global(img),
+    .portfolio-card:hover .portfolio-card__cta-icon,
+    .portfolio-card:has(.portfolio-card__trigger:focus-visible) .portfolio-card__cta-icon {
+      transform: none;
     }
   }
 </style>

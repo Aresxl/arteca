@@ -1,44 +1,27 @@
 [
   {
-    "icon": "optimised",
-    "title": "Optimised Page Speed",
-    "text": "If your site takes more than 3 seconds to load, you can lose up to 50% of visitors before they even see your menu. Our sites load in 1 second or less, keeping every hungry searcher engaged and ready to book or visit.",
-    "cta": "Get Started",
-    "ctaHref": "/contact"
-  },
-  {
-    "icon": "mobile-phone",
-    "title": "Mobile First Design",
-    "text": "Mobile first from the start and flawless on every screen. Diners search and browse on phones, so your site looks sharp and loads instantly no matter the device.",
-    "cta": "Get Started",
-    "ctaHref": "/contact"
-  },
-  {
-    "icon": "code",
     "title": "Custom Hand-Coded",
-    "text": "Unique design with zero templates or bloat. Tailored visuals and clean code that outperforms every generic builder every single time.",
-    "cta": "Get Started",
-    "ctaHref": "/contact"
+    "text": "Built by hand, with none of the templates or plugin bloat that weigh Wix and WordPress down. Just lean code shaped around your venue, so nothing slows it down."
   },
   {
-    "icon": "seo",
+    "title": "Optimised Page Speed",
+    "text": "Google found 53% of mobile visitors abandon a site that takes longer than three seconds to load. Yours loads in around 1.5s, so the people who find you stick around to book."
+  },
+  {
+    "title": "Mobile First Design",
+    "text": "Most diners decide where to eat on their phone, so every site is designed for the small screen first and scaled up from there. Sharp, fast, and effortless to book on, regardless of the device."
+  },
+
+  {
     "title": "SEO Foundations",
-    "text": "Fast loads, clean code, and structured data built in from day one. Helps you rank higher for local searches like “best restaurant in Melbourne” with no extra retainers required.",
-    "cta": "Get Started",
-    "ctaHref": "/contact"
+    "text": "Clean code, proper page structure, meta tags, and a sitemap, built in from day one. It's the on-page groundwork most hospitality sites get wrong, and it's what gives you a real shot at ranking when locals search for “best restaurant in Melbourne”."
   },
   {
-    "icon": "security",
-    "title": "Rock-Solid Security",
-    "text": "Custom code means no common vulnerabilities or hacks. It keeps customer data safe and your site reliable unlike bloated platforms that are constant targets.",
-    "cta": "Get Started",
-    "ctaHref": "/contact"
+    "title": "Built to Convert",
+    "text": "A fast, good-looking site is only half the job. Every page is built to move diners toward one thing, booking a table. Clear menus, obvious buttons, and your booking link never more than a tap away."
   },
   {
-    "icon": "guarantee",
-    "title": "Results Guarantee",
-    "text": "2%+ increase in bookings and enquiries within 60 days — or we continue optimising for free until you achieve it. Tracking is set up collaboratively to ensure full transparency.",
-    "cta": "Get Started",
-    "ctaHref": "/contact"
+    "title": "Designed Around You",
+    "text": "Your booking system, menu, socials, and Google profile, all connected in one place. A diner can see your menu, check your hours, and book a table without ever leaving the page."
   }
 ]

@@ -1,39 +1,48 @@
 ---
 // Data
 import data from "@/data/our-offer.json";
-const sectionTitle = "What we offer";
-const sectionSubtitle = "Never worry about your website ever again";
-const sectionText =
-  "At Vyteca, we build high-performance, hand-coded websites exclusively for Melbourne restaurants. Built from scratch — you get 98–100/100 Google PageSpeed scores, flawless mobile performance on every device, and local SEO foundations that help you rank higher and fill more tables.";
-const sectionTitleId = "offer";
+
+// Images
+import ArrowIcon from "@/assets/icons/arrow-up-right.svg";
 
 // Components
 import OurOfferCard from "../ui/OurOfferCard.astro";
-import Heading from "../ui/Heading.astro";
-import SectionHeader from "../ui/SectionHeader.astro";
+import ItalicTitle from "../ui/ItalicTitle.astro";
+import LinkOrButton from "../ui/LinkOrButton.astro";
 ---
 
-<section class="our__offer | grid-main" aria-labelledby={sectionTitleId}>
-  <SectionHeader
-    title={sectionTitle}
-    subtitle={sectionSubtitle}
-    supportingText={sectionText}
-    titleTag="h2"
-    titleId={sectionTitleId}
-    fadeIn={false}
-    class="our__offer-header"
-  />
-  <ul class="our__offers">
+<section class="our__offer" aria-labelledby="offer-title">
+  <div class="offer-left">
+    <header class="offer-header">
+      <p class="eyebrow eyebrow--dark" id="offer-title">What Vyteca offers</p>
+      <h2 class="section-subtitle section-subtitle--dark">
+        Hospitality websites built to fill <ItalicTitle variant="on-light">tables</ItalicTitle>
+      </h2>
+    </header>
+    <p class="offer-header-body">
+      Every site is high-performance, hand-coded, and made exclusively for Melbourne hospitality
+      venues. Built from scratch, every site gets 98-100 Google PageSpeed scores, flawless mobile
+      performance on every device, and local SEO foundations that help you rank higher and bring
+      more people through the door.
+    </p>
+    <div class="offer-cta">
+      <LinkOrButton
+        as="a"
+        href="/free-designs"
+        text="Get your 3 free designs"
+        variant="primary"
+        onLight
+        data-track="cta"
+      >
+        <ArrowIcon />
+      </LinkOrButton>
+    </div>
+  </div>
+
+  <ul class="offer-cards">
     {
-      data.map((card) => (
-        <OurOfferCard
-          iconName={card.icon}
-          title={card.title}
-          text={card.text}
-          cta={card.cta}
-          ctaHref={card.ctaHref}
-          class="card__wrapper fade-in"
-        />
+      data.map((card, i) => (
+        <OurOfferCard num={String(i + 1).padStart(2, "0")} title={card.title} text={card.text} />
       ))
     }
   </ul>
@@ -41,51 +50,348 @@ import SectionHeader from "../ui/SectionHeader.astro";
 
 <style>
   .our__offer {
-    padding-block-start: var(--section-space);
+    /* Nav is padding-block:10px + 50px SVG + 1px border = 71px; use 72 for safety */
+    --_nav-h: 72px;
+    /* Fallback until JS measures the actual sticky header height after fonts load */
+    --_pin-h: 116px;
+    /* Distribute remaining viewport height equally across 6 cards so they
+       fill the screen exactly — num + title are always visible on modern phones */
+    --_peek: 56px;
+    --_card-base: calc(var(--_nav-h) + var(--_pin-h));
+    background-color: var(--clr-bg-primary-light);
+
+    /* padding-block-end: 20px; */
   }
 
-  .our__offers {
-    display: grid;
-    gap: var(--spacing-lg);
+  /* ── Mobile: offer-header is the only sticky element ───────────────────── */
 
-    margin-block-start: var(--spacing-xl);
+  /* Removing .offer-left as a layout box lets .offer-header be bounded by the
+     full section, so it stays pinned for the entire scroll. */
+  .offer-left {
+    display: contents;
+    text-align: center;
   }
 
+  .offer-header {
+    position: sticky;
+    top: var(--_nav-h);
+    z-index: 10;
+    background: var(--clr-bg-primary-light);
+    padding: var(--spacing-md) var(--page-padding);
+    /* padding-block: var(--spacing-md); */
+  }
+
+  h2 {
+    max-width: 16ch;
+    margin-inline: auto;
+    font-size: clamp(2.125rem, 1.9rem + 0.9600000000000001vw, 2.5rem);
+  }
+
+  /* Body text sticks at the same threshold as card 1. When the page header sticks,
+     the body text is already at --_card-base from the viewport top, so it locks
+     in place. Cards (z-index 1–6) then slide over it from below. */
+  .offer-header-body {
+    position: sticky;
+    top: var(--_card-base);
+    z-index: 0;
+    background: var(--clr-bg-primary-light);
+    padding: var(--spacing-xs) var(--page-padding) var(--spacing-md);
+    color: var(--clr-body-muted);
+  }
+
+  /* The CTA lives only in the desktop pinned rail; the stacked sub-1000px
+     layout hands the scroll to the sticky-stack and has no room for it. */
+  .offer-cta {
+    display: none;
+  }
+
+  .offer-cards {
+    position: relative;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .offer-cards :global(.offer-card) {
+    position: sticky;
+  }
+
+  .offer-cards :global(.offer-card:nth-child(1)) {
+    top: var(--_card-base);
+    z-index: 1;
+  }
+  .offer-cards :global(.offer-card:nth-child(2)) {
+    top: calc(var(--_card-base) + 1 * var(--_peek));
+    z-index: 2;
+  }
+  .offer-cards :global(.offer-card:nth-child(3)) {
+    top: calc(var(--_card-base) + 2 * var(--_peek));
+    z-index: 3;
+  }
+  .offer-cards :global(.offer-card:nth-child(4)) {
+    top: calc(var(--_card-base) + 3 * var(--_peek));
+    z-index: 4;
+  }
+  .offer-cards :global(.offer-card:nth-child(5)) {
+    top: calc(var(--_card-base) + 4 * var(--_peek));
+    z-index: 5;
+  }
+  .offer-cards :global(.offer-card:nth-child(6)) {
+    top: calc(var(--_card-base) + 5 * var(--_peek));
+    z-index: 6;
+  }
+
+  /* Give the pinned header more breathing room above the heading on larger
+     phones. Only the top changes; right/bottom/left stay put so the sticky
+     stagger math (driven by --_pin-h, which JS re-measures) is unaffected. */
   @media (min-width: 40rem) {
-    .our__offers {
-      grid-template-columns: repeat(2, 1fr);
+    .offer-left {
+      text-align: left;
+    }
+
+    .offer-header {
+      padding: var(--spacing-lg) var(--page-padding) var(--spacing-md);
+    }
+
+    h2 {
+      margin-inline: unset;
+      max-width: 19ch;
+      text-wrap: unset;
     }
   }
 
-  @media (min-width: 48rem) {
-    .our__offer-header {
-      p {
-        max-width: 70ch;
-        margin-inline: auto;
-      }
-    }
+  /* ── Tablet: the 3rem card number makes each peeking strip taller, so the
+     stagger has to grow or a card would slide over its own number ─────────── */
 
-    .our__offers {
-      margin-block-start: var(--spacing-2xl);
+  @media (min-width: 48rem) and (max-width: 62.4375rem) {
+    .our__offer {
+      --_peek: 80px;
     }
   }
 
   @media (min-width: 62.5rem) {
-    .our__offer-header {
-      display: flex;
-      align-items: center;
-      gap: var(--spacing-3xl);
-      text-align: left;
-
-      p {
-        margin-block-start: 0px;
-        max-width: 50ch;
-      }
+    .our__offer {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: start;
     }
 
-    .our__offers {
-      grid-template-columns: repeat(3, 1fr);
-      gap: 74px 30px;
+    .offer-left {
+      display: block;
+      position: sticky;
+      top: 68px;
+    }
+
+    .offer-header {
+      position: static;
+      padding: 96px 48px 0;
+    }
+
+    .offer-header-body {
+      position: static;
+      padding: var(--spacing-md) 48px 0;
+    }
+
+    .offer-cta {
+      display: block;
+      padding: var(--spacing-md) 48px 6rem;
+    }
+
+    .offer-cards {
+      background-color: var(--clr-bg-secondary);
+      padding-block-end: 175px;
+    }
+
+    .offer-cards :global(.offer-card:nth-child(1)) {
+      top: 68px;
+    }
+    .offer-cards :global(.offer-card:nth-child(2)) {
+      top: 92px;
+    }
+    .offer-cards :global(.offer-card:nth-child(3)) {
+      top: 116px;
+    }
+    .offer-cards :global(.offer-card:nth-child(4)) {
+      top: 140px;
+    }
+    .offer-cards :global(.offer-card:nth-child(5)) {
+      top: 164px;
+    }
+    .offer-cards :global(.offer-card:nth-child(6)) {
+      top: 188px;
     }
   }
 </style>
+
+<script>
+  function initOurOffer() {
+    const header = document.querySelector<HTMLElement>(".offer-header");
+    // Bail on routes without this section. The astro:page-load listener is
+    // global, so this runs on every navigation, including pages without it.
+    if (!header) return;
+
+    const section = document.querySelector<HTMLElement>(".our__offer");
+    const offerCards = section?.querySelector<HTMLElement>(".offer-cards");
+    const offerHeaderBody = section?.querySelector<HTMLElement>(".offer-header-body");
+    const cards = offerCards ? [...offerCards.querySelectorAll<HTMLElement>(".offer-card")] : [];
+    const desktop = window.matchMedia("(min-width: 62.5rem)");
+
+    if (section && offerCards && cards.length === 6) {
+      const controller = new AbortController();
+      const { signal } = controller;
+      let resizeObserver: ResizeObserver | null = null;
+
+      let freezeScrollY = Infinity;
+      let frozen = false;
+      let rafId: number | null = null;
+      let card6RelativeOffset = 0;
+
+      const freeze = () => {
+        if (frozen) return;
+        // Batch-read ALL positions before any style mutations (read-then-write).
+        const sectionH = section.offsetHeight;
+        const sectionTop = section.getBoundingClientRect().top;
+        const headerTop = header.getBoundingClientRect().top - sectionTop;
+        const bodyTop = offerHeaderBody
+          ? offerHeaderBody.getBoundingClientRect().top - sectionTop
+          : null;
+        const ulTop = offerCards.getBoundingClientRect().top;
+        const ulFromSection = ulTop - sectionTop;
+        const ulHeight = offerCards.offsetHeight;
+        const tops = cards.map((card) => card.getBoundingClientRect().top - ulTop);
+
+        section.style.position = "relative";
+        section.style.minHeight = `${sectionH}px`;
+
+        header.style.position = "absolute";
+        header.style.top = `${headerTop}px`;
+        header.style.left = "0";
+        header.style.right = "0";
+
+        if (offerHeaderBody && bodyTop !== null) {
+          offerHeaderBody.style.position = "absolute";
+          offerHeaderBody.style.top = `${bodyTop}px`;
+          offerHeaderBody.style.left = "0";
+          offerHeaderBody.style.right = "0";
+        }
+
+        offerCards.style.position = "absolute";
+        offerCards.style.top = `${ulFromSection}px`;
+        offerCards.style.left = "0";
+        offerCards.style.right = "0";
+        offerCards.style.minHeight = `${ulHeight}px`;
+
+        cards.forEach((card, i) => {
+          card.style.position = "absolute";
+          card.style.top = `${tops[i]}px`;
+          card.style.left = "0";
+          card.style.right = "0";
+        });
+        frozen = true;
+      };
+
+      const unfreeze = () => {
+        if (!frozen) return;
+        header.style.position = "";
+        header.style.top = "";
+        header.style.left = "";
+        header.style.right = "";
+        if (offerHeaderBody) {
+          offerHeaderBody.style.position = "";
+          offerHeaderBody.style.top = "";
+          offerHeaderBody.style.left = "";
+          offerHeaderBody.style.right = "";
+        }
+        cards.forEach((card) => {
+          card.style.position = "";
+          card.style.top = "";
+          card.style.left = "";
+          card.style.right = "";
+        });
+        offerCards.style.position = "";
+        offerCards.style.top = "";
+        offerCards.style.left = "";
+        offerCards.style.right = "";
+        offerCards.style.minHeight = "";
+        section.style.position = "";
+        section.style.minHeight = "";
+        frozen = false;
+      };
+
+      const computeFreezeScrollY = () => {
+        if (desktop.matches) {
+          freezeScrollY = Infinity;
+          return;
+        }
+        const cs = getComputedStyle(section);
+        const navH = parseFloat(cs.getPropertyValue("--_nav-h")) || 72;
+        const pinH = parseFloat(cs.getPropertyValue("--_pin-h")) || 116;
+        const peek = parseFloat(cs.getPropertyValue("--_peek")) || 56;
+        const card6Threshold = navH + pinH + 5 * peek;
+        const sectionDocTop = section.getBoundingClientRect().top + window.scrollY;
+        freezeScrollY = sectionDocTop + card6RelativeOffset - card6Threshold;
+      };
+
+      const tick = () => {
+        if (desktop.matches) {
+          if (frozen) unfreeze();
+          return;
+        }
+        const scrollY = window.scrollY;
+        if (!frozen && scrollY >= freezeScrollY) freeze();
+        else if (frozen && scrollY < freezeScrollY) unfreeze();
+      };
+
+      const onScroll = () => {
+        if (rafId !== null) return;
+        rafId = requestAnimationFrame(() => {
+          tick();
+          rafId = null;
+        });
+      };
+
+      const sync = () => {
+        section.style.setProperty("--_pin-h", `${header.offsetHeight}px`);
+        if (frozen) unfreeze();
+        // Re-derive Card 6's natural layout offset from section top each time
+        // so header-height changes (font load, resize) are captured.
+        // offerCards is never sticky so its BoundingClientRect is always accurate.
+        const ulFromSection =
+          offerCards.getBoundingClientRect().top - section.getBoundingClientRect().top;
+        card6RelativeOffset = ulFromSection + cards[5].offsetTop;
+        computeFreezeScrollY();
+        tick();
+      };
+
+      document.fonts.ready.then(() => {
+        sync();
+        window.addEventListener("scroll", onScroll, { passive: true, signal });
+      });
+
+      resizeObserver = new ResizeObserver(sync);
+      resizeObserver.observe(header);
+      desktop.addEventListener(
+        "change",
+        () => {
+          if (frozen) unfreeze();
+          computeFreezeScrollY();
+        },
+        { signal },
+      );
+
+      // Tear down before the page is swapped away: disconnect the observer and
+      // remove the scroll/matchMedia listeners via the controller. Without this
+      // they'd leak across navigations, since <body> is replaced on each swap.
+      document.addEventListener(
+        "astro:before-swap",
+        () => {
+          resizeObserver?.disconnect();
+          controller.abort();
+        },
+        { once: true },
+      );
+    }
+  }
+
+  document.addEventListener("astro:page-load", initOurOffer);
+</script>

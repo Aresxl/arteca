@@ -2,66 +2,41 @@
 
 @layer tokens {
   :root {
-    --cyber-cyan-300: hsl(184, 80%, 74%);
-    --cyber-cyan-400: hsl(184, 65%, 59%);
-    --cyber-cyan-500: hsl(184, 100%, 50%);
-    --cyber-cyan-600: hsl(182, 100%, 40%);
-    --cyber-cyan-700: hsl(186, 100%, 33%);
-    --cyber-cyan-900: hsl(187, 100%, 21%);
-    --cyber-magenta-500: hsl(341, 100%, 58%);
-    --cyber-magenta-700: hsl(340, 82%, 39%);
-    --cyber-yellow-500: hsl(57, 98%, 51%);
-    --cyber-yellow-700: hsl(57, 93%, 35%);
-    --cyber-green-400: hsl(140, 100%, 63%);
-    --cyber-green-500: hsl(157, 100%, 51%);
-    --cyber-green-700: hsl(157, 97%, 34%);
-    --cyber-green-900: hsl(155, 98%, 16%);
-    --cyber-purple-500: hsl(271, 100%, 50%);
-    --cyber-orange-500: hsl(20, 100%, 55%);
-    --cyber-void-100: hsl(229, 16%, 20%);
-    --cyber-void-200: hsl(229, 22%, 15%);
-    --cyber-void-300: hsl(231, 21%, 12%);
-    --cyber-void-400: hsl(229, 23%, 9%);
-    --cyber-void-500: hsl(231, 21%, 6%);
-    --cyber-void-700: hsl(228, 26%, 4%);
-    --cyber-void-800: hsl(225, 33%, 2%);
-    --cyber-void-900: hsl(220, 60%, 1%);
-    --cyber-chrome-100: hsl(228, 20%, 95%);
-    --cyber-chrome-200: hsl(226, 16%, 85%);
-    --cyber-chrome-300: hsl(226, 16%, 74%);
-    --cyber-chrome-400: hsl(226, 16%, 63%);
-    --cyber-chrome-500: hsl(225, 15%, 53%);
-    --cyber-chrome-600: hsl(224, 14%, 42%);
-
-    --clr-primary-blue-700: hsl(225, 24%, 9%);
+    --clr-primary-gold: hsl(42, 47%, 56%);
 
     --clr-neutral-0: hsl(0, 0%, 100%);
-    --clr-neutral-50: hsl(0, 100%, 99%);
-    --clr-neutral-100: hsl(0, 0%, 95%);
-    --clr-neutral-200: hsl(0, 0%, 80%);
-    --clr-neutral-700: hsl(0, 0%, 22%);
-    --clr-neutral-800: hsl(0, 0%, 10%);
-    --clr-neutral-900: hsl(0, 0%, 0%);
-
-    --clr-glow-teal: rgba(0, 240, 255, 0.6);
-    --glow-text-cyan:
-      0 0 10px var(--cyber-cyan-500),
-      0 0 20px color-mix(in srgb, var(--cyber-cyan-500) 60%, transparent);
+    --clr-neutral-200: hsl(39, 39%, 93%);
+    --clr-neutral-750: hsl(0, 0%, 22%);
+    --clr-neutral-850: hsl(0, 0%, 11%);
+    --clr-neutral-900: hsl(0, 0%, 8%);
 
     --clr-header-bg: hsla(0, 0%, 100%, 0.15);
 
-    --clr-bg-primary: var(--cyber-void-500);
-    --clr-bg-secondary: var(--cyber-void-400);
-    --clr-bg-tertiary: var(--cyber-void-300);
-    --clr-body-text: var(--cyber-chrome-100);
-    --clr-border-default: var(--cyber-void-100);
+    --clr-bg-primary-dark: var(--clr-neutral-900);
+    --clr-bg-primary-light: var(--clr-neutral-200);
+    --clr-bg-secondary: var(--clr-neutral-850);
+    --clr-bg-card: hsl(0, 0%, 9%);
+    --clr-border-default: hsl(26, 16%, 8%);
 
-    --ff-ubu: "Ubuntu";
-    --ff-main: "Ubuntu";
-    --ff-main: "Jetbrains";
-    --ff-heading: "Orbitron";
-    --ff-mono: "Jetbrains";
+    --clr-body-text: hsl(30, 10%, 80%);
+    --clr-body-text-dark: hsl(30, 13%, 9%);
+    --clr-body-muted: hsl(30, 4%, 35%);
+    --clr-body-muted-light: hsl(27, 4%, 52%);
 
+    /*  */
+    --dim-light: hsl(34, 8%, 66%);
+    --border-light: hsl(37, 16%, 84%);
+    --border-dark: hsl(26, 16%, 8%);
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    /* Reveal/entrance easing — a gentle ease-out (easeOutCubic) that decelerates
+       smoothly instead of jumping the full distance instantly like --ease (expo)
+       does. Use this for scroll-in motion so reveals glide rather than flash. */
+    --ease-reveal: cubic-bezier(0.215, 0.61, 0.355, 1);
+    /*  */
+
+    --ff-main: "Bricolage Grotesque";
+
+    --fs-200: 0.625rem;
     --fs-300: 0.75rem;
     --fs-350: 0.875rem;
     --fs-375: 0.9375rem;
@@ -94,9 +69,10 @@
     --spacing-6xl: calc(var(--spacing-unit) * 24); /* 192px */
     --spacing-7xl: calc(var(--spacing-unit) * 28); /* 224px */
 
-    --section-space-mobile: var(--spacing-2xl);
+    --section-space-mobile: var(--spacing-xl);
     --section-space-tablet: var(--spacing-3xl);
     --section-space-desktop: var(--spacing-4xl);
+    --section-space-desktop-lrg: var(--spacing-5xl);
     --section-space: var(--section-space-mobile);
 
     /* 
@@ -124,199 +100,23 @@
     }
   }
 
+  @media (min-width: 90rem) {
+    :root {
+      --section-space: var(--section-space-desktop-lrg);
+    }
+  }
+
   /* Animations */
 
-  @keyframes hero-grid-pulse {
+  @keyframes scrollPulse {
     0%,
     100% {
-      opacity: 1;
-      transform: translate(0, 0);
+      opacity: 0.4;
+      transform: scaleY(1);
     }
     50% {
-      opacity: 0.8;
-      transform: translate(40px, 40px);
-    }
-  }
-
-  @keyframes pulse-filter {
-    0%,
-    100% {
-      filter: drop-shadow(0 0 1px color-mix(in srgb, var(--cyber-cyan-500) 100%, transparent))
-        drop-shadow(0 0 2px color-mix(in srgb, var(--cyber-cyan-500) 80%, transparent))
-        drop-shadow(0 0 8px color-mix(in srgb, var(--cyber-cyan-500) 30%, transparent));
-    }
-    50% {
-      filter: drop-shadow(0 0 2px color-mix(in srgb, var(--cyber-cyan-500) 100%, transparent))
-        drop-shadow(0 0 4px color-mix(in srgb, var(--cyber-cyan-500) 80%, transparent))
-        drop-shadow(0 0 12px color-mix(in srgb, var(--cyber-cyan-500) 40%, transparent));
-    }
-  }
-
-  @keyframes neon-flow {
-    0% {
-      background-position: 0 50%;
-    }
-    to {
-      background-position: 400% 50%;
-    }
-  }
-
-  @keyframes neon-flicker-main {
-    0%,
-    18%,
-    22%,
-    25%,
-    53%,
-    57%,
-    100% {
-      opacity: 1;
-      text-shadow:
-        0 0 0.5px hsl(from var(--clr-neutral-0) h s l / 0.5),
-        0 0 2.5px var(--clr-glow-teal);
-      box-shadow:
-        inset 0 0 0.5em 0 var(--clr-glow-teal),
-        0 0 0.5em 0 var(--clr-glow-teal);
-    }
-    20%,
-    24%,
-    55% {
-      opacity: 0.88;
-      text-shadow:
-        0 0 0.5px hsl(from var(--clr-neutral-0) h s l / 0.3),
-        0 0 1.8px var(--clr-glow-teal);
-      box-shadow:
-        inset 0 0 0.3em 0 var(--clr-glow-teal),
-        0 0 0.4em 0 var(--clr-glow-teal);
-    }
-    51% {
-      opacity: 0.82;
-    }
-  }
-
-  @keyframes cursor-blink {
-    50% {
-      opacity: 0;
-    }
-  }
-
-  @keyframes cyber-icon-glitch {
-    0%,
-    to {
-      transform: translate(0);
-      filter: none;
-    }
-    10% {
-      transform: translate(-2px, 1px);
-      filter: drop-shadow(2px 0 var(--cyber-cyan-500)) drop-shadow(-2px 0 var(--cyber-magenta-500));
-    }
-    20% {
-      transform: translate(2px, -1px);
-      filter: drop-shadow(-1px 0 var(--cyber-cyan-500)) drop-shadow(1px 0 var(--cyber-magenta-500));
-    }
-    30% {
-      transform: translate(0);
-      filter: none;
-    }
-    70% {
-      transform: translate(1px, 1px);
-      filter: drop-shadow(-2px 0 var(--cyber-cyan-500)) drop-shadow(2px 0 var(--cyber-magenta-500));
-    }
-    80% {
-      transform: translate(-1px, -1px);
-      filter: drop-shadow(1px 0 var(--cyber-cyan-500)) drop-shadow(-1px 0 var(--cyber-magenta-500));
-    }
-    90% {
-      transform: translate(0);
-      filter: none;
-    }
-  }
-
-  @keyframes glitch-1 {
-    0%,
-    100% {
-      transform: translate(-2px);
-      clip-path: inset(0 0 95% 0);
-    }
-    10% {
-      transform: translate(2px);
-      clip-path: inset(30% 0 40% 0);
-    }
-    20% {
-      transform: translate(-1px);
-      clip-path: inset(70% 0 10% 0);
-    }
-    30% {
-      transform: translate(1px);
-      clip-path: inset(10% 0 60% 0);
-    }
-    40% {
-      transform: translate(-2px);
-      clip-path: inset(80% 0 5% 0);
-    }
-    50% {
-      transform: translate(2px);
-      clip-path: inset(20% 0 55% 0);
-    }
-    60% {
-      transform: translate(-1px);
-      clip-path: inset(50% 0 30% 0);
-    }
-    70% {
-      transform: translate(1px);
-      clip-path: inset(5% 0 85% 0);
-    }
-    80% {
-      transform: translate(-2px);
-      clip-path: inset(45% 0 35% 0);
-    }
-
-    90% {
-      transform: translate(2px);
-      clip-path: inset(85% 0 5% 0);
-    }
-  }
-
-  @keyframes glitch-2 {
-    0%,
-    100% {
-      transform: translate(2px);
-      clip-path: inset(95% 0 0 0);
-    }
-    10% {
-      transform: translate(-2px);
-      clip-path: inset(40% 0 30% 0);
-    }
-    20% {
-      transform: translate(1px);
-      clip-path: inset(10% 0 70% 0);
-    }
-    30% {
-      transform: translate(-1px);
-      clip-path: inset(60% 0 10% 0);
-    }
-    40% {
-      transform: translate(2px);
-      clip-path: inset(5% 0 80% 0);
-    }
-    50% {
-      transform: translate(-2px);
-      clip-path: inset(55% 0 20% 0);
-    }
-    60% {
-      transform: translate(1px);
-      clip-path: inset(30% 0 50% 0);
-    }
-    70% {
-      transform: translate(-1px);
-      clip-path: inset(85% 0 5% 0);
-    }
-    80% {
-      transform: translate(2px);
-      clip-path: inset(35% 0 45% 0);
-    }
-    90% {
-      transform: translate(-2px);
-      clip-path: inset(5% 0 85% 0);
+      opacity: 0.9;
+      transform: scaleY(0.7);
     }
   }
 
@@ -349,6 +149,82 @@
     .fade-in.is-visible {
       animation: none;
     }
+  }
+}
+
+/* Page transition (ClientRouter): the shutter. Two panels seal from the top
+   and bottom edges over a gold seam, hiding the DOM swap beneath them, then
+   open onto the new page. Driven by global.js through the ClientRouter
+   lifecycle; reduced-motion users skip it for an instant swap.
+
+   Only `transform` animates, on two fixed, viewport-sized panels: two
+   constant-size composite layers, no layout, no per-frame rasterisation. The
+   gold glow and grain are static, riding along with the panel's layer, so they
+   add depth at no per-frame cost. The panels also cover the swap, so the
+   near-black cross-fade flash this brand is prone to can never appear. */
+.page-shutter {
+  position: fixed;
+  inset: 0;
+  /* Above the header (900), below the body::after film grain (9999) so the
+     grain textures the panels and they read like the page, not a flat slab. */
+  z-index: 9000;
+  pointer-events: none;
+}
+
+.page-shutter__panel {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  box-sizing: border-box;
+  /* Matches the page background (not --clr-bg-secondary) so the seam is the
+     only thing that reads, never a lightness step against the page. */
+  background-color: var(--clr-bg-primary-dark);
+  /* easeInOutExpo: a weighted curtain curve (settle, rush the middle, ease to
+     a stop). Chosen for the shutter specifically, not the UI --ease token. */
+  transition: transform 0.9s cubic-bezier(0.83, 0, 0.17, 1);
+}
+
+/* Resting (open): each panel parked just off its own edge, gold edge facing
+   centre so it leads the motion as the panels seal. The soft gold glow bleeds
+   from the leading edge, echoing the hero's warm radial light. */
+.page-shutter__panel--top {
+  top: 0;
+  /* The extra 60px parks the gold glow off-screen too, not just the panel —
+     the box-shadow blur would otherwise bleed past the viewport edge at rest. */
+  transform: translateY(calc(-100% - 60px));
+  border-bottom: 2px solid var(--clr-primary-gold);
+  box-shadow: 0 6px 34px -6px color-mix(in srgb, var(--clr-primary-gold) 50%, transparent);
+}
+
+.page-shutter__panel--bottom {
+  bottom: 0;
+  transform: translateY(calc(100% + 60px));
+  border-top: 2px solid var(--clr-primary-gold);
+  box-shadow: 0 -6px 34px -6px color-mix(in srgb, var(--clr-primary-gold) 50%, transparent);
+}
+
+/* Sealed: both panels meet at centre, the gold edges forming the seam. */
+.page-shutter.is-sealed .page-shutter__panel {
+  transform: translateY(0);
+}
+
+/* The root swap is instant beneath the sealed shutter rather than
+   cross-fading — an opacity cross-fade of the near-black root reads as a dark
+   flash, and the panels cover the swap anyway. The active nav link still
+   updates, just without a fade. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+}
+
+/* Unlayered: disable view-transition animations for reduced-motion users.
+   The DOM still swaps instantly; only the cross-fade is suppressed. */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
   }
 }
 
@@ -423,56 +299,67 @@
 }
 
 @layer fonts {
-  /* Jetbrains Mono */
-  @font-face {
-    font-display: swap;
-    font-family: "JetBrains";
-    font-style: normal;
-    font-weight: 400;
-    src: url("../fonts/jetbrains-mono-v24-latin-regular.woff2") format("woff2");
-  }
+  /* Bricolage */
 
-  /* Orbitron */
   @font-face {
     font-display: swap;
-    font-family: "Orbitron";
+    font-family: "Bricolage Grotesque";
     font-style: normal;
     font-weight: 400;
-    src: url("../fonts/orbitron-v35-latin-regular.woff2") format("woff2");
+    src: url("../fonts/bricolage-grotesque-v9-latin-regular.woff2") format("woff2");
   }
 
   @font-face {
     font-display: swap;
-    font-family: "Orbitron";
+    font-family: "Bricolage Grotesque";
     font-style: normal;
     font-weight: 700;
-    src: url("../fonts/orbitron-v35-latin-700.woff2") format("woff2");
-  }
-
-  @font-face {
-    font-display: swap;
-    font-family: "Orbitron";
-    font-style: normal;
-    font-weight: 900;
-    src: url("../fonts/orbitron-v35-latin-900.woff2") format("woff2");
+    src: url("../fonts/bricolage-grotesque-v9-latin-700.woff2") format("woff2");
   }
 }
 
 @layer base {
+  /* Reserve the scrollbar gutter so toggling overflow on .menu-open never
+     removes the scrollbar and reflows the centered layout — without this the
+     mobile nav open/close shifts the whole bar by the scrollbar width. */
+  html {
+    scrollbar-gutter: stable;
+  }
+
   body {
     position: relative;
-    background-color: var(--clr-bg-primary);
+    background-color: var(--clr-bg-primary-dark);
     font-family: var(--ff-main);
     color: var(--clr-body-text);
   }
 
+  /* Lock background scroll while the mobile nav is open — and keep it locked
+     through the staggered close (.is-closing) so the page can't scroll behind
+     the dissolving panel. The full-screen panel covers the viewport (with
+     overscroll-behavior: contain), so plain overflow hidden is enough — no
+     position:fixed jump that would fight the sticky bar. */
+  body.menu-open,
+  body.is-closing {
+    overflow: hidden;
+  }
+
+  /* Opaque, stacked above the sticky .closing block so it never shows
+     through transparent gaps while scrolling — only once main scrolls away. */
+  main {
+    position: relative;
+    z-index: 1;
+    background-color: var(--clr-bg-primary-dark);
+  }
+
   body::after {
     content: "";
-    pointer-events: none;
-    position: absolute;
+    position: fixed;
     inset: 0;
-    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cfilter id='a'%3E%3CfeTurbulence baseFrequency='.9' numOctaves='4' stitchTiles='stitch' type='fractalNoise'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23a)'/%3E%3C/svg%3E");
-    opacity: 0.025;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.088;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    background-size: 160px 160px;
   }
 
   /* Layout */
@@ -523,95 +410,79 @@
 }
 
 @layer typography {
-  .h1,
-  .hero-title,
-  .hero__subtitle,
   .section-title,
   .site-logo,
-  .offer-card-title,
   .package-title,
   .card__content-title,
   .subtitle,
   .timeline__step-title {
-    font-family: var(--ff-heading);
     text-transform: uppercase;
-  }
-
-  /* Common h3 styles */
-  .offer-card-title,
-  .card__content-title {
-    font-size: var(--fs-450);
-    font-weight: var(--fw-700);
-    letter-spacing: 1px;
   }
 
   /* MQ */
   .hero-title {
-    position: relative;
-    display: inline-block;
-
-    /*  */
-    font-size: clamp(3.75rem, 2.9815573770491803rem + 3.278688524590164vw, 6.875rem);
-    font-weight: var(--fw-900);
+    font-size: clamp(4rem, 3.2077464788732395rem + 3.3802816901408446vw, 6.25rem);
+    font-weight: var(--fw-700);
     line-height: 1;
-
-    text-shadow:
-      0 0 4px rgba(0, 240, 255, 0.6),
-      0 0 80px rgba(0, 240, 255, 0.25);
-    filter: drop-shadow(0 0 5px var(--clr-glow-teal));
+    letter-spacing: -0.05em;
   }
 
-  .hero-title::before,
-  .hero-title::after {
-    content: attr(data-text);
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 80%;
-    will-change: transform, clip-path;
+  .hero-title-accent {
+    color: var(--clr-body-muted);
   }
 
-  .hero-title::before {
-    z-index: -1;
-    color: var(--cyber-magenta-500);
-    animation: glitch-1 8s linear infinite alternate-reverse;
+  .hero-title--inner {
+    font-size: clamp(5.625rem, 3.644366197183099rem + 8.450704225352112vw, 11.25rem);
+    letter-spacing: -0.02em;
   }
 
-  .hero-title::after {
-    z-index: -1;
-    /* color: var(--cyber-cyan-500); */
-    animation: glitch-2 6s linear infinite alternate;
+  .hero-title--404 {
+    font-size: clamp(2.5rem, 1.3996478873239437rem + 4.694835680751173vw, 5.625rem);
+    letter-spacing: -1.75px;
   }
 
   .hero__subtitle {
-    font-size: clamp(1.25rem, 1.1619718309859155rem + 0.3755868544600939vw, 1.5rem);
-    font-weight: var(--fw-900);
-    letter-spacing: 1px;
-    letter-spacing: 0px;
+    color: var(--clr-body-muted-light);
+    font-size: clamp(0.9375rem, 0.9rem + 0.16vw, 1rem);
+    font-weight: var(--fw-700);
+  }
+
+  .hero__subtitle--404 {
+    color: var(--clr-body-muted-light);
+    font-size: clamp(0.9375rem, 0.8778625954198473rem + 0.2544529262086514vw, 1rem);
+    max-width: 45ch;
+    margin-inline: auto;
   }
 
   /* MQ */
   .site-logo {
-    color: var(--clr-body-text);
-    text-shadow: var(--glow-text-cyan);
+    color: var(--clr-primary-gold);
     font-size: var(--fs-700);
-    font-weight: var(--fw-900);
+    font-weight: var(--fw-700);
+    letter-spacing: -0.06em;
   }
 
   .section-title {
-    color: var(--cyber-cyan-500);
+    color: var(--clr-primary-gold);
+    text-transform: uppercase;
     font-size: clamp(1rem, 0.8807251908396947rem + 0.5089058524173028vw, 1.125rem);
-    text-shadow: var(--glow-text-cyan);
-    letter-spacing: 3px;
+    letter-spacing: 2px;
   }
 
-  .subtitle {
-    display: block;
-    font-size: clamp(1.625rem, 1.4rem + 0.9600000000000001vw, 2rem);
-    line-height: 1.2;
-    letter-spacing: 0.5px;
+  .section-subtitle {
+    font-size: clamp(2.125rem, 1.5528169014084507rem + 2.4413145539906105vw, 3.75rem);
+    font-weight: var(--fw-700);
+    line-height: 1;
+    letter-spacing: -0.03em;
+
+    margin-block-start: var(--spacing-xs);
+  }
+
+  .section-subtitle--light {
+    color: var(--clr-body-text);
+  }
+  .section-subtitle--dark {
+    color: var(--clr-body-text-dark);
   }
 
   .offer-card-title {
@@ -623,38 +494,44 @@
     letter-spacing: 1px;
   }
 
-  @media (min-width: 48rem) {
-    .site-logo {
-      color: var(--cyber-cyan-500);
-    }
+  /* Redesign Start */
+
+  .eyebrow {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: var(--fs-350);
+    font-weight: var(--fw-700);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
   }
 
-  @media (min-width: 62.5rem) {
-    /* MQ */
-    /* .site-logo {
-      font-size: var(--fs-725);
-    } */
+  .eyebrow::before {
+    content: "";
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: var(--eyebrow-clr);
+  }
 
-    .hero-title {
-      /* font-size: 110px; */
-      /* font-size: var(--fs-800); */
+  .eyebrow--gold {
+    --eyebrow-clr: var(--clr-primary-gold);
+    color: var(--eyebrow-clr);
+  }
 
-      line-height: 0.9;
-      /* line-height: 1; */
-    }
+  .eyebrow--dark {
+    --eyebrow-clr: var(--clr-body-muted);
+    color: var(--eyebrow-clr);
+  }
 
-    .hero__subtitle {
-      /* Not for mobile atm */
-      /* font-size: var(--fs-500);
-      font-size: var(--fs-600); */
-      letter-spacing: 1px;
-    }
-
-    .h6 {
-      font-family: var(--ff-heading);
-      text-transform: uppercase;
-      letter-spacing: 2px;
-    }
+  .footer-title {
+    max-width: 18ch;
+    color: var(--clr-neutral-0);
+    font-size: clamp(1.75rem, 1rem + 3.5vw, 3.5rem);
+    font-weight: var(--fw-700);
+    line-height: 1;
+    letter-spacing: -0.01em;
   }
 }
 

@@ -1,0 +1,1098 @@
+---
+// Images
+import ArrowDown from "@/assets/icons/arrow-down.svg";
+import SuccessIcon from "@/assets/icons/checkmark.svg";
+import ErrorIcon from "@/assets/icons/cross.svg";
+
+// Components
+import ItalicTitle from "../ui/ItalicTitle.astro";
+import LinkOrButton from "../ui/LinkOrButton.astro";
+---
+
+<section class="booking | grid-main" id="your-venue" aria-labelledby="booking-title">
+  <header class="booking__head | fade-in">
+    <p class="eyebrow eyebrow--gold">Quick brief</p>
+    <h2 class="section-subtitle section-subtitle--light" id="booking-title">
+      Tell us about your <ItalicTitle variant="on-dark">venue.</ItalicTitle>
+    </h2>
+    <p class="booking__intro">
+      The more we know, the sharper the three concepts. It takes under a minute.
+    </p>
+  </header>
+
+  <div class="booking__panel | fade-in">
+    <noscript>
+      <p class="form__noscript">
+        JavaScript needs to be on to book your call. You can also reach us directly at
+        <a href="mailto:vyteca@gmail.com">vyteca@gmail.com</a>.
+      </p>
+    </noscript>
+
+    <form class="form" data-booking-form novalidate>
+      <span class="form__corner form__corner--tl" aria-hidden="true"></span>
+      <span class="form__corner form__corner--tr" aria-hidden="true"></span>
+      <span class="form__corner form__corner--bl" aria-hidden="true"></span>
+      <span class="form__corner form__corner--br" aria-hidden="true"></span>
+
+      <div class="form__control form__control--pair">
+        <label for="bf-name">
+          <span>Name</span>
+          <span class="asterix" aria-hidden="true">*</span>
+        </label>
+        <div class="input__wrapper">
+          <input
+            type="text"
+            id="bf-name"
+            name="name"
+            placeholder="Jane Smith"
+            autocomplete="name"
+            aria-describedby="bf-error-name"
+            data-input
+            required
+          />
+          <div class="icon__wrapper">
+            <SuccessIcon class="icon icon--success" width="24" height="24" aria-hidden="true" />
+            <ErrorIcon class="icon icon--error" width="24" height="24" aria-hidden="true" />
+          </div>
+        </div>
+        <span class="error-message" data-error-for="name" aria-live="polite" id="bf-error-name"
+        ></span>
+      </div>
+
+      <div class="form__control form__control--pair">
+        <label for="bf-business">
+          <span>Business name</span>
+          <span class="asterix" aria-hidden="true">*</span>
+        </label>
+        <div class="input__wrapper">
+          <input
+            type="text"
+            id="bf-business"
+            name="business-name"
+            placeholder="The Wine Room"
+            autocomplete="organization"
+            aria-describedby="bf-error-business-name"
+            data-input
+            required
+          />
+          <div class="icon__wrapper">
+            <SuccessIcon class="icon icon--success" width="24" height="24" aria-hidden="true" />
+            <ErrorIcon class="icon icon--error" width="24" height="24" aria-hidden="true" />
+          </div>
+        </div>
+        <span
+          class="error-message"
+          data-error-for="business-name"
+          aria-live="polite"
+          id="bf-error-business-name"></span>
+      </div>
+
+      <div class="form__control form__control--pair">
+        <label for="bf-email">
+          <span>Email</span>
+          <span class="asterix" aria-hidden="true">*</span>
+        </label>
+        <div class="input__wrapper">
+          <input
+            type="email"
+            id="bf-email"
+            name="email"
+            placeholder="you@venue.com.au"
+            autocomplete="email"
+            aria-describedby="bf-error-email"
+            data-input
+            required
+          />
+          <div class="icon__wrapper">
+            <SuccessIcon class="icon icon--success" width="24" height="24" aria-hidden="true" />
+            <ErrorIcon class="icon icon--error" width="24" height="24" aria-hidden="true" />
+          </div>
+        </div>
+        <span class="error-message" data-error-for="email" aria-live="polite" id="bf-error-email"
+        ></span>
+      </div>
+
+      <div class="form__control form__control--pair">
+        <label for="bf-phone">
+          <span>Phone</span>
+          <span class="asterix" aria-hidden="true">*</span>
+        </label>
+        <div class="input__wrapper">
+          <input
+            type="tel"
+            id="bf-phone"
+            name="phone"
+            placeholder="0430 811 413"
+            inputmode="tel"
+            autocomplete="tel"
+            aria-describedby="bf-error-phone"
+            data-input
+            required
+          />
+          <div class="icon__wrapper">
+            <SuccessIcon class="icon icon--success" width="24" height="24" aria-hidden="true" />
+            <ErrorIcon class="icon icon--error" width="24" height="24" aria-hidden="true" />
+          </div>
+        </div>
+        <span class="error-message" data-error-for="phone" aria-live="polite" id="bf-error-phone"
+        ></span>
+      </div>
+
+      <div class="form__control">
+        <label for="bf-website">
+          <span>Current website</span>
+          <span class="optional">(optional)</span>
+        </label>
+        <div class="input__wrapper">
+          <input
+            type="url"
+            id="bf-website"
+            name="website"
+            placeholder="yourvenue.com.au"
+            autocomplete="url"
+            aria-describedby="bf-error-website"
+            data-input
+          />
+          <div class="icon__wrapper">
+            <SuccessIcon class="icon icon--success" width="24" height="24" aria-hidden="true" />
+            <ErrorIcon class="icon icon--error" width="24" height="24" aria-hidden="true" />
+          </div>
+        </div>
+        <span
+          class="error-message"
+          data-error-for="website"
+          aria-live="polite"
+          id="bf-error-website"></span>
+      </div>
+
+      <div class="form__control">
+        <label for="bf-notes">
+          <span>Anything you'd like us to know?</span>
+          <span class="optional">(optional)</span>
+        </label>
+        <div class="input__wrapper">
+          <textarea
+            id="bf-notes"
+            name="notes"
+            rows="4"
+            placeholder="What's working, what's not, or what you'd love your site to do."
+          ></textarea>
+        </div>
+      </div>
+
+      <div class="fax__wrapper" aria-hidden="true">
+        <label for="bf-fax">Leave this field empty if you're a human</label>
+        <input type="text" name="fax" id="bf-fax" value="" tabindex="-1" autocomplete="off" />
+      </div>
+
+      <div class="booking__submit">
+        <LinkOrButton
+          as="button"
+          type="submit"
+          text="Pick a time to see your designs"
+          variant="primary"
+        >
+          <ArrowDown />
+        </LinkOrButton>
+      </div>
+
+      <p class="form__fineprint">
+        No cost, no obligation. We only use your details to pre-fill and share your designs.
+      </p>
+      <p class="form__status" role="alert" data-form-status hidden></p>
+    </form>
+  </div>
+
+  <div class="connector" data-connector hidden aria-hidden="true">
+    <span class="connector__line"></span>
+    <span class="connector__arrow">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M12 5v14M6 13l6 6 6-6"></path>
+      </svg>
+    </span>
+  </div>
+</section>
+
+<section class="final | grid-main" data-final hidden aria-labelledby="final-title">
+  <header class="final__head">
+    <p class="eyebrow eyebrow--dark">Final step</p>
+    <h2
+      class="section-subtitle section-subtitle--dark"
+      id="final-title"
+      data-final-title
+      tabindex="-1"
+    >
+      Pick a time and I'll have your <ItalicTitle variant="on-light">3 designs ready.</ItalicTitle>
+    </h2>
+    <p class="final__intro">
+      A short call, around 15 minutes. I'll share the three concepts on screen and talk you through
+      each one.
+    </p>
+  </header>
+
+  <div class="final__embed-frame">
+    <div class="final__embed" data-cal-container></div>
+    <p class="final__loading" data-cal-loading>
+      <span class="final__spinner" aria-hidden="true"></span>
+      Loading your calendar…
+    </p>
+  </div>
+</section>
+
+<style>
+  /* ════════════════ Brief form (dark) ════════════════
+     Field/panel styling is ported from Contact.astro so the two forms read
+     identically. The same brighter, gold-tied border tokens are used because
+     the default --clr-border-default is near-invisible on the dark surface.
+  ════════════════════════════════════════════════════════ */
+  .booking {
+    --c-gold: var(--clr-primary-gold);
+    --c-border: hsl(30, 6%, 24%);
+    --c-border-hover: var(--clr-body-muted);
+    --c-gold-tint: color-mix(in srgb, var(--clr-primary-gold) 8%, transparent);
+    --c-gold-ring: color-mix(in srgb, var(--clr-primary-gold) 20%, transparent);
+    --c-gold-inset: color-mix(in srgb, var(--clr-primary-gold) 10%, transparent);
+
+    --c-ok: oklch(66% 0.115 152);
+    --c-ok-bg: oklch(66% 0.115 152 / 0.08);
+    --c-err: oklch(60% 0.145 30);
+    --c-err-bg: oklch(60% 0.145 30 / 0.08);
+
+    position: relative;
+    padding-block: var(--spacing-2xl);
+    scroll-margin-top: 90px;
+    background-color: var(--clr-bg-primary-dark);
+  }
+
+  /* ── Header ──────────────────────────────────────────── */
+  .booking__head {
+    text-align: center;
+  }
+
+  .booking__title {
+    font-size: clamp(2rem, 1.4rem + 2.6vw, 3.25rem);
+    font-weight: var(--fw-700);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--clr-body-text);
+  }
+
+  .booking__intro {
+    margin-block-start: var(--spacing-md);
+    font-size: var(--fs-400);
+    line-height: 1.7;
+    color: var(--clr-body-muted-light);
+  }
+
+  /* ── Panel ───────────────────────────────────────────── */
+  .booking__panel {
+    width: 100%;
+    max-width: 56rem;
+    margin-inline: auto;
+    margin-block-start: var(--spacing-2xl);
+  }
+
+  .form {
+    position: relative;
+    display: grid;
+    align-items: start;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-lg) var(--spacing-md);
+    background-color: var(--clr-bg-card);
+    border: 1px solid var(--c-border);
+    border-radius: 3px;
+  }
+
+  /* corner brackets */
+  .form__corner {
+    position: absolute;
+    z-index: 2;
+    width: 14px;
+    height: 14px;
+    opacity: 0.55;
+    pointer-events: none;
+  }
+  .form__corner::before,
+  .form__corner::after {
+    content: "";
+    position: absolute;
+    background: var(--c-gold);
+  }
+  .form__corner::before {
+    width: 1px;
+    height: 100%;
+  }
+  .form__corner::after {
+    width: 100%;
+    height: 1px;
+  }
+  .form__corner--tl {
+    top: -1px;
+    left: -1px;
+  }
+  .form__corner--tl::before,
+  .form__corner--tl::after {
+    top: 0;
+    left: 0;
+  }
+  .form__corner--tr {
+    top: -1px;
+    right: -1px;
+  }
+  .form__corner--tr::before,
+  .form__corner--tr::after {
+    top: 0;
+    right: 0;
+  }
+  .form__corner--bl {
+    bottom: -1px;
+    left: -1px;
+  }
+  .form__corner--bl::before,
+  .form__corner--bl::after {
+    bottom: 0;
+    left: 0;
+  }
+  .form__corner--br {
+    bottom: -1px;
+    right: -1px;
+  }
+  .form__corner--br::before,
+  .form__corner--br::after {
+    bottom: 0;
+    right: 0;
+  }
+
+  .form__control {
+    display: grid;
+    gap: var(--spacing-xs);
+  }
+
+  .input__wrapper {
+    position: relative;
+  }
+
+  input,
+  textarea {
+    --input-primary-clr: var(--clr-primary-gold);
+
+    width: 100%;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border: 1px solid var(--c-border);
+    border-radius: 3px;
+    background-color: var(--clr-bg-primary-dark);
+    color: var(--clr-body-text);
+    outline: none;
+    transition:
+      border-color 0.3s var(--ease),
+      box-shadow 0.3s var(--ease),
+      background-color 0.3s var(--ease);
+  }
+
+  .input__wrapper input {
+    padding-inline-end: 2.75rem;
+  }
+
+  textarea {
+    resize: block;
+    min-height: 8rem;
+    line-height: 1.6;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--clr-body-muted);
+    font-size: var(--fs-350);
+  }
+
+  input:hover,
+  textarea:hover {
+    border-color: var(--c-border-hover);
+  }
+
+  input:focus-visible,
+  textarea:focus-visible {
+    border-color: var(--input-primary-clr);
+    box-shadow:
+      0 0 0 3px var(--c-gold-ring),
+      inset 0 0 15px var(--c-gold-inset);
+  }
+
+  .form__control label {
+    font-size: var(--fs-350);
+    font-weight: var(--fw-700);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--clr-body-muted-light);
+  }
+
+  .asterix {
+    color: var(--c-gold);
+  }
+
+  .optional {
+    margin-left: var(--spacing-xxs);
+    font-weight: var(--fw-400);
+    text-transform: none;
+    letter-spacing: normal;
+    color: var(--clr-body-muted);
+  }
+
+  /* ── Submit + fineprint ── */
+  .booking__submit {
+    display: grid;
+    margin-top: var(--spacing-xs);
+  }
+
+  /* The form's submit is the page's key conversion action — gold-filled to set
+     it apart from the neutral hero CTA. Recolours LinkOrButton's primary tokens
+     only, so the lift, magnetic pull and gold-outline hover all carry over. */
+  .booking__submit :global(.btn--primary) {
+    --btn-bg: var(--clr-primary-gold);
+    --btn-border: var(--clr-primary-gold);
+    --btn-fg: var(--clr-neutral-900);
+  }
+
+  .form__fineprint {
+    font-size: var(--fs-300);
+    text-align: center;
+    color: var(--clr-body-muted);
+  }
+
+  .form__status {
+    font-size: var(--fs-350);
+    text-align: center;
+    color: var(--c-err);
+  }
+
+  .form__noscript {
+    margin-bottom: var(--spacing-sm);
+    padding: var(--spacing-sm);
+    border: 1px solid var(--c-border);
+    border-radius: 3px;
+    font-size: var(--fs-350);
+    color: var(--clr-body-muted-light);
+  }
+  .form__noscript a {
+    color: var(--c-gold);
+  }
+
+  /* honeypot — kept in the DOM so bots still fill it, but removed from
+     view, the accessibility tree (aria-hidden) and the tab order. */
+  .fax__wrapper {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  /* ── Success + error states ── */
+  .icon {
+    display: none;
+  }
+  .icon--success {
+    color: var(--c-ok);
+  }
+  .icon--error {
+    color: var(--c-err);
+  }
+
+  .form__control .error-input {
+    border-color: var(--c-err);
+    background-color: var(--c-err-bg);
+  }
+  .form__control .error-input:focus-visible {
+    border-color: var(--c-err);
+    box-shadow:
+      0 0 0 3px color-mix(in srgb, var(--c-err) 22%, transparent),
+      inset 0 0 15px color-mix(in srgb, var(--c-err) 8%, transparent);
+  }
+  .form__control .success-input {
+    border-color: var(--c-ok);
+    background-color: var(--c-ok-bg);
+  }
+  .form__control .success-input:focus-visible {
+    border-color: var(--c-ok);
+    box-shadow:
+      0 0 0 3px color-mix(in srgb, var(--c-ok) 22%, transparent),
+      inset 0 0 15px color-mix(in srgb, var(--c-ok) 8%, transparent);
+  }
+
+  .error-message {
+    margin-block-start: var(--spacing-xxs);
+    font-size: var(--fs-350);
+    color: var(--c-err);
+  }
+
+  .form__control.has-success .icon--success {
+    display: block;
+  }
+  .form__control.has-error .icon--error {
+    display: block;
+  }
+
+  .form .icon__wrapper {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+  }
+
+  /* ── Connector (gold line + arrow) ───────────────────── */
+  .connector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-block-start: var(--spacing-2xl);
+  }
+  /* Class+attribute (0,2,0) beats .grid-main (0,1,0) so hidden wins over the
+     grid's display — without this the section would show despite [hidden]. */
+  .connector[hidden] {
+    display: none;
+  }
+  .connector__line {
+    width: 1px;
+    height: 56px;
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      color-mix(in srgb, var(--clr-primary-gold) 70%, transparent)
+    );
+  }
+  .connector__arrow {
+    margin-block-start: -2px;
+    color: var(--clr-primary-gold);
+  }
+  .connector__arrow svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  /* ════════════════ Final step · Cal.com (cream) ════════════════ */
+  .final {
+    padding-block: var(--section-space);
+    scroll-margin-top: 80px;
+    background-color: var(--clr-bg-primary-light);
+    color: var(--clr-body-text-dark);
+  }
+
+  .final[hidden] {
+    display: none;
+  }
+
+  .final__head {
+    text-align: center;
+  }
+  .final__title {
+    max-width: 26ch;
+    margin-inline: auto;
+    margin-block-start: var(--spacing-sm);
+    font-size: clamp(2rem, 1.4rem + 2.6vw, 3.25rem);
+    font-weight: var(--fw-700);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--clr-body-text-dark);
+  }
+  .final__title:focus {
+    outline: none;
+  }
+  .final__title:focus-visible {
+    outline: 2px solid var(--clr-primary-gold);
+    outline-offset: 6px;
+    border-radius: 2px;
+  }
+  .final__intro {
+    margin-block-start: var(--spacing-md);
+    margin-inline: auto;
+    max-width: 55ch;
+    font-size: var(--fs-400);
+    line-height: 1.7;
+    color: var(--clr-body-muted);
+  }
+
+  /* Frame around the embed — gives the calendar a defined surface on cream and
+     holds height while the iframe loads. */
+  .final__embed-frame {
+    position: relative;
+    width: 100%;
+    max-width: 56rem;
+    margin-inline: auto;
+    margin-block-start: var(--spacing-2xl);
+    min-height: 580px;
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    background: var(--clr-neutral-0);
+    overflow: hidden;
+  }
+  .final__embed {
+    width: 100%;
+  }
+
+  .final__loading {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    font-size: var(--fs-350);
+    color: var(--clr-body-muted-light);
+  }
+  .final__loading[hidden] {
+    display: none;
+  }
+  .final__spinner {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid color-mix(in srgb, var(--clr-primary-gold) 25%, transparent);
+    border-top-color: var(--clr-primary-gold);
+    animation: bf-spin 0.8s linear infinite;
+  }
+  @keyframes bf-spin {
+    to {
+      rotate: 1turn;
+    }
+  }
+
+  /* ── Reveal motion (gated) ───────────────────────────── */
+  @media (prefers-reduced-motion: no-preference) {
+    .connector:not([hidden]),
+    .final:not([hidden]) {
+      opacity: 0;
+      transform: translateY(14px);
+      transition:
+        opacity 0.6s var(--ease),
+        transform 0.6s var(--ease);
+    }
+    .connector.is-revealed,
+    .final.is-revealed {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    input,
+    textarea {
+      transition: none;
+    }
+    .final__spinner {
+      animation: none;
+    }
+  }
+
+  /* ── Responsive form layout (ported from Contact) ────── */
+  @media (min-width: 40rem) {
+    .form {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--spacing-md);
+      padding: var(--spacing-xl);
+    }
+    .form > .form__control,
+    .form > .booking__submit,
+    .form > .form__fineprint,
+    .form > .form__status {
+      grid-column: 1 / -1;
+    }
+    .form > .form__control--pair {
+      grid-column: auto;
+    }
+  }
+</style>
+
+<script>
+  // Cal.com attaches to window untyped; keep a single narrow cast. (dataLayer is
+  // already declared on the global Window elsewhere.)
+  interface CalWindow extends Window {
+    Cal?: any;
+  }
+
+  function initBookingFlow() {
+    const form = document.querySelector<HTMLFormElement>("[data-booking-form]");
+    // Bail on routes without this form. The astro:page-load listener is global,
+    // so this runs on every navigation, including pages with no booking form.
+    if (!form) return;
+
+    const CAL_LINK = "vyteca/design-reveal";
+    const CAL_NAMESPACE = "designReveal";
+    const CAL_BRAND = "#c4a45a"; // --clr-primary-gold as hex
+
+    // Identifier of the phone booking question in your Cal.com event type
+    // (Event Type → Advanced → Booking questions → phone field → Identifier).
+    const CAL_PHONE_FIELD = "attendeePhoneNumber";
+
+    const w = window as unknown as CalWindow;
+
+    const controller = new AbortController();
+    const { signal } = controller;
+
+    const liveFields = document.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>(
+      "[data-input]",
+    );
+    const connector = document.querySelector<HTMLElement>("[data-connector]");
+    const finalSection = document.querySelector<HTMLElement>("[data-final]");
+    const finalTitle = document.querySelector<HTMLElement>("[data-final-title]");
+    const calContainer = document.querySelector<HTMLElement>("[data-cal-container]");
+    const calLoading = document.querySelector<HTMLElement>("[data-cal-loading]");
+    const formStatusEl = document.querySelector<HTMLElement>("[data-form-status]");
+
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    // Observer + rAF kept for teardown before the next swap.
+    let preloadObserver: IntersectionObserver | null = null;
+    let revealRaf: number | null = null;
+
+    // ── Cal.com lazy loader ────────────────────────────────────────────────────
+    let calInitialised = false;
+    let calHandlersBound = false;
+    let calMounted = false;
+
+    function loadCalScript() {
+      if (w.Cal) return;
+      (function (C: any, A: string, L: string) {
+        const p = (a: any, ar: any) => a.q.push(ar);
+        const d = C.document;
+        C.Cal =
+          C.Cal ||
+          function () {
+            const cal = C.Cal;
+            const ar = arguments;
+            if (!cal.loaded) {
+              cal.ns = {};
+              cal.q = cal.q || [];
+              d.head.appendChild(d.createElement("script")).src = A;
+              cal.loaded = true;
+            }
+            if (ar[0] === L) {
+              const api = function () {
+                p(api, arguments);
+              };
+              const namespace = ar[1];
+              (api as any).q = (api as any).q || [];
+              if (typeof namespace === "string") {
+                cal.ns[namespace] = cal.ns[namespace] || api;
+                p(cal.ns[namespace], ar);
+                p(cal, ["initNamespace", namespace]);
+              } else p(cal, ar);
+              return;
+            }
+            p(cal, ar);
+          };
+      })(window, "https://app.cal.com/embed/embed.js", "init");
+    }
+
+    // Fetch + initialise the embed script (no calendar mounted yet) so it's warm
+    // by the time the form is submitted. Idempotent.
+    function preloadCal() {
+      if (calInitialised) return;
+      loadCalScript();
+      if (!w.Cal) return;
+      calInitialised = true;
+      w.Cal("init", CAL_NAMESPACE, { origin: "https://cal.com" });
+    }
+
+    function mountCal(prefill: Record<string, string>) {
+      if (!calContainer) return;
+      preloadCal();
+      const ns = w.Cal.ns[CAL_NAMESPACE];
+
+      ns("inline", {
+        elementOrSelector: calContainer,
+        calLink: CAL_LINK,
+        config: { layout: "month_view", theme: "light", ...prefill },
+      });
+
+      ns("ui", {
+        theme: "light",
+        cssVarsPerTheme: { light: { "cal-brand": CAL_BRAND }, dark: { "cal-brand": CAL_BRAND } },
+        hideEventTypeDetails: false,
+        layout: "month_view",
+      });
+
+      if (!calHandlersBound) {
+        calHandlersBound = true;
+        ns("on", {
+          action: "linkReady",
+          callback: () => {
+            if (calLoading) calLoading.hidden = true;
+          },
+        });
+        ns("on", {
+          action: "bookingSuccessful",
+          callback: () => {
+            w.dataLayer = w.dataLayer || [];
+            w.dataLayer.push({ event: "booking_confirmed", form: "free-designs" });
+          },
+        });
+      }
+    }
+
+    // Preload the embed script as soon as the form nears the viewport.
+    if (calContainer) {
+      preloadObserver = new IntersectionObserver(
+        (entries, obs) => {
+          if (entries.some((e) => e.isIntersecting)) {
+            preloadCal();
+            obs.disconnect();
+          }
+        },
+        { rootMargin: "300px 0px" },
+      );
+      preloadObserver.observe(form);
+    }
+
+    // ── Field validation (mirrors Contact.astro) ───────────────────────────────
+    function setFieldError(fieldName: string, message: string | null) {
+      const inputEl = form?.querySelector<HTMLInputElement>(`[name="${fieldName}"]`);
+      const control = inputEl?.closest(".form__control");
+      const errorMessageEl = form?.querySelector<HTMLSpanElement>(
+        `[data-error-for="${fieldName}"]`,
+      );
+      inputEl?.classList.add("error-input");
+      inputEl?.setAttribute("aria-invalid", "true");
+      control?.classList.add("has-error");
+      if (errorMessageEl) errorMessageEl.textContent = message ?? "";
+    }
+
+    function setFieldSuccess(fieldName: string) {
+      resetField(fieldName);
+      const inputEl = form?.querySelector(`[name="${fieldName}"]`);
+      const control = inputEl?.closest(".form__control");
+      inputEl?.classList.add("success-input");
+      control?.classList.add("has-success");
+    }
+
+    function resetField(fieldName: string) {
+      const inputEl = form?.querySelector(`[name="${fieldName}"]`);
+      const control = inputEl?.closest(".form__control");
+      const errorMessageEl = form?.querySelector(`[data-error-for="${fieldName}"]`);
+      control?.classList.remove("has-error", "has-success");
+      inputEl?.classList.remove("error-input", "success-input");
+      inputEl?.removeAttribute("aria-invalid");
+      if (errorMessageEl) errorMessageEl.textContent = "";
+    }
+
+    function validateAndUpdateField(
+      field: HTMLInputElement | HTMLTextAreaElement,
+      showErrorOnFail = false,
+    ) {
+      const name = field.name;
+      const value = field.value.trim();
+      let isValid = false;
+      let errorMsg = "";
+
+      resetField(name);
+
+      // Optional + empty → neutral (no tick, no error)
+      if (!field.required && value === "") return;
+
+      switch (name) {
+        case "name":
+          isValid = value.length >= 2;
+          errorMsg = "Please enter your name";
+          break;
+        case "business-name":
+          isValid = value.length >= 2;
+          errorMsg = "Please enter your business name";
+          break;
+        case "email":
+          isValid = /\S+@\S+\.\S+/.test(value);
+          errorMsg = !value ? "Email can't be empty" : "Please enter a valid email";
+          break;
+        case "phone": {
+          const digits = value.replace(/[^0-9+]/g, "");
+          isValid = digits.length >= 9;
+          errorMsg = !value ? "Phone can't be empty" : "Please enter a valid phone number";
+          break;
+        }
+        case "website":
+          isValid = /^(https?:\/\/)?[^\s.]+\.\S{2,}$/i.test(value);
+          errorMsg = "Please enter a valid website";
+          break;
+        default:
+          isValid = value.length > 0;
+      }
+
+      if (isValid) setFieldSuccess(name);
+      else if (showErrorOnFail) setFieldError(name, errorMsg);
+    }
+
+    liveFields.forEach((field) => {
+      field.addEventListener("input", () => validateAndUpdateField(field), { signal });
+      field.addEventListener("blur", () => validateAndUpdateField(field, true), { signal });
+    });
+
+    // First-interaction tracking (mirrors Contact)
+    let formStarted = false;
+    form?.addEventListener(
+      "focusin",
+      (e) => {
+        if (formStarted) return;
+        if (!(e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement))
+          return;
+        formStarted = true;
+        w.dataLayer = w.dataLayer || [];
+        w.dataLayer.push({ event: "form_start", form: "free-designs" });
+      },
+      { signal },
+    );
+
+    // ── Reveal ──────────────────────────────────────────────────────────────────
+    function revealBooking() {
+      if (!connector || !finalSection) return;
+      connector.hidden = false;
+      finalSection.hidden = false;
+      revealRaf = requestAnimationFrame(() => {
+        connector.classList.add("is-revealed");
+        finalSection.classList.add("is-revealed");
+      });
+    }
+
+    // Normalise to E.164 with an Australian country code so Cal's phone input
+    // opens on Australia and shows the number already filled.
+    function formatAuPhone(raw: string): string {
+      const v = (raw ?? "").trim().replace(/[^\d+]/g, "");
+      if (!v) return "";
+      if (v.startsWith("+")) return v; // already international — respect it
+      if (v.startsWith("0")) return "+61" + v.slice(1); // local AU (0…) → +61…
+      if (v.startsWith("61")) return "+" + v; // 61… → +61…
+      return "+61" + v; // bare national number → assume AU
+    }
+
+    // Only the attendee's name, email and phone are pre-filled. The additional
+    // notes field is left empty for the visitor to use.
+    function buildPrefill(data: Record<string, string>): Record<string, string> {
+      const prefill: Record<string, string> = {
+        name: data.name ?? "",
+        email: data.email ?? "",
+      };
+      const phone = formatAuPhone(data.phone ?? "");
+      if (phone) prefill[CAL_PHONE_FIELD] = phone;
+      return prefill;
+    }
+
+    // ── HubSpot lead capture (Forms Submission API) ────────────────────────────
+    // Pushes the brief into HubSpot the moment it validates, so the lead lands in
+    // the CRM even if the visitor never picks a calendar time. The endpoint is the
+    // ap1 regional host (the account's data centre) — the default api.hsforms.com
+    // host would silently reject. No secret is involved: portal + form IDs are the
+    // only credentials the public Forms API needs, so it's safe to call client-side.
+    const HUBSPOT_PORTAL_ID = "442932644";
+    const HUBSPOT_FORM_GUID = "6d966291-6e7b-4b62-86c2-f497f910e489";
+    const HUBSPOT_ENDPOINT = `https://api-ap1.hsforms.com/submissions/v3/integration/submit/${HUBSPOT_PORTAL_ID}/${HUBSPOT_FORM_GUID}`;
+
+    function sendToHubSpot(data: Record<string, string>) {
+      // Honeypot — a real user never fills the hidden fax field. Bail silently so
+      // bot submissions never reach the CRM. (The field is excluded from the
+      // payload below regardless; this just skips the call entirely.)
+      if (data.fax?.trim()) return;
+
+      // The form collects a single name field, which maps straight to HubSpot's
+      // firstname (the form has no lastname field).
+      const fields = [
+        { name: "firstname", value: (data.name ?? "").trim() },
+        { name: "email", value: data.email },
+        { name: "company", value: data["business-name"] },
+        { name: "phone", value: data.phone },
+        { name: "website", value: data.website },
+        { name: "message", value: data.notes },
+      ].filter((f) => f.value && f.value.trim() !== "");
+
+      // Fire-and-forget: a CRM hiccup must never block or break the booking flow.
+      fetch(HUBSPOT_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          fields,
+          context: { pageUri: window.location.href, pageName: document.title },
+        }),
+      }).catch(() => {});
+    }
+
+    form?.addEventListener(
+      "submit",
+      (e) => {
+        e.preventDefault();
+        if (formStatusEl) formStatusEl.hidden = true;
+
+        let isValid = true;
+        liveFields.forEach((field) => {
+          validateAndUpdateField(field, true);
+          if (field.closest(".form__control")?.classList.contains("has-error")) isValid = false;
+        });
+
+        if (!isValid) {
+          const firstError = form?.querySelector(".has-error");
+          firstError?.scrollIntoView({
+            behavior: prefersReduced.matches ? "auto" : "smooth",
+            block: "center",
+          });
+          if (formStatusEl) {
+            formStatusEl.textContent = "Please fix the highlighted fields and try again.";
+            formStatusEl.hidden = false;
+          }
+          return;
+        }
+
+        const data = Object.fromEntries(new FormData(form!)) as Record<string, string>;
+
+        // Honeypot: a real user never fills the hidden fax field. For bots that do,
+        // stop here silently — no CRM call, no analytics events, no calendar mount.
+        // Validation has already "passed" for them, so this looks like a no-op.
+        if (data.fax?.trim()) return;
+
+        // Capture the lead in HubSpot as soon as the brief is valid — before the
+        // calendar step, so a no-show on the booking still leaves us the lead.
+        sendToHubSpot(data);
+
+        w.dataLayer = w.dataLayer || [];
+        w.dataLayer.push({ event: "form_submission", form: "free-designs" });
+
+        // Mount the calendar once; later submits just bring the visitor back to it.
+        if (!calMounted) {
+          calMounted = true;
+          revealBooking();
+          mountCal(buildPrefill(data));
+        }
+
+        finalSection?.scrollIntoView({
+          behavior: prefersReduced.matches ? "auto" : "smooth",
+          block: "start",
+        });
+        finalTitle?.focus({ preventScroll: true });
+      },
+      { signal },
+    );
+
+    // Tear down before the page is swapped away: cancel the pending reveal rAF,
+    // drop the preload observer, and remove every form/field/document listener
+    // via the controller. The fresh form swapped in re-binds on the next
+    // astro:page-load.
+    document.addEventListener(
+      "astro:before-swap",
+      () => {
+        if (revealRaf !== null) cancelAnimationFrame(revealRaf);
+        preloadObserver?.disconnect();
+        controller.abort();
+      },
+      { once: true },
+    );
+  }
+
+  document.addEventListener("astro:page-load", initBookingFlow);
+</script>

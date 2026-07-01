@@ -1,0 +1,44 @@
+[
+  {
+    "id": "1",
+    "mobileImgSrc": "/src/assets/images/mobile/dine-mobile.png",
+    "desktopImgSrc": "/src/assets/images/desktop/dine-desktop.png",
+    "title": "Dine",
+    "eyebrow": "Contemporary dining",
+    "text": "A contemporary dining concept. Most venues bury the menu and make diners dig for the booking. This one keeps both a single tap away, on the phones people actually search from. Hand-coded from scratch to a perfect 100 on PageSpeed.",
+    "pageSpeed": "100",
+    "loadSpeed": "1.2s",
+    "roles": ["featured", "portfolio"],
+    "type": "concept",
+    "websiteHref": "https://dine-fem-project.netlify.app/",
+    "websiteUrl": "dine-fem-project.netlify.app"
+  },
+  {
+    "id": "2",
+    "mobileImgSrc": "/src/assets/images/mobile/barra-mobile.png",
+    "desktopImgSrc": "/src/assets/images/desktop/barra-desktop.png",
+    "title": "Barra",
+    "eyebrow": "Latin American",
+    "text": "A Latin American concept that lives on its produce. Most sites shrink the food into thumbnails, so we did the opposite: full-bleed photography that does the selling, with the booking never more than two taps away. No template, no page builder, and a perfect 100 on PageSpeed.",
+    "pageSpeed": "100",
+    "loadSpeed": "1.2s",
+    "roles": ["featured", "portfolio"],
+    "type": "concept",
+    "websiteHref": "https://barra-recreation.netlify.app/",
+    "websiteUrl": "barra-recreation.netlify.app"
+  },
+  {
+    "id": "3",
+    "mobileImgSrc": "/src/assets/images/mobile/aurelia-house-mobile.png",
+    "desktopImgSrc": "/src/assets/images/desktop/aurelia-house-desktop.png",
+    "title": "Aurelia House",
+    "eyebrow": "Modern Australian",
+    "text": "A modern Australian concept built around one action: the reservation. Plenty of restaurant sites tell a lovely story and forget to ask for the booking. Here the story, the seasonal menu, and a reserve button that never leaves the screen all point the same way. Hand-coded to a perfect 100 on PageSpeed.",
+    "pageSpeed": "100",
+    "loadSpeed": "1.2s",
+    "roles": ["featured", "portfolio"],
+    "type": "concept",
+    "websiteHref": "https://aurelia-house.netlify.app/",
+    "websiteUrl": "aurelia-house.netlify.app"
+  }
+]

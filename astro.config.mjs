@@ -1,6 +1,5 @@
 // @ts-check
-import { defineConfig } from "astro/config";
-import icon from "astro-icon";
+import { defineConfig, svgoOptimizer } from "astro/config";
 
 import netlify from "@astrojs/netlify";
 
@@ -18,7 +17,7 @@ export default defineConfig({
   },
 
   experimental: {
-    svgo: {
+    svgOptimizer: svgoOptimizer({
       plugins: [
         {
           name: "preset-default",
@@ -29,15 +28,10 @@ export default defineConfig({
           },
         },
       ],
-    },
+    }),
   },
 
-  integrations: [
-    icon({
-      iconDir: `src/assets/icons/offer`,
-    }),
-    sitemap(),
-  ],
+  integrations: [sitemap()],
 
   adapter: netlify(),
 
