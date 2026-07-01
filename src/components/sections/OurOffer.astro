@@ -81,11 +81,11 @@ import LinkOrButton from "../ui/LinkOrButton.astro";
     /* padding-block: var(--spacing-md); */
   }
 
-  h2 {
+  /* h2 {
     max-width: 16ch;
     margin-inline: auto;
     font-size: clamp(2.125rem, 1.9rem + 0.9600000000000001vw, 2.5rem);
-  }
+  } */
 
   /* Body text sticks at the same threshold as card 1. When the page header sticks,
      the body text is already at --_card-base from the viewport top, so it locks
@@ -154,8 +154,6 @@ import LinkOrButton from "../ui/LinkOrButton.astro";
     }
 
     h2 {
-      margin-inline: unset;
-      max-width: 19ch;
       text-wrap: unset;
     }
   }
@@ -170,6 +168,11 @@ import LinkOrButton from "../ui/LinkOrButton.astro";
   }
 
   @media (min-width: 62.5rem) {
+    h2 {
+      font-size: clamp(2.125rem, -1.568181818181818rem + 5.909090909090909vw, 3.75rem);
+      max-width: 19ch;
+    }
+
     .our__offer {
       display: grid;
       grid-template-columns: 1fr 1fr;
