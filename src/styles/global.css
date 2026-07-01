@@ -34,7 +34,7 @@
     --ease-reveal: cubic-bezier(0.215, 0.61, 0.355, 1);
     /*  */
 
-    --ff-main: "Bricolage Grotesque";
+    --ff-main: "Bricolage Grotesque", "Bricolage Grotesque Fallback", Arial, sans-serif;
 
     --fs-200: 0.625rem;
     --fs-300: 0.75rem;
@@ -315,6 +315,32 @@
     font-style: normal;
     font-weight: 700;
     src: url("../fonts/bricolage-grotesque-v9-latin-700.woff2") format("woff2");
+  }
+
+  /* Metric-matched fallback: local Arial (and its metric-compatible clones)
+     scaled via size-adjust + ascent/descent-override so it occupies the exact
+     space Bricolage will, per weight. Lets font-display: swap keep the brand
+     font while the fallback→Bricolage swap reflows nothing (kills the font CLS).
+     Values generated from the shipped woff2 metrics with Capsize — regenerate
+     (scripts/ in scratch) if the font files change. */
+  @font-face {
+    font-family: "Bricolage Grotesque Fallback";
+    src: local("Arial"), local("ArialMT"), local("Arimo"), local("Liberation Sans");
+    font-weight: 400;
+    size-adjust: 105.4283%;
+    ascent-override: 88.2116%;
+    descent-override: 25.6098%;
+    line-gap-override: 0%;
+  }
+
+  @font-face {
+    font-family: "Bricolage Grotesque Fallback";
+    src: local("Arial"), local("ArialMT"), local("Arimo"), local("Liberation Sans");
+    font-weight: 700;
+    size-adjust: 109.6903%;
+    ascent-override: 84.7842%;
+    descent-override: 24.6148%;
+    line-gap-override: 0%;
   }
 }
 
