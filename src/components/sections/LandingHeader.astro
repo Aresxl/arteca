@@ -8,6 +8,12 @@ import RollLink from "../ui/RollLink.astro";
 ---
 
 <header class="site__header | grid-main">
+  {/* Carries the scrolled frost. A backdrop-filter on the header itself makes
+      iOS 26's status-bar colour sampler bail out ("multiple colours"), so the
+      blur lives on this absolutely-positioned child, which the sampler skips
+      on its way up to the header's own background-color. */}
+  <div class="site__header-frost" aria-hidden="true"></div>
+
   <div class="site__header-inner">
     <RollLink href="/" text="Vyteca" class="home-link site-logo" aria-label="Vyteca home" />
 
@@ -24,37 +30,72 @@ import RollLink from "../ui/RollLink.astro";
 </header>
 
 <style>
+  /* iOS 26 Safari tints the status bar by sampling one point (viewport centre,
+     4px down) and walking up for a fixed/sticky ancestor with a real
+     background-color. This bar is that ancestor — see the fuller note in
+     Header.astro. Load bearing: a plain background-color on THIS element, no
+     backdrop-filter in the walk (it lives on .site__header-frost), and nothing
+     position:fixed covering the top of the viewport above it. */
   .site__header {
     position: sticky;
     z-index: 900;
     top: 0;
     padding-block: var(--spacing-xs);
+    min-height: var(--header-h);
 
-    /* Transparent at the top so the bar blends into the hero. */
-    background-color: transparent;
+    /* Was `transparent`, which gave the sampler nothing to read. This is the
+       page background at full opacity — visually identical to transparent at
+       scroll-top, because the hero sits on exactly this colour. */
+    background-color: var(--clr-bg-primary-dark);
     border-bottom: 1px solid transparent;
 
     /* Blur snaps on with .is-scrolled rather than transitioning, so the
        backdrop isn't re-sampled every frame — same treatment as the site header. */
     transition:
-      background-color 0.4s var(--ease),
       border-color 0.4s var(--ease),
       box-shadow 0.4s var(--ease);
   }
 
-  /* Once scrolled the bar "pops" with a solid dark tint, hairline border and
-     faint shadow — identical treatment to the site header. */
-  .site__header.is-scrolled {
+  /* The frosted layer. Out of flow, so .grid-main's column rule doesn't box it
+     in; z-index 0 sits it above the header's background but below the bar's
+     content, so the blur has the page behind it and never washes the wordmark. */
+  .site__header-frost {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    opacity: 0;
+    pointer-events: none;
     background-color: hsl(from var(--clr-neutral-900) h s l / 0.85);
+    transition: opacity 0.4s var(--ease);
+  }
+
+  .site__header.is-scrolled .site__header-frost {
+    opacity: 1;
     /* Standard property only. Lightning CSS adds the -webkit- prefix from the
        build's css targets; writing both by hand makes it collapse to -webkit-
        only at minify time, which drops the blur in Firefox. */
     backdrop-filter: blur(20px) saturate(1.4);
+  }
+
+  /* Once scrolled the bar "pops" with a hairline border and faint shadow —
+     identical treatment to the site header. */
+  .site__header.is-scrolled {
     border-bottom-color: hsl(0 0% 100% / 0.06);
     box-shadow: 0 8px 32px hsl(0 0% 0% / 0.18);
   }
 
+  @media (prefers-reduced-motion: reduce) {
+    .site__header,
+    .site__header-frost {
+      transition: none;
+    }
+  }
+
   .site__header-inner {
+    position: relative;
+    /* Above .site__header-frost so the blur never washes over the wordmark. */
+    z-index: 1;
+
     display: flex;
     align-items: center;
     gap: var(--spacing-md);

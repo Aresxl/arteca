@@ -18,6 +18,12 @@ const pageCount = String(navLinks.length).padStart(2, "0");
 ---
 
 <header class="site__header | grid-main">
+  {/* Carries the scrolled frost. A backdrop-filter on the header itself makes
+      iOS 26's status-bar colour sampler bail out ("multiple colours"), so the
+      blur lives on this absolutely-positioned child, which the sampler skips
+      on its way up to the header's own background-color. */}
+  <div class="site__header-frost" aria-hidden="true"></div>
+
   <div class="site__header-inner">
     <RollLink href="/" text="Vyteca" class="home-link site-logo" aria-label="Vyteca home" />
 
@@ -128,38 +134,85 @@ const pageCount = String(navLinks.length).padStart(2, "0");
 </nav>
 
 <style>
+  /* iOS 26 Safari tints the status bar by hit-testing one point (viewport
+     centre, 4px down) and walking up for a fixed/sticky ancestor with a real
+     background-color. This bar is that ancestor, so three things are load
+     bearing here and must not be undone:
+       1. A plain background-color on THIS element (not a child, not a pseudo,
+          not a `background:` shorthand carrying an image layer).
+       2. No backdrop-filter anywhere in that walk — it lives on
+          .site__header-frost instead.
+       3. Nothing position:fixed covering the top of the viewport above it
+          (see the body::after grain note in global.css).
+     Without these the strip renders white at rest and page content scrolls
+     visibly through it behind the clock and battery. */
   .site__header {
     position: sticky;
     z-index: 900;
     top: 0;
     padding-block: var(--spacing-xs);
+    min-height: var(--header-h);
 
-    /* Transparent at the top so the bar blends into the hero. */
-    background-color: transparent;
+    /* Was `transparent`, which gave the sampler nothing to read. This is the
+       page background at full opacity — visually identical to transparent at
+       scroll-top, because every hero sits on exactly this colour, and it is
+       what iOS samples for the status strip. The scrolled frost layers its
+       translucent tint + blur on top of it rather than replacing it. */
+    background-color: var(--clr-bg-primary-dark);
     border-bottom: 1px solid transparent;
 
     /* Blur snaps on with .is-scrolled rather than transitioning, so the
-       backdrop isn't re-sampled every frame. The tint, border and shadow fade. */
+       backdrop isn't re-sampled every frame. The border and shadow fade. */
     transition:
-      background-color 0.4s var(--ease),
       border-color 0.4s var(--ease),
       box-shadow 0.4s var(--ease);
   }
 
-  /* Once scrolled the bar "pops" with a solid dark tint, hairline border
-     and faint shadow. The tint stays opaque enough to read consistently
-     over both dark and cream sections. */
-  .site__header.is-scrolled {
+  /* The frosted layer. Absolutely positioned and full-bleed: out of flow, so
+     .grid-main's column rule doesn't box it in. Carrying the blur here rather
+     than on the header keeps the header sampleable (see above).
+
+     z-index 0 puts it above the header's own background but below the bar's
+     content (.site__header-inner, z-index 1), so the blur has the page behind
+     it to work on and never washes over the wordmark or nav. */
+  .site__header-frost {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    opacity: 0;
+    pointer-events: none;
     background-color: hsl(from var(--clr-neutral-900) h s l / 0.85);
+    transition: opacity 0.4s var(--ease);
+  }
+
+  /* Once scrolled the bar "pops" with a hairline border and faint shadow, and
+     the frost fades up over the solid base. */
+  .site__header.is-scrolled .site__header-frost {
+    opacity: 1;
     /* Standard property only. Lightning CSS adds the -webkit- prefix from the
        build's css targets; writing both by hand makes it collapse to -webkit-
        only at minify time, which drops the blur in Firefox. */
     backdrop-filter: blur(20px) saturate(1.4);
+  }
+
+  .site__header.is-scrolled {
     border-bottom-color: hsl(0 0% 100% / 0.06);
     box-shadow: 0 8px 32px hsl(0 0% 0% / 0.18);
   }
 
+  @media (prefers-reduced-motion: reduce) {
+    .site__header,
+    .site__header-frost {
+      transition: none;
+    }
+  }
+
   .site__header-inner {
+    position: relative;
+    /* Above .site__header-frost so the blur never washes over the bar's own
+       wordmark, nav and CTA. */
+    z-index: 1;
+
     display: flex;
     align-items: center;
     gap: var(--spacing-md);

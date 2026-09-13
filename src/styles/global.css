@@ -55,6 +55,12 @@
 
     --page-padding: 10px;
 
+    /* Sticky-header height. Drives the film-grain overlay's top offset so the
+       grain can never cover the top-centre of the viewport — see the
+       body::after rule for why that matters on iOS 26 Safari. Desktop: 52px
+       CTA + 2 × 8px padding. Mobile: ~46px toggle + the same padding. */
+    --header-h: 68px;
+
     --spacing-unit: 0.5rem;
     --spacing-xxs: calc(var(--spacing-unit) * 0.5); /* 4px */
     --spacing-xs: calc(var(--spacing-unit) * 1); /* 8px */
@@ -377,10 +383,28 @@
     background-color: var(--clr-bg-primary-dark);
   }
 
+  /* Film grain over the page — deliberately NOT over the top strip.
+
+     iOS 26 Safari dropped <meta name="theme-color"> and instead samples the
+     page to tint the status bar: it hit-tests a single point (viewport centre,
+     4px down) and walks UP the render tree looking for a fixed/sticky ancestor
+     carrying a real background-color. WebKit remaps a hit on a pseudo-element
+     to its HOST, so a full-viewport body::after makes that walk start at
+     <body>, find nothing fixed, and give up — the header is never examined.
+     The strip then renders white at rest and turns to clear glass on scroll,
+     with page content visibly sliding through it behind the clock and battery.
+
+     Starting the grain below the header leaves .site__header as the only thing
+     under the sample point, so its background-color is what gets sampled. Do
+     NOT give this overlay a background-color to "make it sampleable" — that
+     tints the whole page. Standing rule: nothing position:fixed may cover the
+     top-centre of the viewport above the header. */
   body::after {
     content: "";
     position: fixed;
-    inset: 0;
+    inset-block-start: var(--header-h);
+    inset-inline: 0;
+    inset-block-end: 0;
     pointer-events: none;
     z-index: 9999;
     opacity: 0.088;

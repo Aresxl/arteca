@@ -10,6 +10,10 @@ const ogImageUrl = new URL(ogImage ?? "/images/og-image.png", Astro.site).href;
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  {/* Safari 26 parses and ignores this — it samples the page instead (see the
+      .site__header note in Header.astro). Chrome for iOS and Android still use
+      it, so it stays. Matches --clr-bg-primary-dark. */}
+  <meta name="theme-color" content="#141414" />
   <link
     rel="preload"
     href="/fonts/bricolage-grotesque-v9-latin-700.woff2"
